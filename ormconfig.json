@@ -1,7 +1,8 @@
 {
   "type": "mongodb",
   "host": "localhost",
-  "database": "garden-planner",
+  "database": "gardening-planner",
   "entities": ["dist/**/*.entity{.ts,.js}"],
-  "synchronize": true
+  "synchronize": true,
+  "useUnifiedTopology": true
 }

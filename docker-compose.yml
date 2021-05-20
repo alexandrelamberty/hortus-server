@@ -1,11 +1,13 @@
-version: "3"
+version: "3.6"
 
 services:
-  mysql:
-    image: mysql:5
-    restart: always
+  mongodb:
+    image: mongo:latest
+    container_name: garden-planner-mongodb
     environment:
-      MYSQL_ROOT_PASSWORD: root
-      MYSQL_DATABASE: test
+      - MONGODB_DATABASE="gardening-planner"
     ports:
-      - "3306:3306"
+      - 27017:27017
+    restart: unless-stopped
+    
+

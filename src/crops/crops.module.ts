@@ -1,12 +1,12 @@
 import { Module } from '@nestjs/common';
-import { TypeOrmModule } from '@nestjs/typeorm';
-import { CropService } from './crops.service';
-import { CropController } from './crops.controller';
-import { Crop } from './crops.entity';
+import { MongooseModule } from '@nestjs/mongoose';
+import { CropsService } from './crops.service';
+import { CropsController } from './crops.controller';
+import { Crop, CropSchema } from './schemas/crop.schema';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([Crop])],
-  providers: [CropService],
-  controllers: [CropController],
+  imports: [MongooseModule.forFeature([{ name: Crop.name, schema: CropSchema }])],
+  providers: [CropsService],
+  controllers: [CropsController],
 })
-export class CropModule {}
+export class CropsModule {}
