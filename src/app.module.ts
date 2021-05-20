@@ -7,6 +7,7 @@ import { Crop } from './crops/crops.entity';
 
 @Module({
  	imports: [
+		TypeOrmModule.forRoot(),
     CropModule,
   ], 
   controllers: [AppController],
