@@ -1,16 +1,24 @@
 import { Injectable } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
-import { Crop } from './crops.entity';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+
+import { CreateCropDto } from './dto/create-crop.dto';
+import { Crop, CropDocument } from './schemas/crop.schema';
+
 
 @Injectable()
-export class CropService {
+export class CropsService {
   constructor(
-    @InjectRepository(Crop)
-    private readonly cropRepository: Repository<Crop>,
+    @InjectModel(Crop.name)
+    private readonly cropModel: Model<CropDocument>,
   ) {}
 
+  async create(createCropDto: CreateCropDto): Promise<Crop> {
+    const createdCrop = new this.cropModel(createCropDto);
+    return createdCrop.save();
+  }
+
   async findAll(): Promise<Crop[]> {
-    return this.cropRepository.find();
+    return this.cropModel.find().exec();
   }
 }
