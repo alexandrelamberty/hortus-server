@@ -1,38 +1,31 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo_text.svg" width="320" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# Hortus Server
 
 ## Description
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+[Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
+
+The server expose an API written in Typescript using NestJS that connect to a Docker MongoDB container.
 
 ## Installation
 
+Create the database container. see `docker-compose.yml`
+```bash
+$ docker-compose build
+```
+
+Install the javascript dependencies. see `package.json`
 ```bash
 $ npm install
 ```
 
 ## Running the app
+
+Start the database container named "garden-planner-mongodb". see `docker-compose.yml`
+```bash
+$ docker 
+```
+
+Run the application
 
 ```bash
 # development
@@ -60,14 +53,51 @@ $ npm run test:cov
 
 ## Support
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+Garden Planner is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://github.com/alexandrelamberty/garden-planner-backend/blob/master/SUPPORT.md).
 
 ## Stay in touch
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+- Author - [Alexandre Lamberty](mailto:mail@alexandrelamberty.com?subject=[GitHub]%20Garden%20Planner%20Backend)
+- Website - [https://alexandrelamberty.com](https://alexandrelamberty.com/)
+- Twitter - [@eevos](https://twitter.com/eevos)
 
 ## License
 
-Nest is [MIT licensed](LICENSE).
+Garden Planner is [MIT licensed](LICENSE).
+
+## Ressources
+
+https://dev.to/carlomigueldy/building-a-restful-api-with-nestjs-and-mongodb-mongoose-2165
+https://francescociulla.com/crud-api-using-nestjs-mongoose-mongodb-and-docker
+https://stackoverflow.com/questions/52230301/mongoose-with-nestjs-one-to-many
+https://bezkoder.com/mongoose-one-to-many-relationship/
+https://bezkoder.com/mongoose-one-to-one-relationship-example/
+
+
+## How plants are classified
+
+Asteraceae
+Family Name
+Rudbeckia
+Genus
+fulgida
+Specifc Epithet
+First letter capitalized
+NOT italicized
+First letter capitalized
+Italicized
+All letters lowercase
+Italicized
+Genus + Specifc Epithet = Species
+First letter capitalized
+NOT italicized
+In single quotes
+All letters lowercase
+var. NOT italicized
+Other letters italicized
+var. sullivantii
+Variety
+‘Goldsturm’
+Cultivar
+Rudbeckia fulgida var. sullivantii ‘Goldsturm’
+Common Name: Goldsturm rudbeckia
