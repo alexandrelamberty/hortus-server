@@ -1,10 +1,10 @@
-# Garden Planner Server
+# Hortus Server
 
 ## Description
 
-[Garden Planner Server](https://github.com/alexandrelamberty/garden-planner-backend) the server-side components for the [Garden Planner Web] and [Garden Planner Mobile].
+[Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server expose an API written in Javascript using NestJS and communicate with a Docker MongoDB container.
+The server expose an API written in Typescript using NestJS that connect to a Docker MongoDB container.
 
 ## Installation
 
@@ -59,8 +59,45 @@ Garden Planner is an MIT-licensed open source project. It can grow thanks to the
 
 - Author - [Alexandre Lamberty](mailto:mail@alexandrelamberty.com?subject=[GitHub]%20Garden%20Planner%20Backend)
 - Website - [https://alexandrelamberty.com](https://alexandrelamberty.com/)
-- Twitter - [@alexandrelamberty](https://twitter.com/alexandrelamberty)
+- Twitter - [@eevos](https://twitter.com/eevos)
 
 ## License
 
 Garden Planner is [MIT licensed](LICENSE).
+
+## Ressources
+
+https://dev.to/carlomigueldy/building-a-restful-api-with-nestjs-and-mongodb-mongoose-2165
+https://francescociulla.com/crud-api-using-nestjs-mongoose-mongodb-and-docker
+https://stackoverflow.com/questions/52230301/mongoose-with-nestjs-one-to-many
+https://bezkoder.com/mongoose-one-to-many-relationship/
+https://bezkoder.com/mongoose-one-to-one-relationship-example/
+
+
+## How plants are classified
+
+Asteraceae
+Family Name
+Rudbeckia
+Genus
+fulgida
+Specifc Epithet
+First letter capitalized
+NOT italicized
+First letter capitalized
+Italicized
+All letters lowercase
+Italicized
+Genus + Specifc Epithet = Species
+First letter capitalized
+NOT italicized
+In single quotes
+All letters lowercase
+var. NOT italicized
+Other letters italicized
+var. sullivantii
+Variety
+‘Goldsturm’
+Cultivar
+Rudbeckia fulgida var. sullivantii ‘Goldsturm’
+Common Name: Goldsturm rudbeckia

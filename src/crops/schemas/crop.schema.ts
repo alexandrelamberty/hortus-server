@@ -5,14 +5,29 @@ export type CropDocument = Crop & Document;
 
 @Schema()
 export class Crop {
-  @Prop()
+  @Prop({ required: true })
   name: string;
 
-  @Prop()
-  age: number;
+  @Prop({ required: true })
+  family: string;
+
+  @Prop({ required: true })
+  genus: string;
 
   @Prop()
-  breed: string;
+  seeding: number[];
+
+  @Prop()
+  transplanting: number[];
+
+  @Prop()
+  planting: number[];
+
+  @Prop()
+  harvesting: number[];
+
+  @Prop()
+  description: string;
 }
 
 export const CropSchema = SchemaFactory.createForClass(Crop);

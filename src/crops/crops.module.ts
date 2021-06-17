@@ -5,7 +5,9 @@ import { CropsController } from './crops.controller';
 import { Crop, CropSchema } from './schemas/crop.schema';
 
 @Module({
-  imports: [MongooseModule.forFeature([{ name: Crop.name, schema: CropSchema }])],
+  imports: [
+    MongooseModule.forFeature([{ name: Crop.name, schema: CropSchema }]),
+  ],
   providers: [CropsService],
   controllers: [CropsController],
 })

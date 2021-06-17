@@ -1,5 +1,5 @@
 export class CreateCropDto {
-    readonly name: string;
-    readonly age: number;
-    readonly breed: string;
-  }
+  readonly name: string;
+  readonly family: string;
+  readonly breed: string;
+}

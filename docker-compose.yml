@@ -1,4 +1,4 @@
-version: "3.6"
+version: '3.6'
 
 services:
   mongodb:
@@ -9,5 +9,3 @@ services:
     ports:
       - 27017:27017
     restart: unless-stopped
-    
-
