@@ -1,10 +1,10 @@
 # Hortus Server
-
+j
 ## Description
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server expose an API written in Typescript using NestJS that connect to a Docker MongoDB container.
+The server expose an API written in Typescript using NestJS that connect to a MongoDB.
 
 ## Installation
 

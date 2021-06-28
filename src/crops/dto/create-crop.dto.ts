@@ -1,5 +1,5 @@
+import { Plant } from '../../plants/schemas/plant.schema';
+
 export class CreateCropDto {
-  readonly name: string;
-  readonly family: string;
-  readonly breed: string;
+  readonly plant: Plant;
 }

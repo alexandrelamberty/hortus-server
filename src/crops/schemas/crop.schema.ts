@@ -1,33 +1,17 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Document, Types, Schema as MongooseSchema } from 'mongoose';
+import { Plant } from '../../plants/schemas/plant.schema';
 
 export type CropDocument = Crop & Document;
 
 @Schema()
 export class Crop {
-  @Prop({ required: true })
-  name: string;
-
-  @Prop({ required: true })
-  family: string;
-
-  @Prop({ required: true })
-  genus: string;
-
-  @Prop()
-  seeding: number[];
-
-  @Prop()
-  transplanting: number[];
-
-  @Prop()
-  planting: number[];
-
-  @Prop()
-  harvesting: number[];
-
-  @Prop()
-  description: string;
+  @Prop({
+    type: MongooseSchema.Types.ObjectId,
+    ref: 'Plant',
+    required: true,
+  })
+  plant: Plant;
 }
 
 export const CropSchema = SchemaFactory.createForClass(Crop);
