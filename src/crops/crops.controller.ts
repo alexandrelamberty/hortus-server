@@ -7,7 +7,10 @@ import {
   Put,
   Delete,
   Param,
+  UseInterceptors,
+  UploadedFile,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { CropsService } from './crops.service';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { UpdateCropDto } from './dto/update-crop.dto';
@@ -15,10 +18,20 @@ import { Crop } from './schemas/crop.schema';
 
 @Controller('crops')
 export class CropsController {
-  constructor(private readonly cropsService: CropsService) {}
+  constructor(private readonly cropsService: CropsService) { }
 
+  // @Post()
+  // create(@Body() createPlantationDto: CreateCropDto) {
+  //   return this.cropsService.create(createPlantationDto);
+  // }
+
+  @UseInterceptors(FileInterceptor('file'))
   @Post()
-  create(@Body() createPlantationDto: CreateCropDto) {
+  create(
+    @Body() createPlantationDto: CreateCropDto,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    //file: file.buffer.toString();
     return this.cropsService.create(createPlantationDto);
   }
 
@@ -41,10 +54,4 @@ export class CropsController {
   remove(@Param('id') id: string) {
     return this.cropsService.delete(id);
   }
-
-  /*@Post('upload')
-  @UseInterceptors(FileInterceptor('file'))
-  uploadFile(@UploadedFile() file: Express.Multer.File) {
-    console.log(file);
-  }*/
 }

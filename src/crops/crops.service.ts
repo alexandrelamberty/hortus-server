@@ -18,7 +18,7 @@ export class CropsService {
   }
 
   async findAll(): Promise<Crop[]> {
-    return await this.cropModel.find().exec();
+    return await this.cropModel.find().populate('plant').exec();
   }
 
   async findOne(id: string): Promise<Crop> {

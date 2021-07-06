@@ -1,10 +1,10 @@
 # Hortus Server
-
+j
 ## Description
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server expose an API written in Typescript using NestJS that connect to a Docker MongoDB container.
+The server expose an API written in Typescript using NestJS that connect to a MongoDB.
 
 ## Installation
 
@@ -72,6 +72,7 @@ https://francescociulla.com/crud-api-using-nestjs-mongoose-mongodb-and-docker
 https://stackoverflow.com/questions/52230301/mongoose-with-nestjs-one-to-many
 https://bezkoder.com/mongoose-one-to-many-relationship/
 https://bezkoder.com/mongoose-one-to-one-relationship-example/
+https://medium.com/weekly-webtips/building-modern-backendusing-nest-js-and-mongodb-96fd04f4b050
 
 
 ## How plants are classified
