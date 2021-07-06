@@ -72,6 +72,7 @@ https://francescociulla.com/crud-api-using-nestjs-mongoose-mongodb-and-docker
 https://stackoverflow.com/questions/52230301/mongoose-with-nestjs-one-to-many
 https://bezkoder.com/mongoose-one-to-many-relationship/
 https://bezkoder.com/mongoose-one-to-one-relationship-example/
+https://medium.com/weekly-webtips/building-modern-backendusing-nest-js-and-mongodb-96fd04f4b050
 
 
 ## How plants are classified

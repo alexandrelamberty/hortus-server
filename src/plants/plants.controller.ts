@@ -32,6 +32,7 @@ export class PlantsController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     //file: file.buffer.toString();
+    console.log(createPlantationDto);
     return this.plantsService.create(createPlantationDto);
   }
 
