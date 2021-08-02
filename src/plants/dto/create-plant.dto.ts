@@ -3,6 +3,7 @@ export class CreatePlantDto {
   readonly family: string;
   readonly genus: string;
   readonly description: string;
+  readonly image: string;
   readonly seeding: number[];
   readonly transplanting: number[];
   readonly planting: number[];

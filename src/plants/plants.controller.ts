@@ -19,21 +19,16 @@ import { Plant } from './schemas/plant.schema';
 @Controller('plants')
 export class PlantsController {
   constructor(private readonly plantsService: PlantsService) {}
-
-  // @Post()
-  // create(@Body() createPlantationDto: CreatePlantDto) {
-  //   return this.plantsService.create(createPlantationDto);
-  // }
-
-  @UseInterceptors(FileInterceptor('file'))
+  
   @Post()
+  @UseInterceptors(FileInterceptor('image'))
   create(
     @Body() createPlantationDto: CreatePlantDto,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    //file: file.buffer.toString();
     console.log(createPlantationDto);
-    return this.plantsService.create(createPlantationDto);
+    console.log(file);
+    return this.plantsService.create(createPlantationDto, file.filename);
   }
 
   @Get()

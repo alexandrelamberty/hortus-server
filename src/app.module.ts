@@ -1,3 +1,4 @@
+import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -5,6 +6,11 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { CropsModule } from './crops/crops.module';
 import { PlantsModule } from './plants/plants.module';
+import { ServeStaticModule } from '@nestjs/serve-static';
+import { ImagesModule } from './images/images.module';
+import { PlantFamilyModule } from './plants-families/plant-family.module';
+import { PlantGenusModule } from './plants-genuses/plant-genus.module';
+import { PlantTypeModule } from './plants-types/plant-type.module';
 
 @Module({
   imports: [
@@ -13,10 +19,19 @@ import { PlantsModule } from './plants/plants.module';
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),
+    /*
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', 'upload'),
+  }),
+  */
+    ImagesModule,
     PlantsModule,
     CropsModule,
+    PlantFamilyModule,
+    PlantGenusModule,
+    PlantTypeModule,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule { }
+export class AppModule {}

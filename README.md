@@ -1,10 +1,8 @@
 # Hortus Server
-j
-## Description
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server expose an API written in Typescript using NestJS that connect to a MongoDB.
+The server expose an API written in Typescript using NestJS and a MySQL database.
 
 ## Installation
 
@@ -75,30 +73,3 @@ https://bezkoder.com/mongoose-one-to-one-relationship-example/
 https://medium.com/weekly-webtips/building-modern-backendusing-nest-js-and-mongodb-96fd04f4b050
 
 
-## How plants are classified
-
-Asteraceae
-Family Name
-Rudbeckia
-Genus
-fulgida
-Specifc Epithet
-First letter capitalized
-NOT italicized
-First letter capitalized
-Italicized
-All letters lowercase
-Italicized
-Genus + Specifc Epithet = Species
-First letter capitalized
-NOT italicized
-In single quotes
-All letters lowercase
-var. NOT italicized
-Other letters italicized
-var. sullivantii
-Variety
-‘Goldsturm’
-Cultivar
-Rudbeckia fulgida var. sullivantii ‘Goldsturm’
-Common Name: Goldsturm rudbeckia

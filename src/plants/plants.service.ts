@@ -10,10 +10,14 @@ export class PlantsService {
   constructor(
     @InjectModel(Plant.name)
     private readonly plantModel: Model<PlantDocument>,
-  ) {}
+  ) { }
 
-  async create(createPlantDto: CreatePlantDto): Promise<Plant> {
+  async create(
+    createPlantDto: CreatePlantDto,
+    photoPath: string,
+  ): Promise<Plant> {
     const plant = new this.plantModel(createPlantDto);
+    plant.image = photoPath;
     return plant.save();
   }
 

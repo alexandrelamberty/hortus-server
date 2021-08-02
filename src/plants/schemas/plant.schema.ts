@@ -18,6 +18,12 @@ export class Plant {
   description: string;
 
   @Prop()
+  type: string;
+
+  @Prop()
+  image: string;
+
+  @Prop()
   seeding: number[];
 
   @Prop()
