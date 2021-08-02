@@ -41,17 +41,4 @@ export class PlantsService {
       throw new NotFoundException('Could not find Plant.');
     }*/
   }
-  /*
-  private async findById(id: number): Promise<Plant> {
-    let plant: any;
-    try {
-      plant = await this.plantModel.findById(id).exec();
-    } catch (error) {
-      throw new NotFoundException('Could not find Plant.');
-    }
-    if (!plant) {
-      throw new NotFoundException('Could not find Plant.');
-    }
-    return plant;
-  }*/
 }
