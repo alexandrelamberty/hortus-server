@@ -11,6 +11,6 @@ async function bootstrap() {
     origin: '*',
   });
   await app.listen(process.env.PORT || 3333);
-  console.log(`Application is running on: ${await app.getUrl()}`);
+  console.log(`Hortus is running: ${await app.getUrl()}`);
 }
 bootstrap();

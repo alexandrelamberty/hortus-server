@@ -1,16 +1,16 @@
-import { join } from 'path';
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
 import { CropsModule } from './crops/crops.module';
-import { PlantsModule } from './plants/plants.module';
-import { ServeStaticModule } from '@nestjs/serve-static';
 import { ImagesModule } from './images/images.module';
 import { PlantFamilyModule } from './plants-families/plant-family.module';
 import { PlantGenusModule } from './plants-genuses/plant-genus.module';
 import { PlantTypeModule } from './plants-types/plant-type.module';
+import { PlantsModule } from './plants/plants.module';
+import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -24,6 +24,8 @@ import { PlantTypeModule } from './plants-types/plant-type.module';
       rootPath: join(__dirname, '..', 'upload'),
   }),
   */
+    AuthModule,
+    UsersModule,
     ImagesModule,
     PlantsModule,
     CropsModule,
