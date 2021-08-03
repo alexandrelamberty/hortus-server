@@ -26,16 +26,16 @@ export class UsersService {
     return result[0];
   }
 
+  async findByEmail(email: string): Promise<User> {
+    const result = await this.userModel.find({ email: email }).exec();
+    return result[0];
+  }
+
   async update(id: string, updateUserDto: UpdateUserDto) {
     return await this.userModel.findByIdAndUpdate(id, updateUserDto).exec();
   }
 
   async delete(id: string) {
     return await this.userModel.findByIdAndDelete(id).exec();
-    /*
-    const result = await this.plantModel.deleteOne({ _id: id }).exec();
-    if (result.n === 0) {
-      throw new NotFoundException('Could not find User.');
-    }*/
   }
 }

@@ -1,25 +1,23 @@
 import {
   Body,
   Controller,
-  Get,
-  Post,
-  Patch,
-  Put,
   Delete,
+  Get,
   Param,
-  UseInterceptors,
+  Post,
+  Put,
   UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { PlantsService } from './plants.service';
 import { CreatePlantDto } from './dto/create-plant.dto';
 import { UpdatePlantDto } from './dto/update-plant.dto';
-import { Plant } from './schemas/plant.schema';
+import { PlantsService } from './plants.service';
 
 @Controller('plants')
 export class PlantsController {
   constructor(private readonly plantsService: PlantsService) {}
-  
+
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   create(

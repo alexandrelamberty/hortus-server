@@ -30,6 +30,8 @@
     "@nestjs/passport": "^8.0.0",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/serve-static": "^2.1.4",
+    "@types/bcrypt": "^5.0.0",
+    "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.6",
     "mongoose": "5.12.8",

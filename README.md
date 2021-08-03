@@ -2,7 +2,7 @@
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server expose an API written in Typescript using NestJS and a MySQL database.
+The server expose an API written in Typescript using NestJS and a Mongo database.
 
 ## Installation
 

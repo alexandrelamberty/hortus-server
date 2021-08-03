@@ -10,7 +10,7 @@ export class PlantsService {
   constructor(
     @InjectModel(Plant.name)
     private readonly plantModel: Model<PlantDocument>,
-  ) { }
+  ) {}
 
   async create(
     createPlantDto: CreatePlantDto,

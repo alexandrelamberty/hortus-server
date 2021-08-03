@@ -11,11 +11,16 @@ import { PlantGenusModule } from './plants-genuses/plant-genus.module';
 import { PlantTypeModule } from './plants-types/plant-type.module';
 import { PlantsModule } from './plants/plants.module';
 import { UsersModule } from './users/users.module';
-
+import configuration from './config/configuration';
 @Module({
   imports: [
-    ConfigModule.forRoot({ envFilePath: '.dev.env' }),
-    MongooseModule.forRoot(process.env.CONNECTION_STRING, {
+    ConfigModule.forRoot({
+      envFilePath: '.dev.env',
+      ignoreEnvFile: false,
+      isGlobal: true,
+      load: [configuration],
+    }),
+    MongooseModule.forRoot(process.env.MONGO_CONNECTION, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),

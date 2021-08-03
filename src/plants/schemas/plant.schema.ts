@@ -40,7 +40,6 @@ export class Plant {
 
   @Prop()
   rows: number;
-
 }
 
 export const PlantSchema = SchemaFactory.createForClass(Plant);

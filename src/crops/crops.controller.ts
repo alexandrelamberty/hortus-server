@@ -18,7 +18,7 @@ import { Crop } from './schemas/crop.schema';
 
 @Controller('crops')
 export class CropsController {
-  constructor(private readonly cropsService: CropsService) { }
+  constructor(private readonly cropsService: CropsService) {}
 
   // @Post()
   // create(@Body() createPlantationDto: CreateCropDto) {
