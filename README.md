@@ -2,14 +2,20 @@
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server expose an API written in Typescript using NestJS and a Mongo database.
+The server is composed of 3 docker containers
+ - A Node container to run our NestJS application and access a file system.
+ - A MongoDB container to store our data
+ - A Redis container to store our sessions
 
 ## Installation
 
 Create the database container. see `docker-compose.yml`
+
 ```bash
-$ docker-compose build
+$ docker-compose build web
+$ docker-compose up --no-deps -d web
 ```
+
 
 Install the javascript dependencies. see `package.json`
 ```bash
@@ -63,13 +69,5 @@ Garden Planner is an MIT-licensed open source project. It can grow thanks to the
 
 Garden Planner is [MIT licensed](LICENSE).
 
-## Ressources
-
-https://dev.to/carlomigueldy/building-a-restful-api-with-nestjs-and-mongodb-mongoose-2165
-https://francescociulla.com/crud-api-using-nestjs-mongoose-mongodb-and-docker
-https://stackoverflow.com/questions/52230301/mongoose-with-nestjs-one-to-many
-https://bezkoder.com/mongoose-one-to-many-relationship/
-https://bezkoder.com/mongoose-one-to-one-relationship-example/
-https://medium.com/weekly-webtips/building-modern-backendusing-nest-js-and-mongodb-96fd04f4b050
 
 

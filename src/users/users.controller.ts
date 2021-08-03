@@ -43,4 +43,10 @@ export class UsersController {
   remove(@Param('id') id: string) {
     return this.usersService.delete(id);
   }
+
+  //@UseGuards(JwtAuthGuard)
+  @Get('profile')
+  getProfile() {
+    return 'Profile';
+  }
 }

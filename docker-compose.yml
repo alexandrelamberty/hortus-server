@@ -5,9 +5,9 @@ services:
     container_name: hortus-node-api
     build:
       context: .
-      target: development
+      target: development # Change this to prod
       dockerfile: ./Dockerfile
-    command: npm run start:prod
+    command: npm run start:dev # Change this to prod
     ports:
       - 3333:3333
     networks:
@@ -17,9 +17,9 @@ services:
       - /usr/src/app/node_modules
     restart: unless-stopped
     depends_on:
-      - mongodb
+      - mongo
       - redis
-  mongodb:
+  mongo:
     image: mongo:latest
     container_name: hortus-mongo-database
     environment:
@@ -27,8 +27,6 @@ services:
     ports:
       - 27017:27017
     restart: always
-    volumes:
-      - ./mongo/data:/data/db # Helps to store MongoDB data in `./mongo/data`, to be removed, backup volume ?
   redis:
     image: redis:latest
     container_name: hortus-redis-session

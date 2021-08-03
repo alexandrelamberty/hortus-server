@@ -3,7 +3,7 @@ import { Document } from 'mongoose';
 
 export type PlantFamilyDocument = PlantFamily & Document;
 
-@Schema()
+@Schema({ collection: 'plant-families' })
 export class PlantFamily {
   @Prop({ type: String, required: true })
   title: string;

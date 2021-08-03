@@ -1,20 +1,17 @@
 import {
   Body,
   Controller,
-  Get,
-  Post,
-  Patch,
-  Put,
   Delete,
+  Get,
   Param,
+  Post,
+  Put,
   UseInterceptors,
-  UploadedFile,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { CropsService } from './crops.service';
 import { CreateCropDto } from './dto/create-crop.dto';
 import { UpdateCropDto } from './dto/update-crop.dto';
-import { Crop } from './schemas/crop.schema';
 
 @Controller('crops')
 export class CropsController {
@@ -27,11 +24,7 @@ export class CropsController {
 
   @UseInterceptors(FileInterceptor('file'))
   @Post()
-  create(
-    @Body() createPlantationDto: CreateCropDto,
-    @UploadedFile() file: Express.Multer.File,
-  ) {
-    //file: file.buffer.toString();
+  create(@Body() createPlantationDto: CreateCropDto) {
     return this.cropsService.create(createPlantationDto);
   }
 

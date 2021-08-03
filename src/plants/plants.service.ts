@@ -22,11 +22,11 @@ export class PlantsService {
   }
 
   async findAll(): Promise<Plant[]> {
-    return await this.plantModel.find().exec();
+    return await this.plantModel.find().populate('types').exec();
   }
 
   async findOne(id: string): Promise<Plant> {
-    return await this.plantModel.findById(id).exec();
+    return await this.plantModel.findById(id).populate('types').exec();
   }
 
   async update(id: string, updatePlantDto: UpdatePlantDto) {

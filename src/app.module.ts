@@ -6,9 +6,9 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CropsModule } from './crops/crops.module';
 import { ImagesModule } from './images/images.module';
-import { PlantFamilyModule } from './plants-families/plant-family.module';
-import { PlantGenusModule } from './plants-genuses/plant-genus.module';
-import { PlantTypeModule } from './plants-types/plant-type.module';
+import { PlantFamilyModule } from './families/plant-family.module';
+import { PlantGenusModule } from './genera/plant-genus.module';
+import { PlantTypeModule } from './types/plant-type.module';
 import { PlantsModule } from './plants/plants.module';
 import { UsersModule } from './users/users.module';
 import configuration from './config/configuration';
@@ -20,7 +20,7 @@ import configuration from './config/configuration';
       isGlobal: true,
       load: [configuration],
     }),
-    MongooseModule.forRoot(process.env.MONGO_CONNECTION, {
+    MongooseModule.forRoot(process.env.MONGO_URI, {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     }),

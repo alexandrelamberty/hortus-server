@@ -25,8 +25,9 @@ export class PlantsController {
     @UploadedFile() file: Express.Multer.File,
   ) {
     console.log(createPlantationDto);
+    //TODO: Do something with the file!
     console.log(file);
-    return this.plantsService.create(createPlantationDto, file.filename);
+    return this.plantsService.create(createPlantationDto, 'nothing_for_now');
   }
 
   @Get()
