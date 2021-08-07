@@ -5,13 +5,13 @@ export class CreatePlantDto {
   readonly name: string;
 
   @IsNotEmpty()
-  readonly familyId: MongooseSchema.Types.ObjectId;
+  readonly family: MongooseSchema.Types.ObjectId;
 
   @IsNotEmpty()
-  readonly genusId: MongooseSchema.Types.ObjectId;
+  readonly genus: MongooseSchema.Types.ObjectId;
 
   @IsNotEmpty()
-  readonly typeId: MongooseSchema.Types.ObjectId;
+  readonly type: MongooseSchema.Types.ObjectId;
 
   @IsNotEmpty()
   readonly description: string;

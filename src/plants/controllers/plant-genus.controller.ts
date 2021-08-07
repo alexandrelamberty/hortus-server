@@ -1,18 +1,15 @@
 import {
   Body,
   Controller,
-  Get,
-  Post,
-  Patch,
-  Put,
   Delete,
+  Get,
   Param,
-  UseInterceptors,
-  UploadedFile,
+  Post,
+  Put,
 } from '@nestjs/common';
-import { PlantGenusService } from './plant-genus.service';
-import { CreatePlantGenusDto } from './dto/create-plant-genus.dto';
-import { UpdatePlantGenusDto } from './dto/update-plant-genus.dto';
+import { CreatePlantGenusDto } from '../dto/create-plant-genus.dto';
+import { UpdatePlantGenusDto } from '../dto/update-plant-genus.dto';
+import { PlantGenusService } from '../providers/plant-genus.service';
 
 @Controller('genera')
 export class PlantGenusController {

@@ -1,5 +1,8 @@
 import {
   Body,
+  CacheInterceptor,
+  CacheKey,
+  CacheTTL,
   Controller,
   Delete,
   Get,
@@ -10,16 +13,17 @@ import {
   UseInterceptors,
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { CreatePlantDto } from './dto/create-plant.dto';
-import { UpdatePlantDto } from './dto/update-plant.dto';
-import { PlantsService } from './plants.service';
+import { CreatePlantDto } from '../dto/create-plant.dto';
+import { UpdatePlantDto } from '../dto/update-plant.dto';
+import { PlantsService } from '../providers/plants.service';
 
 @Controller('plants')
+@UseInterceptors(CacheInterceptor)
 export class PlantsController {
   constructor(private readonly plantsService: PlantsService) {}
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
+  //@UseInterceptors(FileInterceptor('image'))
   create(
     @Body() createPlantationDto: CreatePlantDto,
     @UploadedFile() file: Express.Multer.File,
@@ -30,6 +34,8 @@ export class PlantsController {
     return this.plantsService.create(createPlantationDto, 'nothing_for_now');
   }
 
+  //@CacheKey('myCustomKey')
+  //@CacheTTL(300)
   @Get()
   findAll() {
     return this.plantsService.findAll();

@@ -3,26 +3,27 @@
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
 The server is composed of 3 docker containers
- - A Node container to run our NestJS application and access a file system.
- - A MongoDB container to store our data
- - A Redis container to store our sessions
+    - A Node container to run our NestJS application and access a file system.
+    - A MongoDB container to store our data
+    - A Redis container to store data cache
+    - A Redis container to store user sessions
 
 ## Installation
-
-Create the database container. see `docker-compose.yml`
-
-```bash
-$ docker-compose build web
-$ docker-compose up --no-deps -d web
-```
-
 
 Install the javascript dependencies. see `package.json`
 ```bash
 $ npm install
 ```
 
-## Running the app
+Create the database container. see `docker-compose.yml`
+```bash
+$ docker-compose build web
+$ docker-compose up --no-deps -d web
+```
+
+## Configuration
+
+## Deployement
 
 Start the database container named "garden-planner-mongodb". see `docker-compose.yml`
 ```bash

@@ -1,39 +1,10 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Plant } from '../../plants/schemas/plant.schema';
-
-export type SeedingDocument = Seeding & Document;
-
-@Schema()
-export class Seeding {
-  @Prop({
-    type: String,
-    required: true,
-    default: 'Pending',
-    enum: ['Pending', 'Started', 'Stopped', 'Skipped'],
-  })
-  status: string;
-
-  @Prop({
-    type: Number,
-    required: true,
-  })
-  quantity: number;
-
-  @Prop({
-    type: Date,
-    required: false,
-  })
-  startedAt: Date;
-
-  @Prop({
-    type: Date,
-    required: false,
-  })
-  endedAt: Date;
-}
-
-export const SeedingSchema = SchemaFactory.createForClass(Seeding);
+import { Harvesting } from './harvesting.schema ';
+import { Planting } from './planting.schema';
+import { Seeding } from './seeding.schema';
+import { Transplanting } from './transplanting.schema';
 
 export type CropDocument = Crop & Document;
 
@@ -46,23 +17,39 @@ export class Crop {
   })
   plant: Plant;
 
-  @Prop({ type: Date, required: true })
+  @Prop({ type: Date, default: Date.now() })
   createdAt: Date;
 
   @Prop({ type: Date, required: true })
   updatedAt: Date;
 
-  @Prop({ type: Seeding, required: true })
+  @Prop({
+    type: Seeding,
+    ref: 'Seeding',
+    required: true,
+  })
   seeding: Seeding;
 
-  @Prop({ type: Seeding, required: true })
-  transplanting: Seeding;
+  @Prop({
+    type: Transplanting,
+    ref: 'Transplanting',
+    required: true,
+  })
+  transplanting: Transplanting;
 
-  @Prop({ type: Seeding, required: true })
-  planting: Seeding;
+  @Prop({
+    type: Planting,
+    ref: 'Planting',
+    required: true,
+  })
+  planting: Planting;
 
-  @Prop({ type: Seeding, required: true })
-  harvesting: Seeding;
+  @Prop({
+    type: Harvesting,
+    ref: 'Harvesting',
+    required: true,
+  })
+  harvesting: Harvesting;
 }
 
 export const CropSchema = SchemaFactory.createForClass(Crop);

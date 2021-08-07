@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreatePlantDto } from './dto/create-plant.dto';
-import { UpdatePlantDto } from './dto/update-plant.dto';
-import { Plant, PlantDocument } from './schemas/plant.schema';
+import { CreatePlantDto } from '../dto/create-plant.dto';
+import { UpdatePlantDto } from '../dto/update-plant.dto';
+import { Plant, PlantDocument } from '../schemas/plant.schema';
 
 @Injectable()
 export class PlantsService {

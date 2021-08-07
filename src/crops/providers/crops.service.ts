@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
-import { CreateCropDto } from './dto/create-crop.dto';
-import { UpdateCropDto } from './dto/update-crop.dto';
-import { Crop, CropDocument } from './schemas/crop.schema';
+import { CreateCropDto } from '../dto/create-crop.dto';
+import { UpdateCropDto } from '../dto/update-crop.dto';
+import { Crop, CropDocument } from '../schemas/crop.schema';
 
 @Injectable()
 export class CropsService {

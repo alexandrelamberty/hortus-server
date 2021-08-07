@@ -7,9 +7,9 @@ import {
   Post,
   Put,
 } from '@nestjs/common';
-import { CreatePlantTypeDto } from './dto/create-plant-type.dto';
-import { UpdatePlantTypeDto } from './dto/update-plant-type.dto';
-import { PlantTypeService } from './plant-type.service';
+import { CreatePlantTypeDto } from '../dto/create-plant-type.dto';
+import { UpdatePlantTypeDto } from '../dto/update-plant-type.dto';
+import { PlantTypeService } from '../providers/plant-type.service';
 
 @Controller('types')
 export class PlantTypeController {

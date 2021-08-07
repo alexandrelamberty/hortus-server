@@ -1,8 +1,8 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { PlantFamily } from 'src/families/schema/plant-family.schema';
-import { PlantGenus } from 'src/genera/schema/plant-genus.schema';
-import { PlantType } from 'src/types/schema/plant-type.schema';
+import { PlantFamily } from 'src/plants/schemas/plant-family.schema';
+import { PlantGenus } from 'src/plants/schemas/plant-genus.schema';
+import { PlantType } from 'src/plants/schemas/plant-type.schema';
 
 export type PlantDocument = Plant & Document;
 
