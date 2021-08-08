@@ -1,11 +1,42 @@
-version: '3.6'
+version: '3.8'
 
 services:
-  mongodb:
+  node:
+    container_name: hortus-node-api
+    build:
+      context: .
+      target: development # Change this to prod
+      dockerfile: ./Dockerfile
+    command: npm run start:dev # Change this to prod
+    ports:
+      - 3333:3333
+    networks:
+      - hortus-network
+    volumes:
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
+    restart: unless-stopped
+    depends_on:
+      - mongo
+      - redis
+  mongo:
     image: mongo:latest
-    container_name: garden-planner-mongodb
+    container_name: hortus-mongo-database
     environment:
       - MONGODB_DATABASE="gardening-planner"
     ports:
       - 27017:27017
-    restart: unless-stopped
+    restart: always
+  redis:
+    image: redis:latest
+    container_name: hortus-redis-cache
+    ports:
+      - 6379:6379
+
+networks:
+  hortus-network:
+
+volumes:
+  redisdata:
+  mongodata:
+  mediadata:

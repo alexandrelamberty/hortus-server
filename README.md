@@ -1,24 +1,29 @@
 # Hortus Server
-j
-## Description
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server expose an API written in Typescript using NestJS that connect to a MongoDB.
+The server is composed of 3 docker containers
+    - A Node container to run our NestJS application and access a file system.
+    - A MongoDB container to store our data
+    - A Redis container to store data cache
+    - A Redis container to store user sessions
 
 ## Installation
-
-Create the database container. see `docker-compose.yml`
-```bash
-$ docker-compose build
-```
 
 Install the javascript dependencies. see `package.json`
 ```bash
 $ npm install
 ```
 
-## Running the app
+Create the database container. see `docker-compose.yml`
+```bash
+$ docker-compose build web
+$ docker-compose up --no-deps -d web
+```
+
+## Configuration
+
+## Deployement
 
 Start the database container named "garden-planner-mongodb". see `docker-compose.yml`
 ```bash
@@ -65,40 +70,5 @@ Garden Planner is an MIT-licensed open source project. It can grow thanks to the
 
 Garden Planner is [MIT licensed](LICENSE).
 
-## Ressources
-
-https://dev.to/carlomigueldy/building-a-restful-api-with-nestjs-and-mongodb-mongoose-2165
-https://francescociulla.com/crud-api-using-nestjs-mongoose-mongodb-and-docker
-https://stackoverflow.com/questions/52230301/mongoose-with-nestjs-one-to-many
-https://bezkoder.com/mongoose-one-to-many-relationship/
-https://bezkoder.com/mongoose-one-to-one-relationship-example/
-https://medium.com/weekly-webtips/building-modern-backendusing-nest-js-and-mongodb-96fd04f4b050
 
 
-## How plants are classified
-
-Asteraceae
-Family Name
-Rudbeckia
-Genus
-fulgida
-Specifc Epithet
-First letter capitalized
-NOT italicized
-First letter capitalized
-Italicized
-All letters lowercase
-Italicized
-Genus + Specifc Epithet = Species
-First letter capitalized
-NOT italicized
-In single quotes
-All letters lowercase
-var. NOT italicized
-Other letters italicized
-var. sullivantii
-Variety
-‘Goldsturm’
-Cultivar
-Rudbeckia fulgida var. sullivantii ‘Goldsturm’
-Common Name: Goldsturm rudbeckia
