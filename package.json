@@ -30,6 +30,8 @@
     "@nestjs/passport": "^8.0.0",
     "@nestjs/platform-express": "^7.6.15",
     "@nestjs/serve-static": "^2.1.4",
+    "@nestjs/swagger": "^4.8.0",
+    "swagger-ui-express": "^4.1.6",
     "bcrypt": "^5.0.1",
     "cache-manager": "^3.4.4",
     "cache-manager-redis-store": "^2.0.0",

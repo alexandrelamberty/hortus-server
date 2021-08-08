@@ -4,6 +4,7 @@ import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 import { logger } from './common/middleware/logger.middleware';
+import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule, {});
@@ -23,17 +24,17 @@ async function bootstrap() {
     allowedHeaders: '*',
     origin: '*',
   });
-  /*
+
   // Swagger - https://docs.nestjs.com/openapi/introduction
   const swaggerConfig = new DocumentBuilder()
-    .setTitle('Cats example')
-    .setDescription('The cats API description')
+    .setTitle('Hortus API')
+    .setDescription('The Hortus API let you manage plants and cultures.')
     .setVersion('1.0')
-    .addTag('cats')
+    .addTag('hortus')
     .build();
-  const document = SwaggerModule.createDocument(app, config);
-  SwaggerModule.setup('api', app, document);
-  */
+
+  const document = SwaggerModule.createDocument(app, swaggerConfig);
+  SwaggerModule.setup('docs', app, document);
 
   const config = app.get('ConfigService');
 
