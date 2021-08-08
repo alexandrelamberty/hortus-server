@@ -3,9 +3,10 @@ import { NestFactory } from '@nestjs/core';
 import { NestExpressApplication } from '@nestjs/platform-express';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
+import { logger } from './common/middleware/logger.middleware';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {});
 
   /*
   // Versioning - https://docs.nestjs.com/techniques/versioning#versioning
@@ -24,7 +25,7 @@ async function bootstrap() {
   });
   /*
   // Swagger - https://docs.nestjs.com/openapi/introduction
-  const config = new DocumentBuilder()
+  const swaggerConfig = new DocumentBuilder()
     .setTitle('Cats example')
     .setDescription('The cats API description')
     .setVersion('1.0')
@@ -33,7 +34,15 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api', app, document);
   */
-  await app.listen(process.env.PORT || 3333);
-  console.log(`Hortus is running: ${await app.getUrl()}`);
+
+  const config = app.get('ConfigService');
+
+  try {
+    await app.listen(config.get('port'));
+  } catch (e) {
+    console.error(e);
+  } finally {
+    console.log(`Hortus is running: ${await app.getUrl()}`);
+  }
 }
 bootstrap();

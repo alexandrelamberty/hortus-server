@@ -23,7 +23,7 @@ export class PlantsController {
   constructor(private readonly plantsService: PlantsService) {}
 
   @Post()
-  //@UseInterceptors(FileInterceptor('image'))
+  @UseInterceptors(FileInterceptor('image'))
   create(
     @Body() createPlantationDto: CreatePlantDto,
     @UploadedFile() file: Express.Multer.File,

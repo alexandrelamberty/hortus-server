@@ -17,13 +17,14 @@ import { Plant, PlantSchema } from './schemas/plant.schema';
 
 @Module({
   imports: [
-    //CacheModule.register(),
+    CacheModule.register(),
     MongooseModule.forFeature([
       { name: Plant.name, schema: PlantSchema },
       { name: PlantFamily.name, schema: PlantFamilySchema },
       { name: PlantGenus.name, schema: PlantGenusSchema },
       { name: PlantType.name, schema: PlantTypeSchema },
     ]),
+
     MulterModule.register({
       dest: './upload',
     }),

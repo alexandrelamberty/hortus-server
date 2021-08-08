@@ -1,5 +1,5 @@
 import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
-import { ConfigModule } from '@nestjs/config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
 import { ServeStaticModule } from '@nestjs/serve-static';
@@ -9,12 +9,14 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { CatsModule } from './cats/cats.module';
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import configuration from './config/configuration';
+import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
+import { validate } from './config/validators/env.validation';
 import { CropsModule } from './crops/crops.module';
 import { ImagesModule } from './images/images.module';
 import { PlantsModule } from './plants/plants.module';
 import { UsersModule } from './users/users.module';
-
 @Module({
   imports: [
     // Configuration - https://docs.nestjs.com/techniques/configuration
@@ -22,17 +24,25 @@ import { UsersModule } from './users/users.module';
       envFilePath: '.dev.env',
       ignoreEnvFile: false,
       isGlobal: true,
+      cache: true,
       load: [configuration],
+      validate,
     }),
 
     // Database - https://docs.nestjs.com/techniques/mongodb
-    MongooseModule.forRoot(process.env.MONGO_URI, {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
+    MongooseModule.forRootAsync({
+      imports: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        uri: configService.get<string>('mongo.uri'),
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+      }),
+      inject: [ConfigService], // Inject DatabaseConfigService
     }),
 
     // Cache - https://docs.nestjs.com/techniques/caching
     CacheModule.register({
+      isGlobal: true,
       store: redisStore,
       host: process.env.REDIS_HOST,
       port: process.env.REDIS_PORT,
@@ -57,12 +67,17 @@ import { UsersModule } from './users/users.module';
   ],
   controllers: [AppController],
   providers: [
+    AppService,
+    DatabaseConfigService,
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
-    AppService,
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: LoggingInterceptor,
+    },
   ],
-  exports: [CacheModule]
+  exports: [DatabaseConfigService, CacheModule],
 })
 export class AppModule {}
