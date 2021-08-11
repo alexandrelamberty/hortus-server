@@ -14,27 +14,35 @@
 
 ### Culture Care and Envinronment
 
-- 
-
 ### Plants
 
-Plant name with it's differents culture phases starting and ending period.
+Plant with it's differents culture phases starting and ending period.
 
 ```json
 {
   "name": "Carrot",
-  "family": Family(),
+  "family": {Family},
   "genus": Genus(),
   "types": Type(),
   "description": "...",
-  "varietes": Species[],
+  "varietes": [Varietes]
+} 
+```
+
+### Varietes
+
+```json
+{
+  "plant": Plant,
+  "name": string,
+  "description": "",
   "harvest" DayRange(),
-  "season": ["Perenial"],
+  "season": ["Annual", "Biennial", "Perenial"],
   "sun": ["Full Sun"],
-  "frost": ["Tolerant"],
+  "frost": ["²", "Non tolerant"],
   "water": ["1/Week"],
-  "companion": Plant[],
-  "competitor": Plant[],
+  "companions": Plant[],
+  "competitors": Plant[],
   "seeding": {
     "start": 2,
     "end": 5,
@@ -43,7 +51,6 @@ Plant name with it's differents culture phases starting and ending period.
   "transplanting": {
     "start": 2,
     "end": 5,
-    "germination": 15,
     "growth": 2
   },
   "planting": {
@@ -54,7 +61,7 @@ Plant name with it's differents culture phases starting and ending period.
   "harvesting": {
     "start": 2,
     "end": 5,
-    "germination": 15
+    "duration": 15
   },
   "spacing": 
   {

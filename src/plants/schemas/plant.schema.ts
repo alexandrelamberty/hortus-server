@@ -1,8 +1,9 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { PlantFamily } from 'src/plants/schemas/plant-family.schema';
-import { PlantGenus } from 'src/plants/schemas/plant-genus.schema';
-import { PlantType } from 'src/plants/schemas/plant-type.schema';
+import { Family } from './family.schema';
+import { Genus } from './genus.schema';
+import { Type } from './type.schema';
+import { Variete } from './variete.schema';
 
 export type PlantDocument = Plant & Document;
 
@@ -13,54 +14,50 @@ export class Plant {
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: PlantFamily.name,
+    ref: Family.name,
     required: true,
   })
   family: MongooseSchema.Types.ObjectId;
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: PlantGenus.name,
+    ref: Genus.name,
     required: true,
   })
   genus: MongooseSchema.Types.ObjectId;
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: PlantType.name,
+    ref: Type.name,
     required: true,
   })
-  types: MongooseSchema.Types.ObjectId;
+  type: MongooseSchema.Types.ObjectId;
 
   @Prop({ type: String, required: true })
   description: string;
 
-  @Prop({ required: false })
+  @Prop({ type: String })
   image: string;
 
-  @Prop({ required: false })
-  seeding: number[];
-
-  @Prop({ required: false })
-  transplanting: number[];
-
-  @Prop({ required: false })
-  planting: number[];
-
-  @Prop({ required: false })
-  harvesting: number[];
-
-  @Prop({ required: false })
-  spacing: number;
-
-  @Prop({ required: false })
-  rows: number;
+  @Prop({ type: MongooseSchema.Types.ObjectId, ref: Variete.name })
+  varietes: MongooseSchema.Types.ObjectId[];
 
   @Prop({ type: Date, default: Date.now })
-  createdAt: number;
+  createdAt: Date;
 
   @Prop({ type: Date, default: Date.now })
-  updatedAt: number;
+  updatedAt: Date;
 }
 
 export const PlantSchema = SchemaFactory.createForClass(Plant);
+
+PlantSchema.pre<Plant>('save', function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const plant = this;
+  const now = new Date();
+  plant.updatedAt = now;
+  if (!plant.createdAt) {
+    plant.createdAt = now;
+  }
+  next();
+});

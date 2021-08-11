@@ -1,5 +1,7 @@
 # TODO
 
+- Finish to implement the model and it's validators
+ 
 - Remove mapping of mongodb data
 - Improve application configuration management
 - Check for a free online solution like aws for storage

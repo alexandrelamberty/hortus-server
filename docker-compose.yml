@@ -2,6 +2,7 @@ version: '3.8'
 
 services:
   node:
+    image: hortus-node
     container_name: hortus-node-api
     build:
       context: .
@@ -17,9 +18,9 @@ services:
       - /usr/src/app/node_modules
     restart: unless-stopped
     depends_on:
-      - mongo
-      - redis
-  mongo:
+      - database
+      - cache
+  database:
     image: mongo:latest
     container_name: hortus-mongo-database
     environment:
@@ -27,7 +28,7 @@ services:
     ports:
       - 27017:27017
     restart: always
-  redis:
+  cache:
     image: redis:latest
     container_name: hortus-redis-cache
     ports:

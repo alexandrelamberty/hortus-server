@@ -1,4 +1,10 @@
-import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
+import {
+  CacheInterceptor,
+  CacheModule,
+  CACHE_MANAGER,
+  Inject,
+  Module,
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -8,14 +14,12 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { CatsModule } from './cats/cats.module';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import configuration from './config/configuration';
 import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
 import { validate } from './config/validators/env.validation';
 import { CropsModule } from './crops/crops.module';
-import { ImagesModule } from './images/images.module';
-import { PlantsModule } from './plants/plants.module';
+import { PlantModule } from './plants/plant.module';
 import { UsersModule } from './users/users.module';
 @Module({
   imports: [
@@ -58,11 +62,9 @@ import { UsersModule } from './users/users.module';
     }),
 
     // Modules
-    CatsModule,
     AuthModule,
     UsersModule,
-    ImagesModule,
-    PlantsModule,
+    PlantModule,
     CropsModule,
   ],
   controllers: [AppController],
@@ -80,4 +82,11 @@ import { UsersModule } from './users/users.module';
   ],
   exports: [DatabaseConfigService, CacheModule],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(@Inject(CACHE_MANAGER) cacheManager) {
+    const client = cacheManager.store.getClient();
+    client.on('error', (error) => {
+      console.error(error);
+    });
+  }
+}
