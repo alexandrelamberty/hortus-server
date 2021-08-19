@@ -1,0 +1,29 @@
+[
+  {
+    "name": "Root (Racine)"
+  },
+  {
+    "name": "Bulb (Bulbe)"
+  },
+  {
+    "name": "Stem (Tubercule)"
+  },
+  {
+    "name": "Seed (Graine)"
+  },
+  {
+    "name": "Flower (Fleur)"
+  },
+  {
+    "name": "Leaf (Feuille)"
+  },
+  {
+    "name": "Fruit (Fruit)"
+  },
+  {
+    "name": "Herb (Herbe)"
+  },
+  {
+    "name": "Other (Autre)"
+  }
+]

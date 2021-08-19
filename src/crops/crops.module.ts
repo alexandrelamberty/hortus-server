@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
-import { CropsService } from './crops.service';
-import { CropsController } from './crops.controller';
+import { CropsService } from './providers/crops.service';
+import { CropsController } from './controllers/crops.controller';
 import { Crop, CropSchema } from './schemas/crop.schema';
 
 @Module({
