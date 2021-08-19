@@ -14,4 +14,4 @@ export class Type {
   plant: Plant;
 }
 
-export const CropSchema = SchemaFactory.createForClass(Crop);
+export const TypeSchema = SchemaFactory.createForClass(Type);

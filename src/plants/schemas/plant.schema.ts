@@ -33,9 +33,6 @@ export class Plant {
   })
   type: MongooseSchema.Types.ObjectId;
 
-  @Prop({ type:  String, required: true, enum: ['Root', 'OUTBOUND'] })
-  type: string;
-
   @Prop({ type: String, required: true })
   description: string;
 
