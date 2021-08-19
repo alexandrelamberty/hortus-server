@@ -14,6 +14,9 @@ export class Plant {
   @Prop({ type: String, required: true })
   genus: string;
 
+  @Prop({ type:  String, required: true, enum: ['Root', 'OUTBOUND'] })
+  type: string;
+
   @Prop({ type: String, required: true })
   description: string;
 
