@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { PhaseStatus } from '../enum/PhaseStatus';
+import { PhaseStatus } from '../enum/phase-status.enum';
 
 export type HarvestingDocument = Harvesting & Document;
 

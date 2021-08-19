@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
-import { CutlureLocation } from '../enum/CultureLocation';
-import { PhaseStatus } from '../enum/PhaseStatus';
+import { CutlureLocation } from '../enum/location.enum';
+import { PhaseStatus } from '../enum/phase-status.enum';
 
 export type PlantingDocument = Planting & Document;
 
