@@ -2,33 +2,33 @@
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server is composed of 3 docker containers
-    - A Node container to run our NestJS application and access a file system.
-    - A MongoDB container to store our data
-    - A Redis container to store data cache
-    - A Redis container to store user sessions
+The server is composed of four differents parts, an API running on Node, a Mongo database, a Redis instance to cache requests and a Redis instance to store the users sessions. 
+
+The API is securised with password-based authentication and token-based authentication.
+
+## Requirements
+
+- [NPM](https://www.npmjs.com/)
+- [Docker](https://www.docker.com/)
 
 ## Installation
 
-Install the javascript dependencies. see `package.json`
-```bash
-$ npm install
-```
-
-Create the database container. see `docker-compose.yml`
-```bash
-$ docker-compose build web
-$ docker-compose up --no-deps -d web
-```
+After you have cloned the repository, first install the javascript dependencies, see [`package.json`](package.json)
 
 ## Configuration
 
+The API use environment variables via an `.env` file as configuration.
+
+Rename the [`.env.sample`](.env.sample) to [`.env`](.env) and fill it accordingly.
+
+## Build
+
+```bash
+$ docker-compose --env-file .dev.env up
+```
+
 ## Deployement
 
-Start the database container named "garden-planner-mongodb". see `docker-compose.yml`
-```bash
-$ docker 
-```
 
 Run the application
 
@@ -42,6 +42,12 @@ $ npm run start:dev
 # production mode
 $ npm run start:prod
 ```
+
+## Tools
+
+### Redis
+
+### Mongo
 
 ## Test
 
@@ -69,6 +75,13 @@ Garden Planner is an MIT-licensed open source project. It can grow thanks to the
 ## License
 
 Garden Planner is [MIT licensed](LICENSE).
+
+## References
+
+- [International Name Index](https://www.ipni.org/)
+- [The Plant List](http://www.theplantlist.org/)
+- [World Flora Online](http://www.worldfloraonline.org/)
+- [Latin Linguistics - A Useful Tool in Horticulture](https://hortnews.extension.iastate.edu/1999/7-23-1999/latin.html)
 
 
 

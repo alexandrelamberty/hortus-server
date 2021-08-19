@@ -1,5 +1,5 @@
 import { plainToClass } from 'class-transformer';
-import { IsEnum, IsNumber, validateSync } from 'class-validator';
+import { IsPort, IsEnum, IsNumber, validateSync } from 'class-validator';
 
 enum Environment {
   Development = 'development',
@@ -12,8 +12,17 @@ class EnvironmentVariables {
   @IsEnum(Environment)
   NODE_ENV: Environment;
 
+  @IsPort()
+  API_PORT: string;
+
+  @IsPort()
+  DATABASE_PORT: string;
+
+  @IsPort()
+  CACHE_PORT: string;
+
   @IsNumber()
-  PORT: number;
+  CACHE_TTL: number;
 }
 
 export function validate(config: Record<string, unknown>) {

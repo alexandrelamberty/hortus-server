@@ -2,17 +2,17 @@ version: '3.8'
 
 services:
   node:
-    image: hortus-node
+    image: hortus-api:latest
     container_name: hortus-node-api
     build:
       context: .
-      target: development # Change this to prod
+      target: ${NODE_ENV} # Change this to prod
       dockerfile: ./Dockerfile
-    command: npm run start:dev # Change this to prod
+    #command: npm run start:dev # Change this to prod
     ports:
-      - 3333:3333
+      - 3333:${API_PORT}
     networks:
-      - hortus-network
+      - hortus
     volumes:
       - .:/usr/src/app
       - /usr/src/app/node_modules
@@ -20,24 +20,39 @@ services:
     depends_on:
       - database
       - cache
+      - session
   database:
-    image: mongo:latest
-    container_name: hortus-mongo-database
+    image: mongo:4.4.8 # < 5 for AVX CPU support
+    container_name: hortus-database
     environment:
-      - MONGODB_DATABASE="gardening-planner"
+      - MONGO_INITDB_ROOT_USERNAME=root
+      - MONGO_INITDB_ROOT_PASSWORD=root
+      - MONGO_INITDB_DATABASE=development
+      - MONGO_INITDB_USER=mongodb
+      - MONGO_INITDB_PWD=mongodb
+      - MONGODB_SYSTEM_LOG_VERBOSITY=3
     ports:
-      - 27017:27017
+      - 27017:${DATABASE_PORT}
     restart: always
   cache:
     image: redis:latest
-    container_name: hortus-redis-cache
+    container_name: hortus-cache
+    command: --port ${CACHE_PORT}
     ports:
-      - 6379:6379
+      - ${CACHE_PORT}:${CACHE_PORT}
+    restart: always
+  session:
+    image: redis:latest
+    container_name: hortus-session
+    command: --port ${SESSION_PORT}
+    ports:
+      - ${SESSION_PORT}:${SESSION_PORT}
+    restart: always
 
 networks:
-  hortus-network:
+  hortus:
 
 volumes:
-  redisdata:
-  mongodata:
-  mediadata:
+  cache:
+  database:
+  media:

@@ -1,0 +1,818 @@
+{
+	"info": {
+		"_postman_id": "0b8f9eae-9615-40d1-b747-40a693afbfb8",
+		"name": "Garden Planner",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"eevos\",\n    \"email\": \"mail@eevos.com\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{auth_endpoint}}/register",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{auth_endpoint}}",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"mail@eevos.com\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{auth_endpoint}}/login",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{auth_endpoint}}",
+								"login"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Logout a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"mail@alexandrelamberty.com\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{auth_endpoint}}/logout",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{auth_endpoint}}",
+								"logout"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"description": "# Auth \nAuthorization endpoints that allow you to register, login and logout from the api."
+		},
+		{
+			"name": "Users",
+			"item": [
+				{
+					"name": "Create a user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"lilo\",\n    \"email\": \"lilo@lilo.net\",\n    \"password\": \"12345\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{users_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{users_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a user",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{users_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{users_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a user",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{users_endpoint}}/61082aa2c78ce234f75cf294",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{users_endpoint}}",
+								"61082aa2c78ce234f75cf294"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{users_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{users_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Find User by Username",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{users_endpoint}}/eevos",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{users_endpoint}}",
+								"eevos"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Plants",
+			"item": [
+				{
+					"name": "Create a plant",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Carrot\",\n  \"family\": \"61096727757c84acd170c9b3\",\n  \"genus\": \"610966e7757c84acd170c9b2\",\n  \"type\": \"6107f59d3f36cbe0debfb888\",\n  \"description\": \"The carrot is a root vegetable, most commonly observed as orange in color, though purple, black, red, white, and yellow cultivars exist, all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{plants_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{plants_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a plant",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{plants_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{plants_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a plant",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{plants_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{plants_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a plant",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{plants_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{plants_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all plants",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{plants_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{plants_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Families",
+			"item": [
+				{
+					"name": "Create a family",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Carrot\",\n  \"family\": \"61096727757c84acd170c9b3\",\n  \"genus\": \"610966e7757c84acd170c9b2\",\n  \"types\": \"6107f59d3f36cbe0debfb888\",\n  \"description\": \"The carrot is a root vegetable, most commonly observed as orange in color, though purple, black, red, white, and yellow cultivars exist, all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{family_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{family_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a family",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{family_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{family_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a family",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{family_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{family_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a family",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{family_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{family_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all families",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{family_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{family_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Genus",
+			"item": [
+				{
+					"name": "Create a genus",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Carrot\",\n  \"family\": \"61096727757c84acd170c9b3\",\n  \"genus\": \"610966e7757c84acd170c9b2\",\n  \"types\": \"6107f59d3f36cbe0debfb888\",\n  \"description\": \"The carrot is a root vegetable, most commonly observed as orange in color, though purple, black, red, white, and yellow cultivars exist, all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/plants",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"plants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a genus",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{genera_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{genera_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a genus",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{genera_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{genera_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a genus",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{genera_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{genera_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all genera",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{genera_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{genera_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Type",
+			"item": [
+				{
+					"name": "Create a type",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"name\": \"Carrot\",\n  \"family\": \"61096727757c84acd170c9b3\",\n  \"genus\": \"610966e7757c84acd170c9b2\",\n  \"types\": \"6107f59d3f36cbe0debfb888\",\n  \"description\": \"The carrot is a root vegetable, most commonly observed as orange in color, though purple, black, red, white, and yellow cultivars exist, all of which are domesticated forms of the wild carrot, Daucus carota, native to Europe and Southwestern Asia.\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/plants",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"plants"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a type",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{types_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{types_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a type",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{types_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{types_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a type",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{types_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{types_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all types",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{types_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{types_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Varietes",
+			"item": [
+				{
+					"name": "Create a variete",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"plant\": \"61096727757c84acd170c9b3\",\n    \"name\": \"Berlicum\",\n    \"description\": \"The variety 'Berlicum' is an old, Italian storage carrot. It forms long (about 20 cm), cylindrical, blunt, orange and red roots with an excellent taste. This carrot variety is of the Nantaise type. As a storage carrot, it should not be harvested before the foliage turns yellow or red at the tips.\",\n    \"harvest\": [\n        20,\n        40\n    ],\n    \"season\": \"Annual\",\n    \"sun\": \"Full sun\",\n    \"frost\": \"Tolerant\",\n    \"water\": \"1/Week\",\n    \"companions\": [],\n    \"competitors\": [],\n    \"seeding\": {\n        \"start\": 5,\n        \"end\": 7,\n        \"germination\": 20\n    },\n    \"transplanting\": {\n        \"start\": 5,\n        \"end\": 7,\n        \"growth\": 30\n    },\n    \"planting\": {\n        \"start\": 5,\n        \"end\": 7,\n        \"maturity\": 20\n    },\n    \"harvesting\": {\n        \"start\": 5,\n        \"end\": 7,\n        \"quantity\": 20\n    },\n    \"spacing\": 5,\n    \"row\": 20\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{variete_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{variete_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a variete",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{variete_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{variete_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a variete",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{variete_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{variete_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a variete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{variete_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{variete_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all varietes",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{variete_endpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{variete_endpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Crops",
+			"item": [
+				{
+					"name": "Create a crop",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"plant\": \"60d8a242a32a2c6cd6fffb2b\",\n    \"createdAt\": \"2002-12-09\",\n    \"updatedAt\": \"2002-12-09\",\n    \"seeding\": {\n        \"status\": \"Pending\",\n        \"location\": \"Indoor\",\n        \"quantity\": \"200\",\n        \"startedAt\": \"2002-12-09\",\n        \"endedAt\": \"2002-12-09\"\n    },\n    \"transplanting\": {\n        \"status\": \"Pending\",\n        \"location\": \"Indoor\",\n        \"quantity\": \"200\",\n        \"startedAt\": \"2002-12-09\",\n        \"endedAt\": \"2002-12-09\"\n    },\n    \"planting\": {\n        \"status\": \"Pending\",\n        \"location\": \"Indoor\",\n        \"quantity\": \"200\",\n        \"startedAt\": \"2002-12-09\",\n        \"endedAt\": \"2002-12-09\"\n    },\n    \"harvesting\": {\n        \"status\": \"Pending\",\n        \"quantity\": \"200\",\n        \"startedAt\": \"2002-12-09\",\n        \"endedAt\": \"2002-12-09\"\n    }\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{BASE_URL}}/{{crops_endrpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{crops_endrpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Retrieve a crop",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{crops_endrpoint}}/6109a9b5c7f3b314727dcf11",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{crops_endrpoint}}",
+								"6109a9b5c7f3b314727dcf11"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update a crop",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{crops_endrpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{crops_endrpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a crop",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{crops_endrpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{crops_endrpoint}}"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "List all crops",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{BASE_URL}}/{{crops_endrpoint}}",
+							"host": [
+								"{{BASE_URL}}"
+							],
+							"path": [
+								"{{crops_endrpoint}}"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "BASE_URL",
+			"value": "http://localhost:3333"
+		}
+	]
+}

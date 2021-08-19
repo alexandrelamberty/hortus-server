@@ -13,6 +13,7 @@ export class AuthService {
 
   public async registerUser(createUserDto: CreateUserDto) {
     console.log(createUserDto);
+    // TODO: Change bcrypt rounds by a salt string ?
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     try {
       const createdUser = await this.usersService.create({
