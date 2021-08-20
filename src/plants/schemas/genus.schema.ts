@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 
 export type GenusDocument = Genus & Document;
 
-@Schema({ collection: 'plant-genera' })
+@Schema({ collection: 'genera' })
 export class Genus {
   @Prop({ type: String, required: true })
-  title: string;
+  name: string;
 }
 
 export const GenusSchema = SchemaFactory.createForClass(Genus);

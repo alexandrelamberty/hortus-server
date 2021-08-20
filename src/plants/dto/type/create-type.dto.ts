@@ -1,3 +1,3 @@
 export class CreateTypeDto {
-  readonly title: string;
+  readonly name: string;
 }

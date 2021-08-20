@@ -4,13 +4,14 @@ export default () => ({
   mongo: {
     host: process.env.DATABASE_HOST,
     port: process.env.DATABASE_PORT,
+    name: process.env.DATABASE_NAME,
     username: process.env.DATABASE_USERNAME,
     password: process.env.DATABASE_PASSWORD,
     uri: process.env.DATABASE_URI,
     useNewUrlParser: true,
     useUnifiedTopology: true,
   },
-  redis: {
+  cache: {
     host: process.env.CACHE_HOST,
     port: process.env.CACHE_PORT,
     ttl: process.env.CACHE_TTL,
