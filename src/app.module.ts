@@ -25,7 +25,7 @@ import { UsersModule } from './users/users.module';
   imports: [
     // Configuration - https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
-      envFilePath: '.dev.env',
+      envFilePath: '.env.dev',
       ignoreEnvFile: false,
       isGlobal: true,
       cache: false,
