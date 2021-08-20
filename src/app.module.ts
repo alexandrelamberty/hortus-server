@@ -18,8 +18,8 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import configuration from './config/configuration';
 import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
 import { validate } from './config/validators/env.validation';
-import { CropsModule } from './crops/crops.module';
-import { PlantModule } from './plants/plant.module';
+import { CropModule } from './crop/crop.module';
+import { CultureModule } from './culture/culture.module';
 import { UsersModule } from './users/users.module';
 @Module({
   imports: [
@@ -68,8 +68,8 @@ import { UsersModule } from './users/users.module';
     // Modules
     AuthModule,
     UsersModule,
-    PlantModule,
-    CropsModule,
+    CropModule,
+    CultureModule,
   ],
   controllers: [AppController],
   providers: [

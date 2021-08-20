@@ -2,7 +2,7 @@
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server is composed of four differents parts, an API running on Node, a Mongo database, a Redis instance to cache requests and a Redis instance to store the users sessions. 
+The server is composed of four differents parts, an API running on Node, a Mongo database, a Redis instance to cache requests and a Redis instance to store the users sessions.
 
 The API is securised with password-based authentication and token-based authentication.
 
@@ -28,7 +28,6 @@ $ docker-compose --env-file .dev.env up
 ```
 
 ## Deployement
-
 
 Run the application
 
@@ -74,14 +73,13 @@ Garden Planner is an MIT-licensed open source project. It can grow thanks to the
 
 ## License
 
-Garden Planner is [MIT licensed](LICENSE).
+Hortus is [MIT licensed](LI<CENSE).
 
 ## References
 
+- [UPOV - GENIE](https://www.upov.int/genie/index.xhtml)
+- [Taxacom - Biological Systematics Discussion List](http://mailman.nhm.ku.edu/cgi-bin/mailman/listinfo/taxacom)
 - [International Name Index](https://www.ipni.org/)
 - [The Plant List](http://www.theplantlist.org/)
 - [World Flora Online](http://www.worldfloraonline.org/)
 - [Latin Linguistics - A Useful Tool in Horticulture](https://hortnews.extension.iastate.edu/1999/7-23-1999/latin.html)
-
-
-
