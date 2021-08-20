@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 
 export type FamilyDocument = Family & Document;
 
-@Schema({ collection: 'plant-families' })
+@Schema({ collection: 'families' })
 export class Family {
   @Prop({ type: String, required: true })
-  title: string;
+  name: string;
 }
 
 export const FamilySchema = SchemaFactory.createForClass(Family);

@@ -3,10 +3,10 @@ import { Document } from 'mongoose';
 
 export type TypeDocument = Type & Document;
 
-@Schema({ collection: 'plant-types' })
+@Schema({ collection: 'types' })
 export class Type {
   @Prop({ type: String, required: true })
-  title: string;
+  name: string;
 }
 
 export const TypeSchema = SchemaFactory.createForClass(Type);

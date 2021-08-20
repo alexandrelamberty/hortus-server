@@ -11,7 +11,7 @@ export default () => ({
     useNewUrlParser: true,
     useUnifiedTopology: true,
   },
-  redis: {
+  cache: {
     host: process.env.CACHE_HOST,
     port: process.env.CACHE_PORT,
     ttl: process.env.CACHE_TTL,

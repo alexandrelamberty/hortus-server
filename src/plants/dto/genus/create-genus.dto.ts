@@ -1,3 +1,3 @@
 export class CreateGenusDto {
-  readonly title: string;
+  readonly name: string;
 }

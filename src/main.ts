@@ -37,10 +37,10 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);
 
-  const config = app.get('ConfigService');
-
+  //const configService = app.get('ConfigService');
+  // configService.get('port')
   try {
-    await app.listen(config.get('port'));
+    await app.listen(3333);
   } catch (e) {
     console.error(e);
   } finally {

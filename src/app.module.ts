@@ -28,7 +28,7 @@ import { UsersModule } from './users/users.module';
       envFilePath: '.dev.env',
       ignoreEnvFile: false,
       isGlobal: true,
-      cache: true,
+      cache: false,
       load: [configuration],
       validate,
     }),
@@ -37,7 +37,7 @@ import { UsersModule } from './users/users.module';
     MongooseModule.forRootAsync({
       imports: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('mongo.uri'),
+        uri: configService.get('mongo.uri'),
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),
@@ -45,12 +45,16 @@ import { UsersModule } from './users/users.module';
     }),
 
     // Cache - https://docs.nestjs.com/techniques/caching
-    CacheModule.register({
-      isGlobal: true,
-      store: redisStore,
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      ttl: parseInt(process.env.REDIS_TTL),
+    CacheModule.registerAsync({
+      imports: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        isGlobal: true,
+        store: redisStore,
+        host: configService.get('cache.host'),
+        port: configService.get('cache.port'),
+        ttl: parseInt(configService.get('cache.ttl')),
+      }),
+      inject: [ConfigService], // Inject DatabaseConfigService
     }),
 
     // Session
@@ -58,7 +62,7 @@ import { UsersModule } from './users/users.module';
     // Static Server - https://docs.nestjs.com/recipes/serve-static
     // https://docs.nestjs.com/techniques/mvc
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(__dirname, '..', 'upload'),
     }),
 
     // Modules
@@ -71,10 +75,12 @@ import { UsersModule } from './users/users.module';
   providers: [
     AppService,
     DatabaseConfigService,
+    /*
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
+    */
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
