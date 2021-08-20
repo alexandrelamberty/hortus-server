@@ -1,21 +1,22 @@
 version: '3.8'
 
 services:
-  node:
+  api:
     image: hortus-api:latest
-    container_name: hortus-node-api
+    container_name: hortus-api
     build:
       context: .
       target: ${NODE_ENV} # Change this to prod
       dockerfile: ./Dockerfile
-    #command: npm run start:dev # Change this to prod
+    command: npm run start:dev # Change this to prod
     ports:
       - 3333:${API_PORT}
     networks:
       - hortus
     volumes:
       - .:/usr/src/app
-      - /usr/src/app/node_modules
+      #- /usr/src/app/node_modules
+      - media_data:/upload
     restart: unless-stopped
     depends_on:
       - database
@@ -25,14 +26,19 @@ services:
     image: mongo:4.4.8 # < 5 for AVX CPU support
     container_name: hortus-database
     environment:
-      - MONGO_INITDB_ROOT_USERNAME=root
-      - MONGO_INITDB_ROOT_PASSWORD=root
-      - MONGO_INITDB_DATABASE=development
-      - MONGO_INITDB_USER=mongodb
-      - MONGO_INITDB_PWD=mongodb
+      - MONGO_INITDB_ROOT_USERNAME=${DATABASE_ROOT_USER}
+      - MONGO_INITDB_ROOT_PASSWORD=${DATABASE_ROOT_PASSWORD}
+      - MONGO_INITDB_DATABASE=${DATABASE_NAME}
+      - MONGO_INITDB_USER=${DATABASE_USERNAME}
+      - MONGO_INITDB_PWD=${DATABASE_PASSWORD}
       - MONGODB_SYSTEM_LOG_VERBOSITY=3
+    command: --auth
     ports:
       - 27017:${DATABASE_PORT}
+    volumes:
+      - database_data:/data/db
+      - database_config:/data/configdb
+      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     restart: always
   cache:
     image: redis:latest
@@ -40,6 +46,8 @@ services:
     command: --port ${CACHE_PORT}
     ports:
       - ${CACHE_PORT}:${CACHE_PORT}
+    volumes:
+      - cache_data:/data
     restart: always
   session:
     image: redis:latest
@@ -47,12 +55,27 @@ services:
     command: --port ${SESSION_PORT}
     ports:
       - ${SESSION_PORT}:${SESSION_PORT}
+    volumes:
+      - session_data:/data
     restart: always
+  mongo-express:
+    image: mongo-express
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: ${DATABASE_USERNAME}
+      ME_CONFIG_MONGODB_ADMINPASSWORD: ${DATABASE_PASSWORD}
+      ME_CONFIG_MONGODB_URL: mongodb://${DATABASE_USERNAME}:${DATABASE_PASSWORD}@database:27017/${DATABASE_NAME}
+    depends_on:
+      - database
 
 networks:
   hortus:
 
 volumes:
-  cache:
-  database:
-  media:
+  cache_data:
+  session_data:
+  database_data:
+  database_config:
+  media_data:
