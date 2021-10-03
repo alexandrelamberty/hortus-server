@@ -1,49 +1,49 @@
-import {
-  IsArray,
-  IsNotEmpty,
-  IsNumber,
-  IsString,
-  MaxLength,
-} from 'class-validator';
+import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { Schema as MongooseSchema } from 'mongoose';
-import { Harvesting } from 'src/plants/schemas/harvesting.schema';
-import { Planting } from 'src/plants/schemas/planting.schema';
-import { Seeding } from 'src/plants/schemas/seeding.schema';
-import { Transplanting } from 'src/plants/schemas/transplanting.schema';
+import { Harvesting } from 'src/seeds/schemas/harvesting.schema';
+import { Planting } from 'src/seeds/schemas/planting.schema';
+import { Seeding } from 'src/seeds/schemas/seeding.schema';
+import { Transplanting } from 'src/seeds/schemas/transplanting.schema';
 
-export class CreateVarieteDto {
+export class CreateSeedDto {
+
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
+  @IsNotEmpty()
   readonly name: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
+  @MaxLength(30)
   readonly description: string;
 
-  @IsArray()
-  @IsNotEmpty()
-  @MaxLength(2)
-  readonly harvest: number[];
+  readonly image: string;
 
+  @IsString()
+  @IsNotEmpty()
+  readonly type: string;
+
+  readonly harvest: [];
+
+  @IsString()
   @IsNotEmpty()
   readonly season: string;
 
+  @IsString()
   @IsNotEmpty()
   readonly sun: string;
 
+  @IsString()
   @IsNotEmpty()
   readonly frost: string;
 
+  @IsString()
   @IsNotEmpty()
   readonly water: string;
 
-  @IsArray()
-  readonly companions: MongooseSchema.Types.ObjectId[];
-
-  @IsArray()
   readonly competitors: MongooseSchema.Types.ObjectId[];
+
+  readonly companions: MongooseSchema.Types.ObjectId[];
 
   readonly seeding: Seeding;
 
@@ -53,9 +53,7 @@ export class CreateVarieteDto {
 
   readonly harvesting: Harvesting;
 
-  @IsNumber()
   readonly spacing: number;
 
-  @IsNumber()
   readonly rows: number;
 }

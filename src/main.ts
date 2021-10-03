@@ -1,5 +1,5 @@
 // import { VersioningType } from '@nestjs/common';
-import { INestApplication } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
@@ -9,6 +9,8 @@ async function bootstrap() {
   // Check types or interfaces; NestExpressApplication
   const app = await NestFactory.create<INestApplication>(AppModule, {});
 
+
+  app.useGlobalPipes(new ValidationPipe());
   // Versioning - https://docs.nestjs.com/techniques/versioning#versioning
   // TODO: This come with the new version 8!
   /*

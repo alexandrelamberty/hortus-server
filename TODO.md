@@ -1,11 +1,17 @@
 # TODO
 
+Move Types Enum to database and add colors
+
+!!! Exception Handlers ...
+
+    - Change enum in postman and see error in console of server!
+
 ## PROGRESS
 
 - Finish to implement the model and it's validators
-- Remove mapping of mongodb data
+- Remove mapping of mongodb data ???
 - Improve application configuration management
-- Secure redis session and cache
+- Secure redis session and cache ??
 
 ## TODO
 

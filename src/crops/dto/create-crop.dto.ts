@@ -1,11 +1,11 @@
-import { Plant } from '../../plants/schemas/plant.schema';
+import { Seed } from 'src/seeds/schemas/seed.schema';
 import { Harvesting } from '../schemas/harvesting.schema ';
 import { Planting } from '../schemas/planting.schema';
 import { Seeding } from '../schemas/seeding.schema';
 import { Transplanting } from '../schemas/transplanting.schema';
 
 export class CreateCropDto {
-  readonly plant: Plant;
+  readonly seed: Seed;
   readonly createdAt: Date;
   readonly updatedAt: Date;
   readonly seeding: Seeding;

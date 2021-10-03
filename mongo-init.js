@@ -1,7 +1,9 @@
-// Initialize the database with a unique user associated
-// with it and populate some data.
-
-// https://docs.mongodb.com/manual/tutorial/write-scripts-for-the-mongo-shell/
+/**
+ * Initialize the database with the necessary data to run the application.
+ * https://docs.mongodb.com/manual/tutorial/write-scripts-for-the-mongo-shell/
+ *
+ *  
+ */
 
 db.createUser({
   user: 'hortus',
@@ -223,6 +225,7 @@ db.genera.insertMany([
   },
 ]);
 
+/*
 db.types.drop();
 db.types.insertMany([
   {
@@ -253,9 +256,37 @@ db.types.insertMany([
     name: 'Other',
   },
 ]);
+*/
+
+db.species.drop();
+db.species.insertMany([
+  {
+    name: 'Garlic',
+  },
+  {
+    name: 'Carrot',
+  },
+]);
+
+db.seeds.drop();
+db.seeds.insertMany([
+  {
+    name: 'Garlic',
+  },
+  {
+    name: 'Carrot',
+  },
+]);
+
+db.crops.drop();
+db.crops.insertMany([
+  {
+    name: 'Roman Garlic',
+  },
+  {
+    name: 'Spanish Carrot',
+  },
+]);
 
 db.plants.drop();
-db.plants.insertMany([]);
-
-db.varietes.drop();
-db.varietes.insertMany([]);
+db.types.drop();

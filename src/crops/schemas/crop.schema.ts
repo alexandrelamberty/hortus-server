@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Plant } from '../../plants/schemas/plant.schema';
+import { Seed } from 'src/seeds/schemas/seed.schema';
 import { Harvesting } from './harvesting.schema ';
 import { Planting } from './planting.schema';
 import { Seeding } from './seeding.schema';
@@ -12,16 +12,10 @@ export type CropDocument = Crop & Document;
 export class Crop {
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: 'Plant',
+    ref: 'Seed',
     required: true,
   })
-  plant: Plant;
-
-  @Prop({ type: Date, default: Date.now() })
-  createdAt: Date;
-
-  @Prop({ type: Date, required: true })
-  updatedAt: Date;
+  seed: Seed;
 
   @Prop({
     type: Seeding,
@@ -50,6 +44,23 @@ export class Crop {
     required: true,
   })
   harvesting: Harvesting;
+
+  @Prop({ type: Date, default: Date.now() })
+  createdAt: Date;
+
+  @Prop({ type: Date, required: true })
+  updatedAt: Date;
 }
 
 export const CropSchema = SchemaFactory.createForClass(Crop);
+
+CropSchema.pre<Crop>('save', function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const crop = this;
+  const now = new Date();
+  crop.updatedAt = now;
+  if (!crop.createdAt) {
+    crop.createdAt = now;
+  }
+  next();
+});

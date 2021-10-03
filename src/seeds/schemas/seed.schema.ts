@@ -1,25 +1,35 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
+import { Frost } from '../enums/frost.enum';
+import { Season } from '../enums/season.enum';
+import { Sun } from '../enums/sun.enum';
+import { Type } from '../enums/type.enum';
+import { Water } from '../enums/water.enum';
 import { Harvesting } from './harvesting.schema';
 import { Planting } from './planting.schema';
 import { Seeding } from './seeding.schema';
 import { Transplanting } from './transplanting.schema';
 
-export type VarieteDocument = Variete & Document;
+export type SeedDocument = Seed & Document;
 
 @Schema()
-export class Variete {
-  @Prop({ type: String, required: true })
-  plant: string;
-
-  @Prop({ type: String, required: true })
+export class Seed {
+  
+  @Prop({ type: String, required: true, unique: true })
   name: string;
 
   @Prop({ type: String, required: true })
   description: string;
 
-  @Prop({ required: false })
+  @Prop({ type: String, required: false })
   image: string;
+
+  @Prop({
+    type: String,
+    required: true,
+    enum: Type,
+  })
+  type: string;
 
   @Prop({
     type: Array,
@@ -30,46 +40,42 @@ export class Variete {
   @Prop({
     type: String,
     required: true,
-    default: 'Annual',
-    enum: ['Annual', 'Biennial', 'Perrenial'],
+    enum: Season,
   })
   season: string;
 
   @Prop({
     type: String,
     required: true,
-    default: 'Pending',
-    enum: ['Full sun', 'Started', 'Stopped', 'Skipped'],
+    enum: Sun,
   })
   sun: string;
 
   @Prop({
     type: String,
     required: true,
-    default: 'Tolerant',
-    enum: ['Tolerant', 'Non tolerant'],
+    enum: Frost,
   })
   frost: string;
 
   @Prop({
     type: String,
     required: true,
-    default: 'Pendi1/Weekng',
-    enum: ['1/Week', '2/Week', 'Every day'],
+    enum: Water,
   })
   water: string;
 
   @Prop({
     type: [MongooseSchema.Types.ObjectId],
-    ref: Variete.name,
-    default: [],
+    ref: Seed.name,
+    //default: [],
   })
   companions: MongooseSchema.Types.ObjectId[];
 
   @Prop({
     type: [MongooseSchema.Types.ObjectId],
-    ref: Variete.name,
-    default: [],
+    ref: Seed.name,
+    //default: [],
   })
   competitors: MongooseSchema.Types.ObjectId[];
 
@@ -92,10 +98,21 @@ export class Variete {
   rows: number;
 
   @Prop({ type: Date, default: Date.now })
-  createdAt: number;
+  createdAt: Date;
 
   @Prop({ type: Date, default: Date.now })
-  updatedAt: number;
+  updatedAt: Date;
 }
 
-export const VarieteSchema = SchemaFactory.createForClass(Variete);
+export const SeedSchema = SchemaFactory.createForClass(Seed);
+
+SeedSchema.pre<Seed>('save', function (next) {
+  // eslint-disable-next-line @typescript-eslint/no-this-alias
+  const seed = this;
+  const now = new Date();
+  seed.updatedAt = now;
+  if (!seed.createdAt) {
+    seed.createdAt = now;
+  }
+  next();
+});

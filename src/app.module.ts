@@ -1,9 +1,8 @@
 import {
-  CacheInterceptor,
   CacheModule,
   CACHE_MANAGER,
   Inject,
-  Module,
+  Module
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -19,7 +18,7 @@ import configuration from './config/configuration';
 import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
 import { validate } from './config/validators/env.validation';
 import { CropsModule } from './crops/crops.module';
-import { PlantModule } from './plants/plant.module';
+import { SeedModule } from './seeds/seed.module';
 import { UsersModule } from './users/users.module';
 @Module({
   imports: [
@@ -68,7 +67,7 @@ import { UsersModule } from './users/users.module';
     // Modules
     AuthModule,
     UsersModule,
-    PlantModule,
+    SeedModule,
     CropsModule,
   ],
   controllers: [AppController],

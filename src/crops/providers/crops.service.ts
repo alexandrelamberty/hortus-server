@@ -10,7 +10,7 @@ export class CropsService {
   constructor(
     @InjectModel(Crop.name)
     private readonly cropModel: Model<CropDocument>,
-  ) {}
+  ) { }
 
   async create(createCropDto: CreateCropDto): Promise<Crop> {
     const createdCrop = new this.cropModel(createCropDto);
@@ -31,23 +31,5 @@ export class CropsService {
 
   async delete(id: string) {
     return await this.cropModel.findByIdAndDelete(id).exec();
-    /*
-    const result = await this.cropModel.deleteOne({ _id: id }).exec();
-    if (result.n === 0) {
-      throw new NotFoundException('Could not find Crop.');
-    }*/
   }
-  /*
-  private async findById(id: number): Promise<Crop> {
-    let crop: any;
-    try {
-      crop = await this.cropModel.findById(id).exec();
-    } catch (error) {
-      throw new NotFoundException('Could not find Crop.');
-    }
-    if (!crop) {
-      throw new NotFoundException('Could not find Crop.');
-    }
-    return crop;
-  }*/
 }
