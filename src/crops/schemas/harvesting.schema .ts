@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { PhaseStatus } from '../enum/phase-status.enum';
 
 export type HarvestingDocument = Harvesting & Document;
 
@@ -8,8 +9,8 @@ export class Harvesting {
   @Prop({
     type: String,
     required: true,
-    default: 'Pending',
-    enum: ['Pending', 'Started', 'Stopped', 'Skipped'],
+    default: PhaseStatus.Pending,
+    enum: PhaseStatus,
   })
   status: string;
 

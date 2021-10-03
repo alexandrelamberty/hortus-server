@@ -1,16 +1,19 @@
 // import { VersioningType } from '@nestjs/common';
+import { INestApplication, ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { NestExpressApplication } from '@nestjs/platform-express';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
-import { logger } from './common/middleware/logger.middleware';
-import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule, {});
+  // Check types or interfaces; NestExpressApplication
+  const app = await NestFactory.create<INestApplication>(AppModule, {});
 
-  /*
+
+  app.useGlobalPipes(new ValidationPipe());
   // Versioning - https://docs.nestjs.com/techniques/versioning#versioning
+  // TODO: This come with the new version 8!
+  /*
   app.enableVersioning({
     type: VersioningType.URI,
   });
@@ -36,13 +39,14 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document);
 
-  const config = app.get('ConfigService');
-
+  //const configService = app.get('ConfigService');
+  // configService.get('port')
   try {
-    await app.listen(config.get('port'));
+    await app.listen(3333);
   } catch (e) {
     console.error(e);
   } finally {
+    // TODO:   
     console.log(`Hortus is running: ${await app.getUrl()}`);
   }
 }

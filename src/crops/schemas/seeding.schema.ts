@@ -1,5 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
+import { CutlureLocation } from '../enum/location.enum';
+import { PhaseStatus } from '../enum/phase-status.enum';
 
 export type SeedingDocument = Seeding & Document;
 
@@ -8,16 +10,16 @@ export class Seeding {
   @Prop({
     type: String,
     required: true,
-    default: 'Pending',
-    enum: ['Pending', 'Started', 'Stopped', 'Skipped'],
+    default: PhaseStatus.Pending,
+    enum: PhaseStatus,
   })
   status: string;
 
   @Prop({
     type: String,
     required: true,
-    default: 'Pending',
-    enum: ['Indoor', 'Frame', 'Outdoor'],
+    default: CutlureLocation.Indoor,
+    enum: CutlureLocation,
   })
   location: string;
 

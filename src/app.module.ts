@@ -1,4 +1,9 @@
-import { CacheInterceptor, CacheModule, Module } from '@nestjs/common';
+import {
+  CacheModule,
+  CACHE_MANAGER,
+  Inject,
+  Module
+} from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
 import { MongooseModule } from '@nestjs/mongoose';
@@ -8,23 +13,21 @@ import { join } from 'path';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { CatsModule } from './cats/cats.module';
 import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import configuration from './config/configuration';
 import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
 import { validate } from './config/validators/env.validation';
 import { CropsModule } from './crops/crops.module';
-import { ImagesModule } from './images/images.module';
-import { PlantsModule } from './plants/plants.module';
+import { SeedModule } from './seeds/seed.module';
 import { UsersModule } from './users/users.module';
 @Module({
   imports: [
     // Configuration - https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
-      envFilePath: '.dev.env',
+      envFilePath: '.env.dev',
       ignoreEnvFile: false,
       isGlobal: true,
-      cache: true,
+      cache: false,
       load: [configuration],
       validate,
     }),
@@ -33,7 +36,7 @@ import { UsersModule } from './users/users.module';
     MongooseModule.forRootAsync({
       imports: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get<string>('mongo.uri'),
+        uri: configService.get('mongo.uri'),
         useNewUrlParser: true,
         useUnifiedTopology: true,
       }),
@@ -41,12 +44,16 @@ import { UsersModule } from './users/users.module';
     }),
 
     // Cache - https://docs.nestjs.com/techniques/caching
-    CacheModule.register({
-      isGlobal: true,
-      store: redisStore,
-      host: process.env.REDIS_HOST,
-      port: process.env.REDIS_PORT,
-      ttl: parseInt(process.env.REDIS_TTL),
+    CacheModule.registerAsync({
+      imports: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        isGlobal: true,
+        store: redisStore,
+        host: configService.get('cache.host'),
+        port: configService.get('cache.port'),
+        ttl: parseInt(configService.get('cache.ttl')),
+      }),
+      inject: [ConfigService], // Inject DatabaseConfigService
     }),
 
     // Session
@@ -54,25 +61,25 @@ import { UsersModule } from './users/users.module';
     // Static Server - https://docs.nestjs.com/recipes/serve-static
     // https://docs.nestjs.com/techniques/mvc
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'public'),
+      rootPath: join(__dirname, '..', 'upload'),
     }),
 
     // Modules
-    CatsModule,
     AuthModule,
     UsersModule,
-    ImagesModule,
-    PlantsModule,
+    SeedModule,
     CropsModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
     DatabaseConfigService,
+    /*
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
+    */
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
@@ -80,4 +87,11 @@ import { UsersModule } from './users/users.module';
   ],
   exports: [DatabaseConfigService, CacheModule],
 })
-export class AppModule {}
+export class AppModule {
+  constructor(@Inject(CACHE_MANAGER) cacheManager) {
+    const client = cacheManager.store.getClient();
+    client.on('error', (error) => {
+      console.error(error);
+    });
+  }
+}
