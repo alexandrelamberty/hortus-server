@@ -25,4 +25,10 @@ export default () => ({
     secret: process.env.JWT_SECRET,
     ttl: process.env.JWT_EXPIRE,
   },
+  bcrypt: {
+    hash: process.env.BCRYPT_HASH,
+  },
+  medias: {
+    upload: process.env.UPLOAD_PATH,
+  },
 });

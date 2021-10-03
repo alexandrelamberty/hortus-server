@@ -1,14 +1,13 @@
-import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
+import { Type as TypeClass } from 'class-transformer';
+import { IsMongoId, IsNotEmpty, IsNotEmptyObject, IsNumber, IsString, MaxLength, ValidateNested } from 'class-validator';
 import { Schema as MongooseSchema } from 'mongoose';
-import { Harvesting } from 'src/crops/schemas/harvesting.schema';
-import { Planting } from 'src/crops/schemas/planting.schema';
-import { Seeding } from 'src/crops/schemas/seeding.schema';
-import { Transplanting } from 'src/crops/schemas/transplanting.schema';
+import { Harvesting } from 'src/crop/schemas/harvesting.schema';
+import { Planting } from 'src/crop/schemas/planting.schema';
+import { Seeding } from 'src/crop/schemas/seeding.schema';
+import { Transplanting } from 'src/crop/schemas/transplanting.schema';
+import { Type } from 'src/crop/schemas/type.schema';
 
 export class CreateCropDto {
-
-  //@IsNotEmpty()
-  readonly plant: MongooseSchema.Types.ObjectId;
 
   @IsString()
   @IsNotEmpty()
@@ -20,6 +19,7 @@ export class CreateCropDto {
   @MaxLength(30)
   readonly description: string;
 
+  @IsMongoId()
   @IsNotEmpty()
   readonly type: MongooseSchema.Types.ObjectId;
 
@@ -28,31 +28,51 @@ export class CreateCropDto {
 
   readonly harvest: number[];
 
+  @IsString()
+  @IsNotEmpty()
   readonly season: string;
 
+  @IsString()
+  @IsNotEmpty()
   readonly sun: string;
 
+  @IsString()
+  @IsNotEmpty()
   readonly frost: string;
 
+  @IsString()
+  @IsNotEmpty()
   readonly water: string;
 
   readonly companions: MongooseSchema.Types.ObjectId[];
 
   readonly competitors: MongooseSchema.Types.ObjectId[];
 
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @TypeClass(() => Type)
   readonly seeding: Seeding;
 
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @TypeClass(() => Type)
   readonly transplanting: Transplanting;
 
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @TypeClass(() => Type)
   readonly planting: Planting;
 
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @TypeClass(() => Type)
   readonly harvesting: Harvesting;
 
-  readonly spacing: Number;
+  @IsNumber()
+  @MaxLength(3)
+  readonly spacing: number;
 
-  readonly rows: Number;
-
-  readonly createdAt: Date;
-
-  readonly updatedAt: Date;
+  @IsNumber()
+  @MaxLength(3)
+  readonly rows: number;
 }

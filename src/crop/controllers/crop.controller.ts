@@ -7,10 +7,13 @@ import {
   Param,
   Post,
   Put,
+  Req,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { FileInterceptor } from '@nestjs/platform-express';
+import { diskStorage } from 'multer';
 import { CreateCropDto } from '../dto/crop/create-crop.dto';
 import { UpdateCropDto } from '../dto/crop/update-crop.dto';
 import { CropService } from '../providers/crop.service';
@@ -18,18 +21,37 @@ import { CropService } from '../providers/crop.service';
 @Controller('crops')
 @UseInterceptors(CacheInterceptor)
 export class CropController {
-  constructor(private readonly cropService: CropService) {}
+  constructor(private readonly cropService: CropService,
+    private readonly configService: ConfigService) { }
 
   @Post()
-  @UseInterceptors(FileInterceptor('image'))
-  create(
+  @UseInterceptors(FileInterceptor('image', {
+    storage: diskStorage({
+      destination: './upload',
+    }),
+  }))
+  uploadPicture(
     @Body() createCropDto: CreateCropDto,
+    @Req() req: any,
     @UploadedFile() file: Express.Multer.File,
   ) {
-    console.log(createCropDto);
-    //TODO: Do something with the file!
-    console.log(file);
-    return this.cropService.create(createCropDto, 'nothing_for_now');
+    const user = req.user; //as UserDto;
+    return this.cropService.create(createCropDto, file.filename);
+  }
+
+  @Post()
+  @UseInterceptors(FileInterceptor('image', {
+    storage: diskStorage({
+      destination: './upload',
+    }),
+  }))
+  create(
+    @Body() createCropDto: CreateCropDto,
+    @Req() req: any,
+    @UploadedFile() file: Express.Multer.File,
+  ) {
+    const user = req.user; //as UserDto;
+    return this.cropService.create(createCropDto, file.filename);
   }
 
   //@CacheKey('myCustomKey')

@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, raw, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
 import { Frost } from '../enum/frost.enum';
 import { Season } from '../enum/season.enum';
@@ -14,9 +14,6 @@ export type CropDocument = Crop & Document;
 
 @Schema()
 export class Crop {
-
-  @Prop({ type: String, required: true })
-  plant: string;
 
   @Prop({ type: String, required: true, unique: true })
   name: string;
@@ -34,11 +31,11 @@ export class Crop {
   @Prop({ required: false })
   image: string;
 
-  @Prop({
-    type: Array,
-    required: true,
-  })
-  harvest: number[];
+  @Prop(raw({
+    min: { type: Number },
+    max: { type: Number }
+  }))
+  harvest: Record<number, any>;
 
   @Prop({
     type: String,
@@ -86,22 +83,22 @@ export class Crop {
   })
   competitors: MongooseSchema.Types.ObjectId[];
 
-  @Prop({ type: Seeding })
+  @Prop({ type: Seeding, required: true })
   seeding: Seeding;
 
-  @Prop({ type: Transplanting })
+  @Prop({ type: Transplanting, required: true })
   transplanting: Transplanting;
 
-  @Prop({ type: Planting })
+  @Prop({ type: Planting, required: true })
   planting: Planting;
 
-  @Prop({ type: Harvesting })
+  @Prop({ type: Harvesting, required: true })
   harvesting: Harvesting;
 
-  @Prop({ required: false })
+  @Prop({ type: Number, default: 0 })
   spacing: number;
 
-  @Prop({ required: false })
+  @Prop({ type: Number, default: 0 })
   rows: number;
 
   @Prop({ type: Date, default: Date.now })

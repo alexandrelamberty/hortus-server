@@ -2,7 +2,10 @@
 
 ## PROGRESS
 
-- Finish to implement the model and it's validators
+- Create validators for password. Min-length, mixed characters etc ...
+
+- Finish application security
+- Finish to implement the model and it's validators, errors
 - Remove mapping of mongodb data
 - Improve application configuration management
 - Secure redis session and cache

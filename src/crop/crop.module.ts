@@ -15,9 +15,7 @@ import { Type, TypeSchema } from './schemas/type.schema';
       { name: Crop.name, schema: CropSchema },
       { name: Type.name, schema: TypeSchema },
     ]),
-    MulterModule.register({
-      dest: './upload',
-    }),
+    
   ],
   providers: [
     CropService,
