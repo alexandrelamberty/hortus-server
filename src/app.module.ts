@@ -20,8 +20,13 @@ import { validate } from './config/validators/env.validation';
 import { CropsModule } from './crops/crops.module';
 import { SeedModule } from './seeds/seed.module';
 import { UsersModule } from './users/users.module';
+import { LocalisationModule } from './localisation/localisation.module';
+import { MulterModule } from '@nestjs/platform-express';
+import { ScheduleModule } from '@nestjs/schedule';
+import { TaskModule } from './tasks/task.module';
 @Module({
   imports: [
+
     // Configuration - https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
       envFilePath: '.env.dev',
@@ -58,11 +63,26 @@ import { UsersModule } from './users/users.module';
 
     // Session
 
+    // File upload
+    MulterModule.registerAsync({
+      imports: [ConfigModule],
+      useFactory: async (configService: ConfigService) => ({
+        dest: configService.get('medias.upload'),
+        isGlobal: true,
+      }),
+      inject: [ConfigService],
+    }),
+
     // Static Server - https://docs.nestjs.com/recipes/serve-static
     // https://docs.nestjs.com/techniques/mvc
+    /*
     ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', 'upload'),
+      rootPath: join(__dirname, '..', '/upload'),
     }),
+    */
+
+    // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
+    ScheduleModule.forRoot(),
 
     // Modules
     AuthModule,

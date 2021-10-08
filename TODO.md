@@ -8,8 +8,11 @@ Move Types Enum to database and add colors
 
 ## PROGRESS
 
-- Finish to implement the model and it's validators
-- Remove mapping of mongodb data ???
+- Create validators for password. Min-length, mixed characters etc ...
+
+- Finish application security
+- Finish to implement the model and it's validators, errors
+- Remove mapping of mongodb data
 - Improve application configuration management
 - Secure redis session and cache ??
 

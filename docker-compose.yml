@@ -6,22 +6,32 @@ services:
     container_name: hortus-api
     build:
       context: .
-      target: ${NODE_ENV} # Change this to prod
+      target: ${NODE_ENV}
       dockerfile: ./Dockerfile
-    command: npm run start:dev # Change this to prod
+    command: npm run start:${NODE_ENV}
     ports:
       - 3333:${API_PORT}
     networks:
       - hortus
     volumes:
       - .:/usr/src/app
-      #- /usr/src/app/node_modules
-      - media_data:/upload
+      - media_data:/usr/src/app/upload
     restart: unless-stopped
     depends_on:
       - database
       - cache
       - session
+  static:
+    image: nginx:latest
+    container_name: hortus-static-server
+    ports:
+      - '8080:80'
+    networks:
+      - hortus
+    volumes:
+     # - ./.docker/nginx.conf:/etc/nginx/nginx.conf:ro
+      - media_data:/usr/share/nginx/html # nginx default
+    restart: always
   database:
     image: mongo:4.4.8 # < 5 for AVX CPU support
     container_name: hortus-database

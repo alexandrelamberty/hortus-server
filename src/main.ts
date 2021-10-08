@@ -1,23 +1,28 @@
 // import { VersioningType } from '@nestjs/common';
+<<<<<<< HEAD
+import { INestApplication, Logger, ValidationPipe, VersioningType } from '@nestjs/common';
+=======
 import { INestApplication, ValidationPipe } from '@nestjs/common';
+>>>>>>> 1fff0e678f3104a8b805d910decada9547f86151
 import { NestFactory } from '@nestjs/core';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import * as cookieParser from 'cookie-parser';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
+
+  const logger = new Logger("Main");
+
   // Check types or interfaces; NestExpressApplication
   const app = await NestFactory.create<INestApplication>(AppModule, {});
+  app.useGlobalPipes(new ValidationPipe());
 
 
   app.useGlobalPipes(new ValidationPipe());
   // Versioning - https://docs.nestjs.com/techniques/versioning#versioning
-  // TODO: This come with the new version 8!
-  /*
   app.enableVersioning({
     type: VersioningType.URI,
   });
-  */
 
   // Cookies - https://docs.nestjs.com/techniques/cookies
   app.use(cookieParser());
@@ -41,13 +46,14 @@ async function bootstrap() {
 
   //const configService = app.get('ConfigService');
   // configService.get('port')
+  
   try {
     await app.listen(3333);
   } catch (e) {
-    console.error(e);
+    logger.error(e);
   } finally {
     // TODO:   
-    console.log(`Hortus is running: ${await app.getUrl()}`);
+    logger.log(`Hortus is running: ${await app.getUrl()}`);
   }
 }
 bootstrap();
