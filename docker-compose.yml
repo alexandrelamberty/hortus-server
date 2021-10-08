@@ -15,7 +15,6 @@ services:
       - hortus
     volumes:
       - .:/usr/src/app
-      #- /usr/src/app/node_modules
       - media_data:/upload
     restart: unless-stopped
     depends_on:
