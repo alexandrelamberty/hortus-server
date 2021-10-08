@@ -3,12 +3,8 @@ require('dotenv').config();
 
 const config = {
   mongodb: {
-    // TODO Change (or review) the url to your MongoDB:
     url: process.env.DATABASE_URI,
-
-    // TODO Change this to your database name:
     databaseName: process.env.DATABASE_NAME,
-
     options: {
       useNewUrlParser: true, // removes a deprecation warning when connecting
       useUnifiedTopology: true, // removes a deprecating warning when connecting

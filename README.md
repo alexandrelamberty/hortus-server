@@ -13,41 +13,29 @@ The API is securised with password-based authentication and token-based authenti
 
 ## Installation
 
-After you have cloned the repository, first install the javascript dependencies, see [`package.json`](package.json)
+After you have cloned the repository, install the javascript dependencies with npm, see [`package.json`](package.json)
+
+```bash
+$ npm install
+```
 
 ## Configuration
 
-The API use environment variables via an `.env` file as configuration.
+The configuration is stored as environment variables in an `.env` file.
 
 Rename the [`.env.sample`](.env.sample) to [`.env`](.env) and fill it accordingly.
 
 ## Build
 
 ```bash
-$ docker-compose --env-file .dev.env up
+$ docker-compose --env-file .dev.env build
 ```
 
 ## Deployement
 
-
-Run the application
-
 ```bash
-# development
-$ npm run start
-
-# watch mode
-$ npm run start:dev
-
-# production mode
-$ npm run start:prod
+$ docker-compose --env-file .dev.env up
 ```
-
-## Tools
-
-### Redis
-
-### Mongo
 
 ## Test
 
@@ -82,6 +70,4 @@ Garden Planner is [MIT licensed](LICENSE).
 - [The Plant List](http://www.theplantlist.org/)
 - [World Flora Online](http://www.worldfloraonline.org/)
 - [Latin Linguistics - A Useful Tool in Horticulture](https://hortnews.extension.iastate.edu/1999/7-23-1999/latin.html)
-
-
 
