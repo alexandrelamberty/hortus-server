@@ -16,19 +16,40 @@ The API is securised with password-based authentication and token-based authenti
 After you have cloned the repository, install the javascript dependencies with npm, see [`package.json`](package.json)
 
 ```bash
-$ npm install
+npm install
 ```
 
 ## Configuration
 
-The configuration is stored as environment variables in an `.env` file.
+The configuration is stored as environment variables. an `.env` file.
 
-Rename the [`.env.sample`](.env.sample) to [`.env`](.env) and fill it accordingly.
+```properties
+NODE_ENV=development
+API_URL=localhost
+API_PORT=3333
+DATABASE_ROOT_USER=root
+DATABASE_ROOT_PASSWORD=root
+DATABASE_HOST=localhost
+DATABASE_PORT=27017
+DATABASE_NAME=hortus
+DATABASE_USERNAME=hortus
+DATABASE_PASSWORD=hortus
+DATABASE_URI=mongodb://hortus:hortus@localhost:27017/hortus
+CACHE_HOST=localhost
+CACHE_PORT=6379
+CACHE_TTL=300
+SESSION_HOST=localhost
+SESSION_PORT=6380
+SESSION_TTL=300
+STATIC_DIR=/upload
+JWT_SECRET=123456
+JWT_EXPIRE=123456
+```
 
 ## Build
 
 ```bash
-$ docker-compose --env-file .dev.env build
+docker-compose --env-file .dev.env build
 ```
 
 ## Deployement
@@ -36,20 +57,20 @@ $ docker-compose --env-file .dev.env build
 Run the application
 
 ```bash
-$ docker-compose --env-file .dev.env up
+docker-compose --env-file .dev.env up
 ```
 
 ## Test
 
 ```bash
 # unit tests
-$ npm run test
+npm run test
 
 # e2e tests
-$ npm run test:e2e
+npm run test:e2e
 
 # test coverage
-$ npm run test:cov
+npm run test:cov
 ```
 
 ## Support
@@ -74,7 +95,3 @@ Hortus is [MIT licensed](LI<CENSE).
 - [The Plant List](http://www.theplantlist.org/)
 - [World Flora Online](http://www.worldfloraonline.org/)
 - [Latin Linguistics - A Useful Tool in Horticulture](https://hortnews.extension.iastate.edu/1999/7-23-1999/latin.html)
-<<<<<<< HEAD
-
-=======
->>>>>>> 0f868b6cf23cadfb9d6fefa02a173f77c29c6f25
