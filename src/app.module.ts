@@ -1,9 +1,8 @@
 import {
-  CacheInterceptor,
   CacheModule,
   CACHE_MANAGER,
   Inject,
-  Module,
+  Module
 } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -18,8 +17,8 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import configuration from './config/configuration';
 import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
 import { validate } from './config/validators/env.validation';
-import { CropModule } from './crop/crop.module';
-import { CultureModule } from './culture/culture.module';
+import { CropsModule } from './crops/crops.module';
+import { SeedModule } from './seeds/seed.module';
 import { UsersModule } from './users/users.module';
 import { LocalisationModule } from './localisation/localisation.module';
 import { MulterModule } from '@nestjs/platform-express';
@@ -88,10 +87,8 @@ import { TaskModule } from './tasks/task.module';
     // Modules
     AuthModule,
     UsersModule,
-    CropModule,
-    CultureModule,
-    LocalisationModule,
-    TaskModule,
+    SeedModule,
+    CropsModule,
   ],
   controllers: [AppController],
   providers: [

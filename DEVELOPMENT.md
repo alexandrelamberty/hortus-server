@@ -39,7 +39,7 @@ Plant with it's differents culture phases starting and ending period.
   "harvest" DayRange(),
   "season": ["Annual", "Biennial", "Perenial"],
   "sun": ["Full Sun"],
-  "frost": ["²", "Non tolerant"],
+  "frost": ["", "Non tolerant"],
   "water": ["1/Week"],
   "companions": Plant[],
   "competitors": Plant[],

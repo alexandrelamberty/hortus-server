@@ -1,14 +1,13 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 require('dotenv').config();
-console.log(process.env.DATABASE_PORT);
 
 const config = {
   mongodb: {
     // TODO Change (or review) the url to your MongoDB:
-    url: 'mongodb://localhost:27017',
+    url: process.env.DATABASE_URI,
 
     // TODO Change this to your database name:
-    databaseName: 'YOURDATABASENAME',
+    databaseName: process.env.DATABASE_NAME,
 
     options: {
       useNewUrlParser: true, // removes a deprecation warning when connecting

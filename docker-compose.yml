@@ -15,7 +15,7 @@ services:
       - hortus
     volumes:
       - .:/usr/src/app
-      - media_data:/upload
+      - media_data:/usr/src/app/upload
     restart: unless-stopped
     depends_on:
       - database
@@ -25,12 +25,13 @@ services:
     image: nginx:latest
     container_name: hortus-static-server
     ports:
-      - '8000:8080'
+      - '8080:80'
     networks:
       - hortus
     volumes:
-      - ./.docker/nginx.conf:/etc/nginx/nginx.conf:ro
+     # - ./.docker/nginx.conf:/etc/nginx/nginx.conf:ro
       - media_data:/usr/share/nginx/html # nginx default
+    restart: always
   database:
     image: mongo:4.4.8 # < 5 for AVX CPU support
     container_name: hortus-database
@@ -69,6 +70,7 @@ services:
     restart: always
   mongo-express:
     image: mongo-express
+    container_name: hortus-mongo-express
     restart: always
     ports:
       - 8081:8081
