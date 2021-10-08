@@ -2,10 +2,6 @@
 
 [Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 
-The server is composed of four differents parts, an API running on Node, a Mongo database, a Redis instance to cache requests and a Redis instance to store the users sessions.
-
-The API is securised with password-based authentication and token-based authentication.
-
 ## Requirements
 
 - [NPM](https://www.npmjs.com/)
@@ -21,7 +17,7 @@ npm install
 
 ## Configuration
 
-The configuration is stored as environment variables. an `.env` file.
+Create a file named `.env` and insert the following
 
 ```properties
 NODE_ENV=development
@@ -46,7 +42,11 @@ JWT_SECRET=123456
 JWT_EXPIRE=123456
 ```
 
+This config will work out of the box in most case. Verify that the ports specified in the configuration are not in use.
+
 ## Build
+
+Build all the services.
 
 ```bash
 docker-compose --env-file .dev.env build
