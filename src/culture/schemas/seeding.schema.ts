@@ -33,7 +33,7 @@ export class Seeding {
 
   @Prop({
     type: Date,
-    default: Date.now(),
+    required: false,
   })
   startedAt: Date;
 

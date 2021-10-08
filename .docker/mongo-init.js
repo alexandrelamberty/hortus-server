@@ -1,8 +1,6 @@
 /**
  * Initialize the database with the necessary data to run the application.
  * https://docs.mongodb.com/manual/tutorial/write-scripts-for-the-mongo-shell/
- *
- *  
  */
 
 db.createUser({

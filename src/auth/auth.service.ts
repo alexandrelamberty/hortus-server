@@ -1,4 +1,5 @@
 import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
@@ -9,11 +10,11 @@ export class AuthService {
   constructor(
     private readonly usersService: UsersService,
     private readonly jwtService: JwtService,
-  ) {}
+    private readonly configService: ConfigService,
+  ) { }
 
   public async registerUser(createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    // TODO: Change bcrypt rounds by a salt string ?
+    const salt: string = this.configService.get<string>('BCRYPT_HASH')
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
     try {
       const createdUser = await this.usersService.create({
@@ -44,15 +45,7 @@ export class AuthService {
     }
   }
 
-  async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
-    return {
-      access_token: this.jwtService.sign(payload),
-    };
-  }
-  /*
-  
- 
+   /*
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
     if (user && user.password === pass) {
@@ -62,6 +55,19 @@ export class AuthService {
     return null;
   }
   */
+
+  public async login(user: any) {
+    const payload = { username: user.username, sub: user.userId };
+    return {
+      access_token: this.jwtService.sign(payload),
+    };
+  }
+
+  public getCookieWithJwtToken(userId: number) {
+    const payload: TokenPayload = { userId };
+    const token = this.jwtService.sign(payload);
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXPIRe')}`;
+  }
 
   private async verifyPassword(
     plainTextPassword: string,

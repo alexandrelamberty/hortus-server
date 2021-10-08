@@ -1,0 +1,35 @@
+{
+    "name": "Beet",
+    "description": 2,
+    "type": "611f88b6619515801d7da714",
+    "harvest": [
+        40,
+        60
+    ],
+    "season": "annual",
+    "sun": "full_sun",
+    "frost": "tolerant",
+    "water": "once_week",
+    "companions": [],
+    "competitors": [],
+    "seeding": {
+        "start": 5,
+        "end": 5,
+        "germination": "20"
+    },
+    "transplanting": {
+        "start": 6,
+        "end": 6,
+        "growth": "30"
+    },
+    "planting": {
+        "start": 6,
+        "end": 7,
+        "maturity": "60" 
+    },
+    "harvesting": {
+        "start": 6,
+        "end": 7,
+        "duration": 60
+    }
+}
