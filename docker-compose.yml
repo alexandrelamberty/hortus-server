@@ -7,7 +7,7 @@ services:
     build:
       context: .
       target: ${NODE_ENV}
-      dockerfile: ./Dockerfile
+      dockerfile: ./docker/Dockerfile
     command: npm run start:${NODE_ENV}
     ports:
       - 3333:${API_PORT}
@@ -48,7 +48,7 @@ services:
     volumes:
       - database_data:/data/db
       - database_config:/data/configdb
-      - ./mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      - ./.docker/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     restart: always
   cache:
     image: redis:latest
