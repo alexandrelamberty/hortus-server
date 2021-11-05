@@ -2,7 +2,18 @@
 
 # Hortus Server
 
-[Hortus Server](https://github.com/alexandrelamberty/hortus-server) the server-side components for the [Hortus Web](https://github.com/alexandrelamberty/hortus-web) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
+Backend application that expose a secured api and a websocket for real-time communicate with [Hortus Web Client](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile). The application collect data from [Hortus Wireless Temperature Sensor]().
+
+
+## Technologies
+
+- [NPM](https://www.npmjs.com/)
+- [Docker](https://www.docker.com/)
+- [Node.js](https://www.docker.com/)
+- [NestJS](https://www.docker.com/)
+- [Socket.io](https://www.docker.com/)
+- [MongoDB](https://www.docker.com/)
+- [Redis](https://www.docker.com/)
 
 ## Requirements
 
