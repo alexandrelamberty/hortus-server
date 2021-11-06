@@ -17,26 +17,23 @@ import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
 import configuration from './config/configuration';
 import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
 import { validate } from './config/validators/env.validation';
-import { CropsModule } from './crops/crops.module';
 import { SeedModule } from './seeds/seed.module';
 import { UsersModule } from './users/users.module';
-import { LocalisationModule } from './localisation/localisation.module';
 import { MulterModule } from '@nestjs/platform-express';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TaskModule } from './tasks/task.module';
+import { CultureModule } from './culture/culture.module';
 @Module({
   imports: [
-
     // Configuration - https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
-      envFilePath: '.env.dev',
+      envFilePath: '.dev.env',
       ignoreEnvFile: false,
       isGlobal: true,
       cache: false,
       load: [configuration],
       validate,
     }),
-
     // Database - https://docs.nestjs.com/techniques/mongodb
     MongooseModule.forRootAsync({
       imports: [ConfigService],
@@ -47,7 +44,6 @@ import { TaskModule } from './tasks/task.module';
       }),
       inject: [ConfigService], // Inject DatabaseConfigService
     }),
-
     // Cache - https://docs.nestjs.com/techniques/caching
     CacheModule.registerAsync({
       imports: [ConfigService],
@@ -60,9 +56,16 @@ import { TaskModule } from './tasks/task.module';
       }),
       inject: [ConfigService], // Inject DatabaseConfigService
     }),
-
-    // Session
-
+    // Session TODO: server the client with express to benefit from express or check nestjs
+    // Static Server - https://docs.nestjs.com/recipes/serve-static
+    // https://docs.nestjs.com/techniques/mvc
+    /*
+    ServeStaticModule.forRoot({
+      rootPath: join(__dirname, '..', '/upload'),
+    }),
+    */
+    // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
+    ScheduleModule.forRoot(),
     // File upload
     MulterModule.registerAsync({
       imports: [ConfigModule],
@@ -72,23 +75,11 @@ import { TaskModule } from './tasks/task.module';
       }),
       inject: [ConfigService],
     }),
-
-    // Static Server - https://docs.nestjs.com/recipes/serve-static
-    // https://docs.nestjs.com/techniques/mvc
-    /*
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '/upload'),
-    }),
-    */
-
-    // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
-    ScheduleModule.forRoot(),
-
     // Modules
     AuthModule,
     UsersModule,
     SeedModule,
-    CropsModule,
+    CultureModule,
   ],
   controllers: [AppController],
   providers: [

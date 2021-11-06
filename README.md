@@ -1,9 +1,8 @@
-![example workflow](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg)
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) ![example workflow](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg)
 
 # Hortus Server
 
 Backend application that expose a secured api and a websocket for real-time communicate with [Hortus Web Client](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile). The application collect data from [Hortus Wireless Temperature Sensor]().
-
 
 ## Technologies
 
@@ -30,7 +29,7 @@ npm install
 
 ## Configuration
 
-Create a file named `.env` and insert the following
+Create a file named `.dev.env` and insert the following
 
 ```properties
 NODE_ENV=development
@@ -53,6 +52,8 @@ SESSION_TTL=300
 STATIC_DIR=/upload
 JWT_SECRET=123456
 JWT_EXPIRE=123456
+BCRYPT_HASH=12345
+UPLOAD_PATH=/upload
 ```
 
 This config will work out of the box in most case. Verify that the ports specified in the configuration are not in use.
@@ -86,25 +87,4 @@ npm run test:e2e
 npm run test:cov
 ```
 
-## Support
 
-Garden Planner is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://github.com/alexandrelamberty/garden-planner-backend/blob/master/SUPPORT.md).
-
-## Stay in touch
-
-- Author - [Alexandre Lamberty](mailto:mail@alexandrelamberty.com?subject=[GitHub]%20Garden%20Planner%20Backend)
-- Website - [https://alexandrelamberty.com](https://alexandrelamberty.com/)
-- Twitter - [@eevos](https://twitter.com/eevos)
-
-## License
-
-Hortus is [MIT licensed](LI<CENSE).
-
-## References
-
-- [UPOV - GENIE](https://www.upov.int/genie/index.xhtml)
-- [Taxacom - Biological Systematics Discussion List](http://mailman.nhm.ku.edu/cgi-bin/mailman/listinfo/taxacom)
-- [International Name Index](https://www.ipni.org/)
-- [The Plant List](http://www.theplantlist.org/)
-- [World Flora Online](http://www.worldfloraonline.org/)
-- [Latin Linguistics - A Useful Tool in Horticulture](https://hortnews.extension.iastate.edu/1999/7-23-1999/latin.html)

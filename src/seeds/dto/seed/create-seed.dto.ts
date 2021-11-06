@@ -6,6 +6,8 @@ import { Seeding } from 'src/seeds/schemas/seeding.schema';
 import { Transplanting } from 'src/seeds/schemas/transplanting.schema';
 
 export class CreateSeedDto {
+  
+  readonly species: MongooseSchema.Types.ObjectId
 
   @IsString()
   @IsNotEmpty()

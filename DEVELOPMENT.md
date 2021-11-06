@@ -14,22 +14,21 @@
 
 ### Culture Care and Envinronment
 
-### Plants
+### Plant
 
 Plant with it's differents culture phases starting and ending period.
 
 ```json
 {
-  "name": "Carrot",
-  "family": {Family},
-  "genus": Genus(),
-  "types": Type(),
-  "description": "...",
-  "varietes": [Varietes]
+  "name": string,
+  "family": string,
+  "genus": string,
+  "species": sring,
+  "subspecies": string,
 } 
 ```
 
-### Varietes
+### Seed
 
 ```json
 {
@@ -71,7 +70,7 @@ Plant with it's differents culture phases starting and ending period.
 }
 ```
 
-### Plants Family
+### Plant Family
 
 ```json
 {
@@ -85,7 +84,8 @@ Plant with it's differents culture phases starting and ending period.
   ]
 }
 ```
-### Plants Genus
+
+### Plant Genus
 
 ```json
 {
@@ -100,7 +100,7 @@ Plant with it's differents culture phases starting and ending period.
 }
 ```
 
-## Plants Types
+## Plant Type
 
 See: `plant_type.json`
 
@@ -119,11 +119,11 @@ See: `plant_type.json`
 }
 ```
 
-### Crops
+### Culture
 
 ```json
 {
-  "plant": Plant(Carrot),
+  "plant": Carrot,
   "createdAt": Date,
   "updatedAt": Date,
   "seeding": {
@@ -155,15 +155,3 @@ See: `plant_type.json`
   },
 }
 ```
-
-## Ressources
-
-https://www.fondation-louisbonduelle.org/en/my-vegetable-garden/grouping-vegetables-according-to-plant-families/
-https://www.vegetables.co.nz/vegetables-a-z/
-https://www.digitalocean.com/community/tutorials/how-to-add-login-authentication-to-react-applications
-https://dev.to/carlomigueldy/building-a-restful-api-with-nestjs-and-mongodb-mongoose-2165
-https://francescociulla.com/crud-api-using-nestjs-mongoose-mongodb-and-docker
-https://stackoverflow.com/questions/52230301/mongoose-with-nestjs-one-to-many
-https://bezkoder.com/mongoose-one-to-many-relationship/
-https://bezkoder.com/mongoose-one-to-one-relationship-example/
-https://medium.com/weekly-webtips/building-modern-backendusing-nest-js-and-mongodb-96fd04f4b050
