@@ -16,8 +16,6 @@
 
 ### Plant
 
-Plant with it's differents culture phases starting and ending period.
-
 ```json
 {
   "name": string,
@@ -25,7 +23,27 @@ Plant with it's differents culture phases starting and ending period.
   "genus": string,
   "species": sring,
   "subspecies": string,
+  "variant": string,
 } 
+```
+
+## Plant Type
+
+See: `plant_type.json`
+
+```json
+{
+  "title": "Hortus Plant Types",
+  "description": "List of all the available plant types in the Hortus system",
+  "link": "/types",
+  "types":[
+    {
+      "id": Id(),
+      "title": "Root",
+      "link": "/types/1"
+    }
+  ]
+}
 ```
 
 ### Seed
@@ -67,55 +85,6 @@ Plant with it's differents culture phases starting and ending period.
     "row": 10,
     "lines": 30
   }
-}
-```
-
-### Plant Family
-
-```json
-{
-  "title": "Hortus Plant Families",
-  "description": "List of all the available plant families in the Hortus system",
-  "link": "/families",
-  "families":[
-    {
-      "name": "Cucurbitaceae",
-    }
-  ]
-}
-```
-
-### Plant Genus
-
-```json
-{
-  "title": "Hortus Plant Genus",
-  "description": "List of all the available plant genus in the Hortus system",
-  "link": "/genera",
-  "genera":[
-    {
-      "name": "Cucurbita",
-    }
-  ]
-}
-```
-
-## Plant Type
-
-See: `plant_type.json`
-
-```json
-{
-  "title": "Hortus Plant Types",
-  "description": "List of all the available plant types in the Hortus system",
-  "link": "/types",
-  "types":[
-    {
-      "id": Id(),
-      "title": "Root",
-      "link": "/types/1"
-    }
-  ]
 }
 ```
 

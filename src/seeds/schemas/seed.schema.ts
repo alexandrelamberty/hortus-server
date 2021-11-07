@@ -19,7 +19,6 @@ export class Seed {
   @Prop({
     type: MongooseSchema.Types.ObjectId,
     ref: Species.name,
-    //default: [],
   })
   species: MongooseSchema.Types.ObjectId;
 

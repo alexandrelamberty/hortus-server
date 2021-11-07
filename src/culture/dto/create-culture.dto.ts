@@ -33,7 +33,4 @@ export class CreateCultureDto {
   @ValidateNested()
   @TypeClass(() => Harvesting)
   readonly harvesting: Harvesting;
-
-  readonly createdAt: Date;
-  readonly updatedAt: Date;
 }
