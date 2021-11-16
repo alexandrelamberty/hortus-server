@@ -2,7 +2,10 @@
 
 # Hortus Server
 
-Backend application that expose a secured api and a websocket for real-time communicate with [Hortus Web Client](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile). The application collect data from [Hortus Wireless Temperature Sensor]().
+Gardening planner, monitoring and automation server application that expose a secured api and a websocket for real-time communicate with [Hortus Web Application](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile). 
+The application collect data from [Hortus Wireless Temperature Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/).
+
+## Features
 
 ## Technologies
 
