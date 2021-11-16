@@ -2,10 +2,21 @@
 
 # Hortus Server
 
-Gardening planner, monitoring and automation server application that expose a secured api and a websocket for real-time communicate with [Hortus Web Application](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile). 
-The application collect data from [Hortus Wireless Temperature Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/).
+Main project: [Hortus](https://github.com/alexandrelamberty/hortus)
+
+Gardening planner, monitoring and automation server application that expose a secured api and a websocket real-time communication with [Hortus Web Application](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
+The application receive and process data collected from [Hortus Wireless Temperature / Humidity Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/). 
 
 ## Features
+
+- Secured API
+- Create and manage your seeds
+- Plan your cultures
+- Manage the differents culture phases ex: seeding, planting, harvesting
+- Add monitoring devices, humidity, temperature, ph
+- Add controller devices, ventilation, heating, watering
+- Monitoring alerts vie SMS, email, mobile and web notifications
+- Automation of ventilation, heating and wateriong
 
 ## Technologies
 
