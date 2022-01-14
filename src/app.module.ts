@@ -32,7 +32,7 @@ import { CultureModule } from './culture/culture.module';
       isGlobal: true,
       cache: false,
       load: [configuration],
-      validate,
+      // validate,
     }),
     // Database - https://docs.nestjs.com/techniques/mongodb
     MongooseModule.forRootAsync({

@@ -7,3 +7,4 @@ export default registerAs('database', () => ({
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE_DATABASE,
 }));
+

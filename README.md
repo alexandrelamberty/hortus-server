@@ -1,8 +1,8 @@
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) ![example workflow](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg)
 
-# Hortus Server
-
 Main project: [Hortus](https://github.com/alexandrelamberty/hortus)
+
+# Hortus Server
 
 Gardening planner, monitoring and automation server application that expose a secured api and a websocket real-time communication with [Hortus Web Application](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 The application receive and process data collected from [Hortus Wireless Temperature / Humidity Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/). 

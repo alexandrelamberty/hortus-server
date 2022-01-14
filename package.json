@@ -39,7 +39,7 @@
     "cookie-parser": "^1.4.5",
     "ejs": "^3.1.6",
     "joi": "^17.4.2",
-    "mongoose": "5.12.8",
+    "mongoose": "^5.13.14",
     "nestjs": "^0.0.1",
     "passport": "^0.4.1",
     "passport-jwt": "^4.0.0",
