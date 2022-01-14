@@ -6,7 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
-    "docker:infrastructure": "docker-compose --env-file .env.dev up -d cache session database mongo-express",
+    "docker:infrastructure": "docker-compose --env-file .env up -d cache session database mongo-express",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
