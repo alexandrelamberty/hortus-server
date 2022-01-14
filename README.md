@@ -1,26 +1,38 @@
 [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) ![example workflow](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg)
 
-Main project: [Hortus](https://github.com/alexandrelamberty/hortus)
-
 # Hortus Server
 
 Gardening planner, monitoring and automation server application that expose a secured api and a websocket real-time communication with [Hortus Web Application](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
 The application receive and process data collected from [Hortus Wireless Temperature / Humidity Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/). 
 
-## Features
+It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 
-- Secured API
-- Create and manage your seeds
-- Plan your cultures
-- Manage the differents culture phases ex: seeding, planting, harvesting
-- Add monitoring devices, humidity, temperature, ph
-- Add controller devices, ventilation, heating, watering
-- Monitoring alerts vie SMS, email, mobile and web notifications
-- Automation of ventilation, heating and wateriong
+## Development roadmap
+
+- [ ] NestJS
+	- [ ] Configuration 
+		- [x] Global
+		- [ ] Module
+	- [x] Database 
+	- [x] Request cache 
+	- [ ] Session cache 
+	- [ ] Auth
+		- [x] Login
+		- [x] Token
+		- [ ] Refresh token
+- [ ] API
+	- [ ] CRUD
+
+
+## Features roadmap
+
+- [ ] Add monitoring devices, humidity, temperature, ph
+- [ ] Add controller devices, ventilation, heating, watering
+- [ ] Monitoring alerts vie SMS, email, mobile and web notifications
+- [ ] Automation of ventilation, heating and wateriong
 
 ## Technologies
 
-- [NPM](https://www.npmjs.com/)
 - [Docker](https://www.docker.com/)
 - [Node.js](https://www.docker.com/)
 - [NestJS](https://www.docker.com/)
