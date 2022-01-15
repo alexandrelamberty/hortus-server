@@ -1,4 +1,5 @@
 **/dist
 **/.git
+**/.github
 **/node_modules
 Dockerfile

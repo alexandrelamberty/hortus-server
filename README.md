@@ -14,14 +14,17 @@ It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 		- [x] Global
 		- [ ] Module
 	- [x] Database 
+	- [ ]	Logging
 	- [x] Request cache 
 	- [ ] Session cache 
+	- [ ] Task Scheduling
 	- [ ] Auth
 		- [x] Login
 		- [x] Token
 		- [ ] Refresh token
 - [ ] API
 	- [ ] CRUD
+- [ ] Docker
 
 
 ## Features roadmap
@@ -31,14 +34,14 @@ It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 - [ ] Monitoring alerts vie SMS, email, mobile and web notifications
 - [ ] Automation of ventilation, heating and wateriong
 
-## Technologies
+## Technologies and frameworks
 
 - [Docker](https://www.docker.com/)
-- [Node.js](https://www.docker.com/)
-- [NestJS](https://www.docker.com/)
-- [Socket.io](https://www.docker.com/)
-- [MongoDB](https://www.docker.com/)
-- [Redis](https://www.docker.com/)
+- [Node.js](https://nodejs.org/)
+- [NestJS](https://nestjs.com/)
+- [Socket.io](https://socket.io/)
+- [MongoDB](https://www.mongodb.com/)
+- [Redis](https://redis.io/)
 
 ## Requirements
 
@@ -82,7 +85,8 @@ BCRYPT_HASH=12345
 UPLOAD_PATH=/upload
 ```
 
-This config will work out of the box in most case. Verify that the ports specified in the configuration are not in use.
+This config will work out of the box in most case. Verify that the ports
+specified in the configuration are not in use.
 
 ## Build
 
@@ -92,23 +96,27 @@ Build all the services.
 docker-compose --env-file .dev.env build
 ```
 
-## Deployement
+## Development
 
-Run the application
-
-```bash
-docker-compose --env-file .dev.env up
-```
-
-## Test
+Before running the application all the services it depends on need to be up and
+running.
 
 ```bash
-# unit tests
-npm run test
-
-# e2e tests
-npm run test:e2e
-
-# test coverage
-npm run test:cov
+docker-compose --env-file .env up
 ```
+
+## MongoDB
+
+[Mongo Express](http://localhost:8081)
+
+## Redis
+
+```bash
+docker exec -it hortus-cache redis-cli -p 6379
+```
+
+```bash
+docker exec -it hortus-cache redis-cli -p 6380
+```
+
+

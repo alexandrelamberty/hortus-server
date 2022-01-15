@@ -23,8 +23,10 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TaskModule } from './tasks/task.module';
 import { CultureModule } from './culture/culture.module';
+
 @Module({
   imports: [
+	
     // Configuration - https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -32,8 +34,9 @@ import { CultureModule } from './culture/culture.module';
       isGlobal: true,
       cache: false,
       load: [configuration],
-      // validate,
+      validate,
     }),
+
     // Database - https://docs.nestjs.com/techniques/mongodb
     MongooseModule.forRootAsync({
       imports: [ConfigService],
@@ -44,6 +47,7 @@ import { CultureModule } from './culture/culture.module';
       }),
       inject: [ConfigService], // Inject DatabaseConfigService
     }),
+
     // Cache - https://docs.nestjs.com/techniques/caching
     CacheModule.registerAsync({
       imports: [ConfigService],
@@ -56,6 +60,7 @@ import { CultureModule } from './culture/culture.module';
       }),
       inject: [ConfigService], // Inject DatabaseConfigService
     }),
+
     // Session TODO: server the client with express to benefit from express or check nestjs
     // Static Server - https://docs.nestjs.com/recipes/serve-static
     // https://docs.nestjs.com/techniques/mvc
@@ -64,8 +69,10 @@ import { CultureModule } from './culture/culture.module';
       rootPath: join(__dirname, '..', '/upload'),
     }),
     */
+
     // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
     ScheduleModule.forRoot(),
+
     // File upload
     MulterModule.registerAsync({
       imports: [ConfigModule],
@@ -75,7 +82,8 @@ import { CultureModule } from './culture/culture.module';
       }),
       inject: [ConfigService],
     }),
-    // Modules
+
+    // Domain 
     AuthModule,
     UsersModule,
     SeedModule,
@@ -96,13 +104,15 @@ import { CultureModule } from './culture/culture.module';
       useClass: LoggingInterceptor,
     },
   ],
-  exports: [DatabaseConfigService, CacheModule],
+  exports: [DatabaseConfigService /*, CacheModule */],
 })
+
+
 export class AppModule {
   constructor(@Inject(CACHE_MANAGER) cacheManager) {
     const client = cacheManager.store.getClient();
     client.on('error', (error) => {
-      console.error(error);
+      console.error("CacheManager", error);
     });
   }
 }

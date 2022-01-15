@@ -6,6 +6,7 @@
   "private": true,
   "license": "UNLICENSED",
   "scripts": {
+    "docker:up": "docker-compose --env-file .env up -d cache session database mongo-express api static",
     "docker:infrastructure": "docker-compose --env-file .env up -d cache session database mongo-express",
     "prebuild": "rimraf dist",
     "build": "nest build",
