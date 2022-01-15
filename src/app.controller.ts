@@ -9,7 +9,7 @@ export class AppController {
     private readonly authService: AuthService,
   ) {}
 
-  @Get('')
+  @Get('/')
   async home() {
     return this.appService.getHello();
   }

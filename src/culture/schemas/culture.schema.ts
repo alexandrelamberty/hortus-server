@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Seed } from 'src/seeds/schemas/seed.schema';
+import { Seed } from '../../seeds/schemas/seed.schema';
 import { Harvesting } from './harvesting.schema';
 import { Planting } from './planting.schema';
 import { Seeding } from './seeding.schema';
