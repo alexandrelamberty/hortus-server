@@ -61,7 +61,9 @@ import { CultureModule } from './culture/culture.module';
       inject: [ConfigService], // Inject DatabaseConfigService
     }),
 
-    // Session TODO: server the client with express to benefit from express or check nestjs
+    // Session TODO: serve the client with express to benefit from express session or check nestjs
+		// FIXME
+
     // Static Server - https://docs.nestjs.com/recipes/serve-static
     // https://docs.nestjs.com/techniques/mvc
     /*
