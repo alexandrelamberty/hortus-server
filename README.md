@@ -15,7 +15,8 @@ It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 		- [ ] Module
 	- [x] Database 
 	- [ ]	Logging
-	- [x] Request cache 
+	- [x] Cache 
+		- [ ] Secure session and cache
 	- [ ] Session cache 
 	- [ ] Task Scheduling
 	- [ ] Auth
@@ -24,6 +25,10 @@ It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 		- [ ] Refresh token
 - [ ] API
 	- [ ] CRUD
+	- [ ] Create validators for password. Min-length, mixed characters etc ...
+	- [ ] Finish application security
+	- [ ] Finish to implement the model and it's validators, errors
+	- [ ] Sensors management
 - [ ] Docker
 
 

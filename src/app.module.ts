@@ -23,6 +23,7 @@ import { MulterModule } from '@nestjs/platform-express';
 import { ScheduleModule } from '@nestjs/schedule';
 import { TaskModule } from './tasks/task.module';
 import { CultureModule } from './culture/culture.module';
+import { SensorsModule } from './sensors/sensors.module';
 
 @Module({
   imports: [
@@ -90,6 +91,7 @@ import { CultureModule } from './culture/culture.module';
     UsersModule,
     SeedModule,
     CultureModule,
+	SensorsModule,
   ],
   controllers: [AppController],
   providers: [

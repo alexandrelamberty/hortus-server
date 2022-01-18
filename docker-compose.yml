@@ -8,7 +8,8 @@ services:
       context: .
       target: ${NODE_ENV}
       dockerfile: ./.docker/Dockerfile
-    command: npm run start:${NODE_ENV}
+    # command: npm run start:${NODE_ENV}
+# 	modified:   src/providers/SpeciesProvider.tsx
     ports:
       - 3333:${API_PORT}
     volumes:
