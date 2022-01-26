@@ -1,16 +1,13 @@
 import { IsMACAddress , IsString, IsIP, IsNotEmpty, MinLength } from 'class-validator';
 
-export class CreateSensorDto {
+export class CreateMeasurementDto {
   @IsNotEmpty()
-  @MinLength(5)
   @IsString()
-  readonly name: string;
+  readonly id: string;
 
   @IsNotEmpty()
-  @IsIP()
-  readonly ip: string;
+  readonly value: string;
 
   @IsNotEmpty()
-  @IsMACAddress()
-  readonly macaddress: string;
+  readonly timestamp: string;
 }

@@ -1,18 +1,25 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose'
+import { Document, Schema as MongooseSchema } from 'mongoose'
+import { Measurement } from './measurement.schema'
 
-export type SensorDocument = Sensor & Document;
+export type SensorDocument = Sensor & Document
 
 @Schema()
 export class Sensor {
   @Prop({ type: String, required: true, unique: true })
-  username: string;
+  name: string
 
   @Prop({ type: String, required: true, unique: true, lowercase: true })
-  email: string;
+  ip: string
 
-  @Prop({ type: String, required: true })
-  password: string;
+  @Prop({ type: String, required: true, unique: true, lowercase: true })
+  macaddress: string
+
+  @Prop({
+    type: MongooseSchema.Types.Array,
+    default: [],
+  })
+  measurements: Measurement[]
 }
 
-export const SensorSchema = SchemaFactory.createForClass(Sensor);
+export const SensorSchema = SchemaFactory.createForClass(Sensor)

@@ -1,80 +1,79 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { CreateSensorDto } from './dto/create-sensor.dto';
-import { UpdateSensorDto } from './dto/update-sensor.dto';
-import { Sensor, SensorDocument } from './schemas/sensor.schema';
-import find from 'local-devices'
+import { HttpException, HttpStatus, Injectable } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model } from 'mongoose'
+import { CreateMeasurementDto } from './dto/create-measurement.dto'
+import { CreateSensorDto } from './dto/create-sensor.dto'
+import { UpdateSensorDto } from './dto/update-sensor.dto'
+import { Sensor, SensorDocument } from './schemas/sensor.schema'
 
 @Injectable()
 export class SensorsService {
   constructor(
     @InjectModel(Sensor.name)
-    private readonly userModel: Model<SensorDocument>,
+    private readonly sensorModel: Model<SensorDocument>
   ) {}
 
   async findAll(): Promise<Sensor[]> {
-    //return await this.userModel.find().exec();
-    const find = require('local-devices')
-    return await find().then((devices) => {
-	  return devices
-    })
+    return await this.sensorModel.find().exec()
   }
 
-  async findOne(username: string): Promise<Sensor> {
-    const user = await this.userModel.findOne({ username: username }).exec();
-    if (user) {
-      return user;
+  async findByIp(ip: string): Promise<Sensor> {
+    const sensor = await this.sensorModel.findOne({ ip: ip }).exec()
+    if (sensor) {
+      return sensor
     }
     throw new HttpException(
-      'User with this username does not exist',
-      HttpStatus.NOT_FOUND,
-    );
+      'Sensor with this ip does not exist',
+      HttpStatus.NOT_FOUND
+    )
   }
 
-  async findById(id: string): Promise<Sensor> {
-    const user = await this.userModel.findOne({ id: id }).exec();
-    if (user) {
-      return user;
+  async findByMacAddress(mac: string): Promise<Sensor> {
+    const sensor = await this.sensorModel.findOne({ macaddress: mac }).exec()
+    if (sensor) {
+      return sensor
     }
     throw new HttpException(
-      'User with this id does not exist',
-      HttpStatus.NOT_FOUND,
-    );
+      'Sensor with this mac-address does not exist',
+      HttpStatus.NOT_FOUND
+    )
   }
 
-  async findByUsername(username: string): Promise<Sensor> {
-    const user = await this.userModel.findOne({ username: username }).exec();
-    if (user) {
-      return user;
+  async addMeasurement(id: string, createMeasurementDto: CreateMeasurementDto): Promise<Sensor> {
+    const sensor = await this.sensorModel.findById(id).exec()
+	if(!sensor)
+	{
+	  throw new HttpException(
+		'Sensor with this mac-address does not exist',
+		HttpStatus.NOT_FOUND
+	  )
+	}
+	sensor.measurements.push(createMeasurementDto)
+	sensor.save()
+	return sensor
+  }
+
+  async create(createSensorDto: CreateSensorDto): Promise<Sensor> {
+    const sensor = new this.sensorModel(createSensorDto)
+    return sensor.save()
+  }
+
+  async read(id:string): Promise<Sensor> {
+    const sensor = await this.sensorModel.findById(id).exec()
+    if (sensor) {
+      return sensor
     }
     throw new HttpException(
-      'User with this username does not exist',
-      HttpStatus.NOT_FOUND,
-    );
+      'Sensor with this mac-address does not exist',
+      HttpStatus.NOT_FOUND
+    )
   }
 
-  async findByEmail(email: string): Promise<Sensor> {
-    const user = await this.userModel.findOne({ email: email }).exec();
-    if (user) {
-      return user;
-    }
-    throw new HttpException(
-      'User with this email does not exist',
-      HttpStatus.NOT_FOUND,
-    );
-  }
-
-  async create(createUserDto: CreateSensorDto): Promise<Sensor> {
-    const plant = new this.userModel(createUserDto);
-    return plant.save();
-  }
-
-  async update(id: string, updateUserDto: UpdateSensorDto) {
-    return await this.userModel.findByIdAndUpdate(id, updateUserDto).exec();
+  async update(id: string, updateSensorDto: UpdateSensorDto) {
+    return await this.sensorModel.findByIdAndUpdate(id, updateSensorDto).exec()
   }
 
   async delete(id: string) {
-    return await this.userModel.findByIdAndDelete(id).exec();
+    return await this.sensorModel.findByIdAndDelete(id).exec()
   }
 }

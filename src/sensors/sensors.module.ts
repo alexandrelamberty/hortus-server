@@ -1,6 +1,7 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MulterModule } from '@nestjs/platform-express';
+import { NetworkService } from './network.service';
 import { Sensor, SensorSchema } from './schemas/sensor.schema';
 import { SensorsController } from './sensors.controller';
 import { SensorsService } from './sensors.service';
@@ -12,7 +13,7 @@ import { SensorsService } from './sensors.service';
       dest: './upload',
     }),
   ],
-  providers: [SensorsService],
+  providers: [SensorsService,NetworkService],
   controllers: [SensorsController],
   exports: [SensorsService],
 })
