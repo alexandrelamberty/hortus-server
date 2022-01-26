@@ -5,6 +5,7 @@ import { AuthService } from '../auth.service';
 
 @Injectable()
 export class LocalStrategy extends PassportStrategy(Strategy) {
+
   constructor(private readonly authService: AuthService) {
     super({
       usernameField: 'email', // Override default field username
@@ -12,9 +13,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string): Promise<any> {
-    console.log('LocalStrategy::validate', email, password);
     const user = await this.authService.validateUser(email, password);
-    console.log('LocalStrategy::validate', user);
     if (!user) {
       throw new UnauthorizedException();
     }

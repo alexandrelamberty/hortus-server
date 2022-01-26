@@ -20,18 +20,13 @@ import { UsersService } from './users.service';
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}
 
-  @Post()
-  @UseInterceptors(FileInterceptor('image'))
-  create(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    return this.usersService.create(createUserDto);
-  }
-
+  @UseGuards(JwtAuthGuard)
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
+  @UseGuards(JwtAuthGuard)
   @Get(':username')
   findOne(@Param('username') username: string) {
     return this.usersService.findOne(username);
@@ -47,9 +42,4 @@ export class UsersController {
     return this.usersService.delete(id);
   }
 
-  //@UseGuards(JwtAuthGuard)
-  @Get('profile')
-  getProfile() {
-    return 'Profile';
-  }
 }

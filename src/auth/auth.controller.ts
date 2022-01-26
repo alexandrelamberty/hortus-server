@@ -1,4 +1,4 @@
-import { Body, Controller, HttpCode, Post, Request, Res, UseGuards } from '@nestjs/common';
+import { Body, Controller, HttpCode, Get, Post, Request, Res, UseGuards } from '@nestjs/common';
 import { Response } from 'express';
 import { CreateUserDto } from '../users/dto/create-user.dto';
 import { AuthService } from './auth.service';
@@ -19,19 +19,19 @@ export class AuthController {
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
+		console.log(req.user)
     return this.authService.login(req.user);
   }
 
   @UseGuards(JwtAuthGuard)
-  @Post('logout')
+  @Get('logout')
   async logout(@Request() req: any, @Res() response: Response) {
-    //return req.user;
     return response.sendStatus(200);
-    //return this.authService.login(req.user);
   }
+
   /*
   @UseGuards(JwtAuthGuard)
-  @Post('log-out')
+  @Post('logout')
   async logOut(@Req() request: RequestWithUser, @Res() response: Response) {
     response.setHeader('Set-Cookie', this.authService.getCookieForLogOut());
     return response.sendStatus(200);
