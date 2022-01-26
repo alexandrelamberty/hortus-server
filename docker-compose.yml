@@ -9,7 +9,6 @@ services:
       target: ${NODE_ENV}
       dockerfile: ./.docker/Dockerfile
     # command: npm run start:${NODE_ENV}
-# 	modified:   src/providers/SpeciesProvider.tsx
     ports:
       - 3333:${API_PORT}
     volumes:
@@ -30,7 +29,7 @@ services:
       - media_data:/usr/share/nginx/html # nginx default
     restart: always
   database:
-    image: mongo:4.4.8 # < 5 for AVX CPU support
+    image: mongo:4.4.8 # < 5 for AVX CPU support (Elitebook 254Op)
     container_name: hortus-database
     environment:
       - MONGO_INITDB_ROOT_USERNAME=${DATABASE_ROOT_USER}
