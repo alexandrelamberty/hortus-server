@@ -18,7 +18,7 @@ export class SeedService {
   ): Promise<Seed> {
     const seed = new this.seedModel(createSeedDto);
     seed.image = photoPath;
-    return seed.save();
+    return await seed.save();
   }
 
   async findAll(): Promise<Seed[]> {
@@ -26,7 +26,7 @@ export class SeedService {
   }
 
   async findOne(id: string): Promise<Seed> {
-    return await this.seedModel.findById(id).populate('types').exec();
+    return await this.seedModel.findById(id).populate('species').exec();
   }
 
   async update(id: string, updateSeedDto: UpdateSeedDto) {
