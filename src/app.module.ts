@@ -24,6 +24,7 @@ import { ScheduleModule } from '@nestjs/schedule';
 import { TaskModule } from './tasks/task.module';
 import { CultureModule } from './culture/culture.module';
 import { SensorsModule } from './sensors/sensors.module';
+import { MailModule } from './mail/mail.module';
 
 @Module({
   imports: [
@@ -89,6 +90,7 @@ import { SensorsModule } from './sensors/sensors.module';
     // Domain 
     AuthModule,
     UsersModule,
+	MailModule,
     SeedModule,
     CultureModule,
 	SensorsModule,
