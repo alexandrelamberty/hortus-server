@@ -45,6 +45,9 @@ import { MailModule } from './mail/mail.module';
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get('mongo.uri'),
         useNewUrlParser: true,
+		// https://stackoverflow.com/questions/51960171/node63208-deprecationwarning-collection-ensureindex-is-deprecated-use-creat
+        useFindAndModify: false,
+		useCreateIndex: true,
         useUnifiedTopology: true,
       }),
       inject: [ConfigService], // Inject DatabaseConfigService

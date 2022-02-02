@@ -13,9 +13,10 @@ constructor(
   ) {}
 
   private readonly logger = new Logger(MailService.name);
+  private readonly confirmUrl : string = this.configService.get('mail.confirmation')
 
   async sendUserConfirmation(user: User, token: string) {
-    const url = `https://hortus-webapp-demo.app/auth/confirm?token=${token}`;
+    const url = this.confirmUrl + '?token=${token}';
 
     return await this.mailerService.sendMail({
       to: user.email, 
@@ -29,7 +30,7 @@ constructor(
   }
 
   async sendUserInvitation(user:User, token: string ) {
-    const url = `https://hortus-webapp-demo.app/auth/confirm?token=${token}`;
+    const url = this.confirmUrl + '?token=${token}';
 
     return await this.mailerService.sendMail({
       to: user.email, 

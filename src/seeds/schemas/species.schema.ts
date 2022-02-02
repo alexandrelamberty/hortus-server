@@ -9,7 +9,10 @@ export class Species {
   @Prop({ type: String, required: true })
   name: string;
 
-  @Prop({ type: String, required: true })
+	@Prop({ type: String, required: true })
+  name_fr: string;
+  
+	@Prop({ type: String, required: true })
   family: string;
 
   @Prop({ type: String, required: true })

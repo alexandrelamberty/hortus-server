@@ -9,7 +9,7 @@ It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 
 ## Development roadmap
 
-- [ ] NestJS
+- [ ] Core
 	- [ ] Configuration 
 		- [x] Global
 		- [ ] Module
