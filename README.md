@@ -3,34 +3,37 @@
 # Hortus Server
 
 Gardening planner, monitoring and automation server application that expose a secured api and a websocket real-time communication with [Hortus Web Application](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
-The application receive and process data collected from [Hortus Wireless Temperature / Humidity Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/). 
+The application receive and process data collected from [Hortus Wireless Temperature / Humidity Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/).
 
 It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 
 ## Development roadmap
 
 - [ ] Core
-	- [ ] Configuration 
-		- [x] Global
-		- [ ] Module
-	- [x] Database 
-	- [ ]	Logging
-	- [x] Cache 
-		- [ ] Secure session and cache
-	- [ ] Session cache 
-	- [ ] Task Scheduling
-	- [ ] Auth
-		- [x] Login
-		- [x] Token
-		- [ ] Refresh token
+  - [ ] Configuration
+    - [x] Global
+    - [ ] Module
+  - [ ] Logging
+  - [ ] Validation
+    - [ ] Class validator
+  - [ ] Exception
+  - [x] Database
+  - [x] Cache
+    - [ ] Secure session and cache
+  - [ ] Session cache
+  - [ ] Mail
+  - [ ] Task Scheduling
+  - [ ] Auth
+    - [ ] Invitation
+    - [ ] Registration
+    - [ ] Login
+    - [ ] Token
+    - [ ] Refresh token
+    - [ ] Logout (Refresh token, session, cache, cookies ?)
 - [ ] API
-	- [ ] CRUD
-	- [ ] Create validators for password. Min-length, mixed characters etc ...
-	- [ ] Finish application security
-	- [ ] Finish to implement the model and it's validators, errors
-	- [ ] Sensors management
+  - [ ] Sensors management
 - [ ] Docker
-
+  - [ ] Redis commander
 
 ## Features roadmap
 
@@ -123,5 +126,3 @@ docker exec -it hortus-cache redis-cli -p 6379
 ```bash
 docker exec -it hortus-cache redis-cli -p 6380
 ```
-
-
