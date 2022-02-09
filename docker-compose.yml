@@ -25,7 +25,7 @@ services:
     ports:
       - '8080:80'
     volumes:
-     # - ./.docker/nginx.conf:/etc/nginx/nginx.conf:ro
+      # - ./.docker/nginx.conf:/etc/nginx/nginx.conf:ro
       - media_data:/usr/share/nginx/html # nginx default
     restart: always
   database:
@@ -65,6 +65,15 @@ services:
     volumes:
       - session_data:/data
     restart: always
+  redis-commander:
+    container_name: hortus-redis-commander
+    image: rediscommander/redis-commander:latest
+    environment:
+      - REDIS_HOSTS=cache:cache:6379,session:session:6380
+    ports:
+      - '8082:8081'
+    depends_on:
+      - cache
   mongo-express:
     image: mongo-express
     container_name: hortus-mongo-express
