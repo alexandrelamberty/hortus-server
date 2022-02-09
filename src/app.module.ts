@@ -1,34 +1,28 @@
-import {
-  CacheModule,
-  CACHE_MANAGER,
-  Inject,
-  Module
-} from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { APP_INTERCEPTOR } from '@nestjs/core';
-import { MongooseModule } from '@nestjs/mongoose';
-import { ServeStaticModule } from '@nestjs/serve-static';
-import * as redisStore from 'cache-manager-redis-store';
-import { join } from 'path';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from './auth/auth.module';
-import { LoggingInterceptor } from './common/interceptors/logging.interceptor';
-import configuration from './config/configuration';
-import { DatabaseConfigService } from './config/providers/DatabaseConfigService';
-import { validate } from './config/validators/env.validation';
-import { SeedModule } from './seeds/seed.module';
-import { UsersModule } from './users/users.module';
-import { MulterModule } from '@nestjs/platform-express';
-import { ScheduleModule } from '@nestjs/schedule';
-import { TaskModule } from './tasks/task.module';
-import { CultureModule } from './culture/culture.module';
-import { SensorsModule } from './sensors/sensors.module';
-import { MailModule } from './mail/mail.module';
+import { CacheInterceptor, CacheModule, CACHE_MANAGER, Inject, Module } from '@nestjs/common'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { APP_INTERCEPTOR } from '@nestjs/core'
+import { MongooseModule } from '@nestjs/mongoose'
+import { ServeStaticModule } from '@nestjs/serve-static'
+import * as redisStore from 'cache-manager-redis-store'
+import { join } from 'path'
+import { AppController } from './app.controller'
+import { AppService } from './app.service'
+import { AuthModule } from './auth/auth.module'
+import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
+import configuration from './config/configuration'
+import { DatabaseConfigService } from './config/providers/DatabaseConfigService'
+import { validate } from './config/validators/env.validation'
+import { SeedModule } from './seeds/seed.module'
+import { UsersModule } from './users/users.module'
+import { MulterModule } from '@nestjs/platform-express'
+import { ScheduleModule } from '@nestjs/schedule'
+import { TaskModule } from './tasks/task.module'
+import { CultureModule } from './culture/culture.module'
+import { SensorsModule } from './sensors/sensors.module'
+import { MailModule } from './mail/mail.module'
 
 @Module({
   imports: [
-	
     // Configuration - https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -45,9 +39,9 @@ import { MailModule } from './mail/mail.module';
       useFactory: async (configService: ConfigService) => ({
         uri: configService.get('mongo.uri'),
         useNewUrlParser: true,
-		// https://stackoverflow.com/questions/51960171/node63208-deprecationwarning-collection-ensureindex-is-deprecated-use-creat
+        // https://stackoverflow.com/questions/51960171/node63208-deprecationwarning-collection-ensureindex-is-deprecated-use-creat
         useFindAndModify: false,
-		useCreateIndex: true,
+        useCreateIndex: true,
         useUnifiedTopology: true,
       }),
       inject: [ConfigService], // Inject DatabaseConfigService
@@ -67,7 +61,7 @@ import { MailModule } from './mail/mail.module';
     }),
 
     // Session TODO: serve the client with express to benefit from express session or check nestjs
-		// FIXME
+    // FIXME
 
     // Static Server - https://docs.nestjs.com/recipes/serve-static
     // https://docs.nestjs.com/techniques/mvc
@@ -90,24 +84,22 @@ import { MailModule } from './mail/mail.module';
       inject: [ConfigService],
     }),
 
-    // Domain 
+    // Domain
     AuthModule,
     UsersModule,
-	MailModule,
+    MailModule,
     SeedModule,
     CultureModule,
-	SensorsModule,
+    SensorsModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
     DatabaseConfigService,
-    /*
     {
       provide: APP_INTERCEPTOR,
       useClass: CacheInterceptor,
     },
-    */
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
@@ -115,13 +107,11 @@ import { MailModule } from './mail/mail.module';
   ],
   exports: [DatabaseConfigService /*, CacheModule */],
 })
-
-
 export class AppModule {
   constructor(@Inject(CACHE_MANAGER) cacheManager) {
-    const client = cacheManager.store.getClient();
+    const client = cacheManager.store.getClient()
     client.on('error', (error) => {
-      console.error("CacheManager", error);
-    });
+      console.error('CacheManager', error)
+    })
   }
 }

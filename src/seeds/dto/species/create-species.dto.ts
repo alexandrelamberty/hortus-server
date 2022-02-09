@@ -13,16 +13,16 @@ export class CreateSpeciesDto {
 
   @IsString()
   @IsNotEmpty()
-  //FIXME: @@MaxLength(255)
+  @MaxLength(255)
   readonly family: string;
 
   @IsString()
-  //FIXME: @@IsNotEmpty()
+  @IsNotEmpty()
   @MaxLength(255)
   readonly genus: string;
   
   @IsString()
-  //FIXME: @IsNotEmpty()
+  @IsNotEmpty()
   @MaxLength(255)
   readonly species: string;
 

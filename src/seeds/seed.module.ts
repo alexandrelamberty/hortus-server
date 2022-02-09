@@ -2,7 +2,7 @@ import { CacheModule, Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MulterModule } from '@nestjs/platform-express';
 import { SeedController } from './controllers/seed.controller';
-import { SpeciesController } from './controllers/sepecies.controller';
+import { SpeciesController } from './controllers/species.controller';
 import { SeedService } from './providers/seed.service';
 import { SpeciesService } from './providers/species.service';
 import { Seed, SeedSchema } from './schemas/seed.schema';

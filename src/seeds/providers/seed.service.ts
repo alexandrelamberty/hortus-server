@@ -1,44 +1,56 @@
-import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { CreateSeedDto } from '../dto/seed/create-seed.dto';
-import { UpdateSeedDto } from '../dto/seed/update-seed.dto';
-import { Seed, SeedDocument } from '../schemas/seed.schema';
+import { Injectable, Logger } from '@nestjs/common'
+import { InjectModel } from '@nestjs/mongoose'
+import { Model, ObjectId } from 'mongoose'
+import { CreateSeedDto } from '../dto/seed/create-seed.dto'
+import { UpdateSeedDto } from '../dto/seed/update-seed.dto'
+import SeedNotFoundException from '../exceptions/seedNotFound.exception'
+import { Seed, SeedDocument } from '../schemas/seed.schema'
 
 @Injectable()
 export class SeedService {
+
+	private readonly logger = new Logger(SeedService.name);
+
   constructor(
     @InjectModel(Seed.name)
-    private readonly seedModel: Model<SeedDocument>,
+    private readonly seedModel: Model<SeedDocument>
   ) {}
 
-  async create(
-    createSeedDto: CreateSeedDto,
-    photoPath: string,
-  ): Promise<Seed> {
-    const seed = new this.seedModel(createSeedDto);
-    seed.image = photoPath;
-    return await seed.save();
-  }
-
   async findAll(): Promise<Seed[]> {
-    return await this.seedModel.find().populate('types').exec();
+		this.logger.log('findAll');
+    return await this.seedModel
+      .find()
+      .populate('companions')
+      .populate('species')
+      .populate('types')
+      .exec()
   }
 
-  async findOne(id: string): Promise<Seed> {
-    return await this.seedModel.findById(id).populate('species').exec();
+  async create(createSeedDto: CreateSeedDto, photoPath: string): Promise<Seed> {
+		this.logger.log('create', createSeedDto);
+    const seed = new this.seedModel(createSeedDto)
+    seed.image = photoPath
+    const result = await seed.save()
+    return result
   }
 
-  async update(id: string, updateSeedDto: UpdateSeedDto) {
-    return await this.seedModel.findByIdAndUpdate(id, updateSeedDto).exec();
+  async read(id: ObjectId): Promise<Seed> {
+    const result = await this.seedModel.findById(id).populate('species').exec()
+    if (!result) throw new SeedNotFoundException(id)
+    return result
   }
 
-  async delete(id: string) {
-    return await this.seedModel.findByIdAndDelete(id).exec();
-    /*
-    const result = await this.seedModel.deleteOne({ _id: id }).exec();
-    if (result.n === 0) {
-      throw new NotFoundException('Could not find Seed.');
-    }*/
+  async update(id: ObjectId, updateSeedDto: UpdateSeedDto) {
+    const result = await this.seedModel
+      .findByIdAndUpdate(id, updateSeedDto)
+      .exec()
+    if (!result) throw new SeedNotFoundException(id)
+    return result
+  }
+
+  async delete(id: ObjectId) {
+    const result = await this.seedModel.findByIdAndDelete(id).exec()
+    if (!result) throw new SeedNotFoundException(id)
+    return result
   }
 }

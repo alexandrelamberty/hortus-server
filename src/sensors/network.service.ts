@@ -12,12 +12,12 @@ export class NetworkService {
     return new Promise((resolve, reject) => {
       const find = require('local-devices')
       find()
-        .then((devices : Array<IDevice>) => {
+        .then((devices: Array<IDevice>) => {
           resolve(devices)
         })
         .catch((error) => {
           console.log(error)
-		  reject(error)
+          reject(error)
         })
     })
   }
@@ -27,7 +27,7 @@ export class NetworkService {
       const dns = require('dns')
       dns.reverse(ip, (err, hostnames) => {
         if (err) {
-		  console.log(err)
+          console.log(err)
           if (err.code == 'ENOTFOUND') {
             resolve(['IP not found'])
           } else if (err.code == 'EINVAL') {

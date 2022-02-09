@@ -26,26 +26,26 @@ describe("SeedController Unit Tests", () => {
     spyService = app.get<SeedService>(SeedService);
   })
 
-  it("calling saveNotes method", () => {
+  it("calling createSeed method", () => {
     const dto = new CreateSeedDto();
     expect(seedController.create(dto,null)).not.toEqual(null);
   })
 
-  it("calling saveNotes method 2", () => {
+  it("calling createSeed method 2", () => {
     const dto = new CreateSeedDto();
     seedController.create(dto,null);
     expect(spyService.create).toHaveBeenCalled();
     expect(spyService.create).toHaveBeenCalledWith(dto, "nothing_for_now");
   })
 
-  it("calling getAllNote method", () => {
+  it("calling getAllSeeds method", () => {
     seedController.findAll();
     expect(spyService.findAll).toHaveBeenCalled();
   })
 
-  it("calling find NoteById method", () => {
+  it("calling findSeedById method", () => {
     seedController.findOne('2');
-    expect(spyService.findOne).toHaveBeenCalled();
+    expect(spyService.read).toHaveBeenCalled();
   })
 
 });

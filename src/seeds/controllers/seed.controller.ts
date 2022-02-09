@@ -11,14 +11,24 @@ import {
   UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
+import { ApiTags } from '@nestjs/swagger'
+import { ObjectId } from 'mongoose'
+import { ParseObjectIdPipe } from 'src/common/pipe/ParseObjectIdPipe'
 import { CreateSeedDto } from '../dto/seed/create-seed.dto'
 import { UpdateSeedDto } from '../dto/seed/update-seed.dto'
 import { SeedService } from '../providers/seed.service'
 
+@ApiTags('seeds')
 @Controller('seeds')
-//@UseInterceptors(CacheInterceptor)
+@UseInterceptors(CacheInterceptor)
 export class SeedController {
   constructor(private readonly seedService: SeedService) {}
+
+	// TODO Add pagination query
+  @Get()
+  findAll() {
+    return this.seedService.findAll()
+  }
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
@@ -29,25 +39,18 @@ export class SeedController {
     return this.seedService.create(createSeedationDto, 'nothing_for_now')
   }
 
-  //@CacheKey('myCustomKey')
-  //@CacheTTL(300)
-  @Get()
-  findAll() {
-    return this.seedService.findAll()
-  }
-
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.seedService.findOne(id)
+  read(@Param('id', ParseObjectIdPipe) id: ObjectId) {
+    return this.seedService.read(id)
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateSeedDto: UpdateSeedDto) {
+  update(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() updateSeedDto: UpdateSeedDto) {
     return this.seedService.update(id, updateSeedDto)
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
+  delete(@Param('id', ParseObjectIdPipe) id: ObjectId) {
     return this.seedService.delete(id)
   }
 }

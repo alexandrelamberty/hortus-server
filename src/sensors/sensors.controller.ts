@@ -22,8 +22,8 @@ import { SensorsService } from './sensors.service'
 @Controller('sensors')
 export class SensorsController {
   constructor(
-	private readonly sensorsService: SensorsService,
-	private readonly networkService: NetworkService
+    private readonly sensorsService: SensorsService,
+    private readonly networkService: NetworkService
   ) {}
 
   // NetworkService
@@ -44,23 +44,26 @@ export class SensorsController {
   }
 
   // SensorsService
-  
+
   @Get('/:sensorid/measurements')
   getMeasurement() {
     return 'measurements'
   }
 
   @Post('/:sensorid/measurements')
-  addMeasurement(@Param('sensorid') id:string, @Body() createMeasurementDto: CreateMeasurementDto) {
-	console.log(id, createMeasurementDto)
-	return this.sensorsService.addMeasurement(id, createMeasurementDto)
+  addMeasurement(
+    @Param('sensorid') id: string,
+    @Body() createMeasurementDto: CreateMeasurementDto
+  ) {
+    console.log(id, createMeasurementDto)
+    return this.sensorsService.addMeasurement(id, createMeasurementDto)
   }
 
   @Get()
   findAll() {
     return this.sensorsService.findAll()
   }
-  
+
   @Post()
   create(@Body() createUserDto: CreateSensorDto) {
     console.log(createUserDto)
