@@ -21,28 +21,28 @@ export class Culture {
   @Prop({
     type: Seeding,
     ref: 'Seeding',
-    required: true,
+    required: false,
   })
   seeding: Seeding;
 
   @Prop({
     type: Transplanting,
     ref: 'Transplanting',
-    required: true,
+    required: false,
   })
   transplanting: Transplanting;
 
   @Prop({
     type: Planting,
     ref: 'Planting',
-    required: true,
+    required: false,
   })
   planting: Planting;
 
   @Prop({
     type: Harvesting,
     ref: 'Harvesting',
-    required: true,
+    required: false,
   })
   harvesting: Harvesting;
 

@@ -1,3 +1,4 @@
+import { Schema, Types } from 'mongoose';
 import { Test, TestingModule } from '@nestjs/testing';
 import { CreateSpeciesDto } from '../dto/species/create-species.dto';
 import { SpeciesService } from '../providers/species.service';
@@ -39,13 +40,13 @@ describe("SpeciesController Unit Tests", () => {
   })
 
   it("calling getAllSpecies method", () => {
-    speciesController.findAll();
+    speciesController.findAll({skip:0,limit:0});
     expect(spyService.findAll).toHaveBeenCalled();
   })
 
   it("calling findSpeciesById method", () => {
-    speciesController.findOne('1');
-    expect(spyService.findOne).toHaveBeenCalled();
+    speciesController.read(new Schema.Types.ObjectId('j'));
+    expect(spyService.read).toHaveBeenCalled();
   })
 
 });

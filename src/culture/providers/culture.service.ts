@@ -18,7 +18,7 @@ export class CultureService {
   }
 
   async findAll(): Promise<Culture[]> {
-    return await this.cultureModel.find().populate('plant').exec();
+    return await this.cultureModel.find().populate('seed').exec();
   }
 
   async findOne(id: string): Promise<Culture> {

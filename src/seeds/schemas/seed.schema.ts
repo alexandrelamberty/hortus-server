@@ -40,7 +40,7 @@ export class Seed {
 
   @Prop({
     type: Array,
-    required: true,
+    required: false,
   })
   harvest: number[];
 

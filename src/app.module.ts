@@ -96,10 +96,10 @@ import { MailModule } from './mail/mail.module'
   providers: [
     AppService,
     DatabaseConfigService,
-    {
-      provide: APP_INTERCEPTOR,
-      useClass: CacheInterceptor,
-    },
+    // {
+      // provide: APP_INTERCEPTOR,
+      // useClass: CacheInterceptor,
+    // },
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,
@@ -108,10 +108,11 @@ import { MailModule } from './mail/mail.module'
   exports: [DatabaseConfigService /*, CacheModule */],
 })
 export class AppModule {
+/*
   constructor(@Inject(CACHE_MANAGER) cacheManager) {
     const client = cacheManager.store.getClient()
     client.on('error', (error) => {
       console.error('CacheManager', error)
     })
-  }
+  */
 }

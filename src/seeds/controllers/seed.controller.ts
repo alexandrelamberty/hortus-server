@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Put,
@@ -20,23 +21,30 @@ import { SeedService } from '../providers/seed.service'
 
 @ApiTags('seeds')
 @Controller('seeds')
-@UseInterceptors(CacheInterceptor)
+// @UseInterceptors(CacheInterceptor)
 export class SeedController {
+  
+  private readonly logger = new Logger(SeedController.name);
+
   constructor(private readonly seedService: SeedService) {}
 
 	// TODO Add pagination query
   @Get()
   findAll() {
+	this.logger.log("findAll")
     return this.seedService.findAll()
   }
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
   create(
-    @Body() createSeedationDto: CreateSeedDto,
+    @Body() body: CreateSeedDto,
     @UploadedFile() file: Express.Multer.File
   ) {
-    return this.seedService.create(createSeedationDto, 'nothing_for_now')
+	this.logger.log("body", body)
+	this.logger.log("file", file)
+	// TODO: Save the file then save the species if no erros
+    return this.seedService.create(body, 'nothing_for_now')
   }
 
   @Get(':id')
@@ -45,8 +53,8 @@ export class SeedController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() updateSeedDto: UpdateSeedDto) {
-    return this.seedService.update(id, updateSeedDto)
+  update(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() body: UpdateSeedDto) {
+    return this.seedService.update(id, body)
   }
 
   @Delete(':id')

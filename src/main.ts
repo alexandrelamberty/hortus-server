@@ -15,12 +15,12 @@ import { HttpExceptionFilter } from './common/exceptions/http-exception.filter'
 import { MongoExceptionFilter } from './common/exceptions/mongo-exception.filters'
 
 async function bootstrap() {
-  const logger = new Logger('Main')
+  const logger = new Logger('Hortus')
 
   // Check types or interfaces; NestExpressApplication
   const app = await NestFactory.create<INestApplication>(AppModule, {
-		logger: logger
-	})
+    logger: logger,
+  })
 
   // Exception Filters - https://docs.nestjs.com/exception-filters
   const { httpAdapter } = app.get(HttpAdapterHost)

@@ -1,32 +1,41 @@
-import { Body, Controller, HttpCode, Get, Post, Request, Res, UseGuards } from '@nestjs/common';
-import { Response } from 'express';
-import { CreateUserDto } from '../users/dto/create-user.dto';
-import { AuthService } from './auth.service';
-import { JwtAuthGuard } from './guards/jwt-auth.guard';
-import { LocalAuthGuard } from './guards/local-auth.guard';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  Get,
+  Post,
+  Request,
+  Res,
+  UseGuards,
+} from '@nestjs/common'
+import { Response } from 'express'
+import { CreateUserDto } from '../users/dto/create-user.dto'
+import { AuthService } from './auth.service'
+import { JwtAuthGuard } from './guards/jwt-auth.guard'
+import { LocalAuthGuard } from './guards/local-auth.guard'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) { }
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
   async register(@Body() createUserDto: CreateUserDto) {
-    console.log(createUserDto);
-    return this.authService.registerUser(createUserDto);
+    console.log(createUserDto)
+    return this.authService.registerUser(createUserDto)
   }
 
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
   async login(@Request() req) {
-		console.log(req.user)
-    return this.authService.login(req.user);
+    console.log(req.user)
+    return this.authService.login(req.user)
   }
 
   @UseGuards(JwtAuthGuard)
   @Get('logout')
   async logout(@Request() req: any, @Res() response: Response) {
-    return response.sendStatus(200);
+    return response.sendStatus(200)
   }
 
   /*

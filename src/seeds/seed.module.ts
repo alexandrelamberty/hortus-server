@@ -10,7 +10,7 @@ import { Species, SpeciesSchema } from './schemas/species.schema';
 
 @Module({
   imports: [
-    CacheModule.register(),
+    // CacheModule.register(),
     MongooseModule.forFeature([
       { name: Seed.name, schema: SeedSchema },
       { name: Species.name, schema: SpeciesSchema },
