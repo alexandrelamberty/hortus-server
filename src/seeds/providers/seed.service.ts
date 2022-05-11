@@ -8,8 +8,7 @@ import { Seed, SeedDocument } from '../schemas/seed.schema'
 
 @Injectable()
 export class SeedService {
-
-	private readonly logger = new Logger(SeedService.name);
+  private readonly logger = new Logger(SeedService.name)
 
   constructor(
     @InjectModel(Seed.name)
@@ -17,17 +16,17 @@ export class SeedService {
   ) {}
 
   async findAll(): Promise<Seed[]> {
-		this.logger.log('findAll');
+    this.logger.log('findAll')
     return await this.seedModel
       .find()
-      .populate('companions')
       .populate('species')
       .populate('types')
+      .populate('companions')
       .exec()
   }
 
   async create(createSeedDto: CreateSeedDto, photoPath: string): Promise<Seed> {
-		this.logger.log('create', createSeedDto);
+    this.logger.log('create', createSeedDto)
     const seed = new this.seedModel(createSeedDto)
     seed.image = photoPath
     const result = await seed.save()

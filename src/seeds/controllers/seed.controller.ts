@@ -23,27 +23,33 @@ import { SeedService } from '../providers/seed.service'
 @Controller('seeds')
 // @UseInterceptors(CacheInterceptor)
 export class SeedController {
-  
-  private readonly logger = new Logger(SeedController.name);
+  private readonly logger = new Logger(SeedController.name)
 
   constructor(private readonly seedService: SeedService) {}
 
-	// TODO Add pagination query
+  // TODO Add pagination query
   @Get()
   findAll() {
-	this.logger.log("findAll")
+    this.logger.log('findAll')
     return this.seedService.findAll()
   }
 
   @Post()
   @UseInterceptors(FileInterceptor('image'))
-  create(
+  picture(
     @Body() body: CreateSeedDto,
     @UploadedFile() file: Express.Multer.File
   ) {
-	this.logger.log("body", body)
-	this.logger.log("file", file)
-	// TODO: Save the file then save the species if no erros
+    this.logger.log('body', body)
+    this.logger.log('file', file)
+    return this.seedService.create(body, 'nothing_for_now')
+  }
+
+  @Post()
+  create(
+    @Body() body: CreateSeedDto
+  ) {
+    this.logger.log('body', body)
     return this.seedService.create(body, 'nothing_for_now')
   }
 
@@ -53,7 +59,10 @@ export class SeedController {
   }
 
   @Put(':id')
-  update(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() body: UpdateSeedDto) {
+  update(
+    @Param('id', ParseObjectIdPipe) id: ObjectId,
+    @Body() body: UpdateSeedDto
+  ) {
     return this.seedService.update(id, body)
   }
 
