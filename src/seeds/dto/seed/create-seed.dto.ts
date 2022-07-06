@@ -1,61 +1,64 @@
+import { Type as TypeClass } from 'class-transformer';
 import { IsNotEmpty, IsString, MaxLength } from 'class-validator';
 import { Schema as MongooseSchema } from 'mongoose';
 import { Harvesting } from 'src/seeds/schemas/harvesting.schema';
 import { Planting } from 'src/seeds/schemas/planting.schema';
 import { Seeding } from 'src/seeds/schemas/seeding.schema';
+import { Species } from '../../schemas/species.schema';
 import { Transplanting } from 'src/seeds/schemas/transplanting.schema';
 
 export class CreateSeedDto {
   
-  readonly species: MongooseSchema.Types.ObjectId
+  @TypeClass(() => Species)
+  public species: Species
 
   @IsString()
   @IsNotEmpty()
   @IsNotEmpty()
-  readonly name: string;
+  public name: string;
 
   @IsString()
   @IsNotEmpty()
   @MaxLength(30)
-  readonly description: string;
+  public description: string;
 
-  readonly image: string;
-
-  @IsString()
-  @IsNotEmpty()
-  readonly type: string;
-
-  readonly harvest: [];
+  public image: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly season: string;
+  public type: string;
+
+  public harvest: [];
 
   @IsString()
   @IsNotEmpty()
-  readonly sun: string;
+  public season: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly frost: string;
+  public sun: string;
 
   @IsString()
   @IsNotEmpty()
-  readonly water: string;
+  public frost: string;
 
-  readonly competitors: MongooseSchema.Types.ObjectId[];
+  @IsString()
+  @IsNotEmpty()
+  public water: string;
 
-  readonly companions: MongooseSchema.Types.ObjectId[];
+  public competitors: MongooseSchema.Types.ObjectId[];
 
-  readonly seeding: Seeding;
+  public companions: MongooseSchema.Types.ObjectId[];
 
-  readonly transplanting: Transplanting;
+  public seeding: Seeding;
 
-  readonly planting: Planting;
+  public transplanting: Transplanting;
 
-  readonly harvesting: Harvesting;
+  public planting: Planting;
 
-  readonly spacing: number;
+  public harvesting: Harvesting;
 
-  readonly rows: number;
+  public spacing: number;
+
+  public rows: number;
 }

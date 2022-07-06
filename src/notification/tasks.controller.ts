@@ -12,7 +12,7 @@ import {
 } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 
-@Controller('tasks')
+@Controller('notifications')
 @UseInterceptors(CacheInterceptor)
 export class TasksController {
   constructor() {}

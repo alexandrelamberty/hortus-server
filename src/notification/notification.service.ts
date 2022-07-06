@@ -7,5 +7,5 @@ export class NotificationService {
     name: 'notifications',
     timeZone: 'Europe/Paris',
   })
-  triggerNotifications() {}
+  triggerNotifications() { }
 }

@@ -16,10 +16,10 @@ import { LocalAuthGuard } from './guards/local-auth.guard'
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly authService: AuthService) {}
+  constructor(private readonly authService: AuthService) { }
 
   @Post('register')
-  async register(@Body() createUserDto: CreateUserDto) {
+  async signin(@Body() createUserDto: CreateUserDto) {
     console.log(createUserDto)
     return this.authService.registerUser(createUserDto)
   }
@@ -27,9 +27,10 @@ export class AuthController {
   @HttpCode(200)
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
+  async login(@Request() req, @Res() response: Response) {
     console.log(req.user)
-    return this.authService.login(req.user)
+    response.setHeader('Set-Cookie', 'hello');
+    return response.sendStatus(200);
   }
 
   @UseGuards(JwtAuthGuard)

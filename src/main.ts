@@ -8,19 +8,19 @@ import {
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import * as cookieParser from 'cookie-parser'
-import { AppModule } from './app.module'
-import { BadRequestExceptionFilter } from './common/exceptions/bad-request.exception.filter'
-import { ExceptionsLoggerFilter } from './common/exceptions/exceptionLogger.filter'
-import { HttpExceptionFilter } from './common/exceptions/http-exception.filter'
-import { MongoExceptionFilter } from './common/exceptions/mongo-exception.filters'
+import { AppModule } from './app/app.module'
+import { BadRequestExceptionFilter } from 'src/common/exceptions/bad-request.exception.filter'
+import { ExceptionsLoggerFilter } from 'src/common/exceptions/exceptionLogger.filter'
+import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter'
+import { MongoExceptionFilter } from 'src/common/exceptions/mongo-exception.filters'
+import { logger } from 'src/common/middleware/logger.middleware'
+
 
 async function bootstrap() {
-  const logger = new Logger('Hortus')
 
   // Check types or interfaces; NestExpressApplication
-  const app = await NestFactory.create<INestApplication>(AppModule, {
-    logger: logger,
-  })
+  const app = await NestFactory.create<INestApplication>(AppModule)
+  app.use(logger);
 
   // Exception Filters - https://docs.nestjs.com/exception-filters
   const { httpAdapter } = app.get(HttpAdapterHost)
@@ -48,25 +48,9 @@ async function bootstrap() {
     origin: '*',
   })
 
-  // Swagger - https://docs.nestjs.com/openapi/introduction
-  const swaggerConfig = new DocumentBuilder()
-    .setTitle('Hortus API')
-    .setDescription('The Hortus API let you manage plants and cultures.')
-    .setVersion('1.0')
-    .addTag('hortus')
-    .build()
-
-  const document = SwaggerModule.createDocument(app, swaggerConfig)
-  SwaggerModule.setup('docs', app, document)
-
   //const configService = app.get('ConfigService');
   // configService.get('port')
-  try {
-    await app.listen(3333)
-  } catch (e) {
-    logger.error(e)
-  } finally {
-    logger.log(`Hortus is running: ${await app.getUrl()}`)
-  }
+  await app.listen(3333)
+
 }
 bootstrap()

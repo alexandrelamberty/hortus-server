@@ -1,40 +1,52 @@
-import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
 import { ApiOperation, ApiTags } from '@nestjs/swagger'
+import { ObjectId } from 'mongoose'
+import { PaginationParams } from '../../common/paginationParams'
 import { CreateCultureDto } from '../dto/create-culture.dto'
 import { UpdateCultureDto } from '../dto/update-culture.dto'
+import { PhaseStatus } from '../enum/phase-status.enum'
 import { CultureService } from '../providers/culture.service'
+import { Harvesting } from '../schemas/harvesting.schema'
+import { Planting } from '../schemas/planting.schema'
+import { Seeding } from '../schemas/seeding.schema'
+import { Transplanting } from '../schemas/transplanting.schema'
 
 @ApiTags('cultures')
 @Controller('cultures')
 export class CultureController {
-  constructor(private readonly cultureService: CultureService) {}
+  constructor(private readonly cultureService: CultureService) { }
+
+  @Get()
+  listCultures(@Query() { skip = 0, limit = 20 }: PaginationParams) {
+    return this.cultureService.listCultures(skip, limit)
+  }
 
   @Post()
-  @ApiOperation({ summary: 'Create a culture' })
-  create(@Body() createCultureDto: CreateCultureDto) {
-    const result = this.cultureService.create(createCultureDto)
+  createCulture(@Body() createCultureDto: CreateCultureDto) {
+    // FIXME:
+    createCultureDto.seeding = new Seeding();
+    createCultureDto.seeding.status = PhaseStatus.Pending;
+    createCultureDto.transplanting = new Transplanting();
+    createCultureDto.planting = new Planting();
+    createCultureDto.harvesting = new Harvesting();
+    const result = this.cultureService.createCulture(createCultureDto);
     return result
   }
 
   @Get(':id')
-  @ApiOperation({ summary: 'Find a culture by it id' })
-  findOne(@Param('id') id: string) {
-    return this.cultureService.findOne(id)
+  readCulture(@Param('id') id: ObjectId) {
+    return this.cultureService.readCulture(id)
   }
 
   @Put(':id')
-  @ApiOperation({ summary: 'Update a culture' })
-  update(@Param('id') id: string, @Body() updateCultureDto: UpdateCultureDto) {
-    return this.cultureService.update(id, updateCultureDto)
+  updateCulture(@Param('id') id: ObjectId, @Body() updateCultureDto: UpdateCultureDto) {
+    return this.cultureService.updateCulture(id, updateCultureDto)
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.cultureService.delete(id)
+  deleteCulture(@Param('id') id: ObjectId) {
+    return this.cultureService.deleteCulture(id)
   }
 
-  @Get()
-  findAll() {
-    return this.cultureService.findAll()
-  }
+
 }

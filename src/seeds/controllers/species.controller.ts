@@ -10,39 +10,39 @@ import {
 } from '@nestjs/common'
 import { ApiTags } from '@nestjs/swagger'
 import { ObjectId } from 'mongoose'
-import { ParseObjectIdPipe } from 'src/common/pipe/ParseObjectIdPipe'
+import { ParseObjectIdPipe } from '../../common/pipe/ParseObjectIdPipe'
 import { CreateSpeciesDto } from '../dto/species/create-species.dto'
 import { UpdateSpeciesDto } from '../dto/species/update-species.dto'
 import { SpeciesService } from '../providers/species.service'
-import { PaginationParams } from './paginationParams'
+import { PaginationParams } from '../../common/paginationParams'
 
 @ApiTags('species')
-@Controller('species')
+@Controller('plants')
 export class SpeciesController {
   constructor(private readonly speciesService: SpeciesService) {}
 
   @Get()
-  findAll(@Query() { skip, limit }: PaginationParams) {
-    return this.speciesService.findAll(skip, limit)
+  listSpecies(@Query() { skip, limit }: PaginationParams) {
+    return this.speciesService.listSpecies(skip, limit)
   }
 
   @Post()
-  create(@Body() createSpeciesDto: CreateSpeciesDto) {
-      return this.speciesService.create(createSpeciesDto)
+  createSpecies(@Body() createSpeciesDto: CreateSpeciesDto) {
+      return this.speciesService.createSpecies(createSpeciesDto)
   }
 
   @Get(':id')
-  read(@Param('id', ParseObjectIdPipe) id: ObjectId) {
-    return this.speciesService.read(id)
+  readSpecies(@Param('id', ParseObjectIdPipe) id: ObjectId) {
+    return this.speciesService.readSpecies(id)
   }
 
   @Put(':id')
-  update(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() updateSpeciesDto: UpdateSpeciesDto) {
-    return this.speciesService.update(id, updateSpeciesDto)
+  updateSpecies(@Param('id', ParseObjectIdPipe) id: ObjectId, @Body() updateSpeciesDto: UpdateSpeciesDto) {
+    return this.speciesService.updateSpecies(id, updateSpeciesDto)
   }
 
   @Delete(':id')
-  remove(@Param('id', ParseObjectIdPipe) id: ObjectId) {
-    return this.speciesService.delete(id)
+  deleteSpecies(@Param('id', ParseObjectIdPipe) id: ObjectId) {
+    return this.speciesService.deleteSpecies(id)
   }
 }

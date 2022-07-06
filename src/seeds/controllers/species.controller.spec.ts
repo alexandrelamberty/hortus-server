@@ -11,11 +11,11 @@ describe("SpeciesController Unit Tests", () => {
     const ApiServiceProvider = {
       provide: SpeciesService,
       useFactory: () => ({
-        create: jest.fn(() => []),
-        findAll: jest.fn(() => []),
-        findOne: jest.fn(() => { }),
-        update: jest.fn(() => { }),
-        remove: jest.fn(() => { })
+        listSpecies: jest.fn(() => []),
+        createSpecies: jest.fn(() => []),
+        readSpecies: jest.fn(() => { }),
+        updateSpecies: jest.fn(() => { }),
+        deleteSpecies: jest.fn(() => { })
       })
     }
     const app: TestingModule = await Test.createTestingModule({
@@ -27,26 +27,26 @@ describe("SpeciesController Unit Tests", () => {
     spyService = app.get<SpeciesService>(SpeciesService);
   })
 
-  it("calling createSpecies method", () => {
+  it("call createSpecies method", () => {
     const dto = new CreateSpeciesDto();
-    expect(speciesController.create(dto)).not.toEqual(null);
+    expect(speciesController.createSpecies(dto)).not.toEqual(null);
   })
 
-  it("calling createSpecies method 2", () => {
+  it("call createSpecies method 2", () => {
     const dto = new CreateSpeciesDto();
-    speciesController.create(dto);
-    expect(spyService.create).toHaveBeenCalled();
-    expect(spyService.create).toHaveBeenCalledWith(dto);
+    speciesController.createSpecies(dto);
+    expect(spyService.createSpecies).toHaveBeenCalled();
+    expect(spyService.createSpecies).toHaveBeenCalledWith(dto);
   })
 
-  it("calling getAllSpecies method", () => {
-    speciesController.findAll({skip:0,limit:0});
-    expect(spyService.findAll).toHaveBeenCalled();
+  it("call getAllSpecies method", () => {
+    speciesController.listSpecies({skip:0,limit:0});
+    expect(spyService.listSpecies).toHaveBeenCalled();
   })
 
-  it("calling findSpeciesById method", () => {
-    speciesController.read(new Schema.Types.ObjectId('j'));
-    expect(spyService.read).toHaveBeenCalled();
+  it("call findSpeciesById method", () => {
+    speciesController.readSpecies(new Schema.Types.ObjectId('j'));
+    expect(spyService.readSpecies).toHaveBeenCalled();
   })
 
 });

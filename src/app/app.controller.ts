@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppService } from './app.service';
-import { AuthService } from './auth/auth.service';
+import { AuthService } from '../auth/auth.service';
 
 @Controller()
 export class AppController {
@@ -10,7 +10,7 @@ export class AppController {
   ) {}
 
   @Get('/')
-  async home() {
-    return this.appService.getHello();
+  async getVersion() {
+    return this.appService.getVersion();
   }
 }

@@ -1,6 +1,13 @@
+import { Injectable, Logger, NestMiddleware } from '@nestjs/common';
 import { NextFunction, Request, Response } from 'express';
 
 export function logger(req: Request, res: Response, next: NextFunction) {
-  console.log(`Request`, req.url, res.json);
+  const now = Date.now()
+  const method = req.method
+  const url = req.url
+  Logger.log(
+    `${method} ${url}`,
+    url
+  )
   next();
 }

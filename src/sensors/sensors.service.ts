@@ -13,8 +13,18 @@ export class SensorsService {
     private readonly sensorModel: Model<SensorDocument>
   ) {}
 
-  async findAll(): Promise<Sensor[]> {
-    return await this.sensorModel.find().exec()
+  async findAll(skip = 0, limit?: number): Promise<any> {
+    const query = this.sensorModel
+      .find()
+      .sort({ _id: 1 })
+      .skip(parseInt(skip.toString()))
+
+    if (limit) {
+      query.limit(parseInt(limit.toString()))
+    }
+    const results = await query
+    const count = await this.sensorModel.count()
+    return { results, count }
   }
 
   async findByIp(ip: string): Promise<Sensor> {

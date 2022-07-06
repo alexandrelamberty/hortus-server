@@ -9,34 +9,22 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateCultureDto {
 
-	@ApiProperty({ type: Seed })
-  readonly seed: Seed;
+	@TypeClass(() => Seed)
+  public seed: Seed;
 
-  @IsDefined()
-  @IsNotEmptyObject()
   @ValidateNested()
   @TypeClass(() => Seeding)
-	@ApiProperty()
-  readonly seeding: Seeding;
+  public seeding: Seeding = new Seeding();
 
-  @IsDefined()
-  @IsNotEmptyObject()
   @ValidateNested()
   @TypeClass(() => Transplanting)
-	@ApiProperty({ type: Transplanting })
-  readonly transplanting: Transplanting;
+  public transplanting: Transplanting = new Transplanting();
 
-  @IsDefined()
-  @IsNotEmptyObject()
   @ValidateNested()
   @TypeClass(() => Planting)
-	@ApiProperty()
-  readonly planting: Planting;
+  public planting: Planting = new Planting();
 
-  @IsDefined()
-  @IsNotEmptyObject()
   @ValidateNested()
   @TypeClass(() => Harvesting)
-	@ApiProperty()
-  readonly harvesting: Harvesting;
+  public harvesting: Harvesting = new Harvesting();
 }

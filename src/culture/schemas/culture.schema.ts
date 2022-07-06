@@ -21,7 +21,7 @@ export class Culture {
   @Prop({
     type: Seeding,
     ref: 'Seeding',
-    required: false,
+    required: true,
   })
   seeding: Seeding;
 
@@ -35,14 +35,14 @@ export class Culture {
   @Prop({
     type: Planting,
     ref: 'Planting',
-    required: false,
+    required: true,
   })
   planting: Planting;
 
   @Prop({
     type: Harvesting,
     ref: 'Harvesting',
-    required: false,
+    required: true,
   })
   harvesting: Harvesting;
 

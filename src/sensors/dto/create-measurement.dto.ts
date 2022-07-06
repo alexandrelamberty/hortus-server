@@ -3,7 +3,7 @@ import { IsMACAddress , IsString, IsIP, IsNotEmpty, MinLength } from 'class-vali
 export class CreateMeasurementDto {
   @IsNotEmpty()
   @IsString()
-  readonly id: string;
+  readonly sensorId: string;
 
   @IsNotEmpty()
   readonly value: string;

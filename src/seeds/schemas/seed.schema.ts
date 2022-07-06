@@ -14,13 +14,14 @@ import { Transplanting } from './transplanting.schema';
 export type SeedDocument = Seed & Document;
 
 @Schema()
-export class Seed {
+export class  Seed {
   
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: Species.name,
+    ref: 'Species',
+    required: true,
   })
-  species: MongooseSchema.Types.ObjectId;
+  species: Species;
 
   @Prop({ type: String, required: true })
   name: string;

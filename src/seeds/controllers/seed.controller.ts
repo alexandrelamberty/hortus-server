@@ -8,16 +8,19 @@ import {
   Param,
   Post,
   Put,
+  Query,
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common'
 import { FileInterceptor } from '@nestjs/platform-express'
 import { ApiTags } from '@nestjs/swagger'
 import { ObjectId } from 'mongoose'
-import { ParseObjectIdPipe } from 'src/common/pipe/ParseObjectIdPipe'
+import { ParseObjectIdPipe } from '../../common/pipe/ParseObjectIdPipe'
 import { CreateSeedDto } from '../dto/seed/create-seed.dto'
 import { UpdateSeedDto } from '../dto/seed/update-seed.dto'
 import { SeedService } from '../providers/seed.service'
+import { Seed } from '../schemas/seed.schema'
+import { PaginationParams } from '../../common/paginationParams'
 
 @ApiTags('seeds')
 @Controller('seeds')
@@ -25,49 +28,51 @@ import { SeedService } from '../providers/seed.service'
 export class SeedController {
   private readonly logger = new Logger(SeedController.name)
 
-  constructor(private readonly seedService: SeedService) {}
+  constructor(private readonly seedService: SeedService) { }
 
   // TODO Add pagination query
   @Get()
-  findAll() {
-    this.logger.log('findAll')
-    return this.seedService.findAll()
+  listSeeds(@Query() { skip = 0, limit = 10 }: PaginationParams) {
+    return this.seedService.listSeeds(skip, limit)
   }
 
-  @Post()
+  @Post(":id/upload")
   @UseInterceptors(FileInterceptor('image'))
   picture(
-    @Body() body: CreateSeedDto,
+    @Param('id', ParseObjectIdPipe) id: ObjectId,
     @UploadedFile() file: Express.Multer.File
   ) {
-    this.logger.log('body', body)
+    this.logger.log('id', id)
     this.logger.log('file', file)
-    return this.seedService.create(body, 'nothing_for_now')
+    var seed = new UpdateSeedDto();
+    seed.image = file.filename;
+    this.logger.log('seed', seed)
+    return this.seedService.updateSeed(id, seed)
   }
 
   @Post()
-  create(
+  createSeed(
     @Body() body: CreateSeedDto
   ) {
     this.logger.log('body', body)
-    return this.seedService.create(body, 'nothing_for_now')
+    return this.seedService.createSeed(body)
   }
 
   @Get(':id')
-  read(@Param('id', ParseObjectIdPipe) id: ObjectId) {
-    return this.seedService.read(id)
+  readSeed(@Param('id', ParseObjectIdPipe) id: ObjectId) {
+    return this.seedService.readSeed(id)
   }
 
   @Put(':id')
-  update(
+  updateSeed(
     @Param('id', ParseObjectIdPipe) id: ObjectId,
     @Body() body: UpdateSeedDto
   ) {
-    return this.seedService.update(id, body)
+    return this.seedService.updateSeed(id, body)
   }
 
   @Delete(':id')
-  delete(@Param('id', ParseObjectIdPipe) id: ObjectId) {
-    return this.seedService.delete(id)
+  deleteSeed(@Param('id', ParseObjectIdPipe) id: ObjectId) {
+    return this.seedService.deleteSeed(id)
   }
 }

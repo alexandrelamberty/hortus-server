@@ -12,19 +12,25 @@ export class Harvesting {
     default: PhaseStatus.Pending,
     enum: PhaseStatus,
   })
-  status: string;
+  status: string = PhaseStatus.Pending;
 
   @Prop({
     type: Number,
     required: true,
   })
-  quantity: number;
+  quantity: number = 0;
 
   @Prop({
     type: Date,
-    default: Date.now(),
+    required: false,
   })
   startedAt: Date;
+
+  @Prop({
+    type: Date,
+    required: false,
+  })
+  skippedAt: Date;
 
   @Prop({
     type: Date,

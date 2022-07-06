@@ -1,7 +1,6 @@
 import { MailerService } from '@nestjs-modules/mailer';
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import { logger } from 'src/common/middleware/logger.middleware';
 import { User } from 'src/users/schemas/user.schema';
 
 
@@ -12,7 +11,6 @@ constructor(
 	private configService : ConfigService
   ) {}
 
-  private readonly logger = new Logger(MailService.name);
   private readonly confirmUrl : string = this.configService.get('mail.confirmation')
 
   async sendUserConfirmation(user: User, token: string) {

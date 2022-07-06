@@ -1,4 +1,4 @@
-import { CacheInterceptor, CacheModule, CACHE_MANAGER, Inject, Module } from '@nestjs/common'
+import { CacheInterceptor, CacheModule, CACHE_MANAGER, Inject, MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { APP_INTERCEPTOR } from '@nestjs/core'
 import { MongooseModule } from '@nestjs/mongoose'
@@ -7,19 +7,20 @@ import * as redisStore from 'cache-manager-redis-store'
 import { join } from 'path'
 import { AppController } from './app.controller'
 import { AppService } from './app.service'
-import { AuthModule } from './auth/auth.module'
-import { LoggingInterceptor } from './common/interceptors/logging.interceptor'
-import configuration from './config/configuration'
-import { DatabaseConfigService } from './config/providers/DatabaseConfigService'
-import { validate } from './config/validators/env.validation'
-import { SeedModule } from './seeds/seed.module'
-import { UsersModule } from './users/users.module'
+import { AuthModule } from '../auth/auth.module'
+import { LoggingInterceptor } from '../common/interceptors/logging.interceptor'
+import configuration from '../config/configuration'
+import { DatabaseConfigService } from '../config/providers/DatabaseConfigService'
+import { validate } from '../config/validators/env.validation'
+import { SeedModule } from '../seeds/seed.module'
+import { UsersModule } from '../users/users.module'
 import { MulterModule } from '@nestjs/platform-express'
 import { ScheduleModule } from '@nestjs/schedule'
-import { TaskModule } from './tasks/task.module'
-import { CultureModule } from './culture/culture.module'
-import { SensorsModule } from './sensors/sensors.module'
-import { MailModule } from './mail/mail.module'
+import { NotificationModule } from '../notification/notification.module'
+import { CultureModule } from '../culture/culture.module'
+import { SensorsModule } from '../sensors/sensors.module'
+import { MailModule } from '../mail/mail.module'
+import { logger } from '../common/middleware/logger.middleware'
 
 @Module({
   imports: [
@@ -84,7 +85,7 @@ import { MailModule } from './mail/mail.module'
       inject: [ConfigService],
     }),
 
-    // Domain
+    // Domain modules
     AuthModule,
     UsersModule,
     MailModule,
@@ -97,8 +98,8 @@ import { MailModule } from './mail/mail.module'
     AppService,
     DatabaseConfigService,
     // {
-      // provide: APP_INTERCEPTOR,
-      // useClass: CacheInterceptor,
+    // provide: APP_INTERCEPTOR,
+    // useClass: CacheInterceptor,
     // },
     {
       provide: APP_INTERCEPTOR,
@@ -108,11 +109,16 @@ import { MailModule } from './mail/mail.module'
   exports: [DatabaseConfigService /*, CacheModule */],
 })
 export class AppModule {
-/*
-  constructor(@Inject(CACHE_MANAGER) cacheManager) {
-    const client = cacheManager.store.getClient()
-    client.on('error', (error) => {
-      console.error('CacheManager', error)
-    })
-  */
+  /*
+    constructor(@Inject(CACHE_MANAGER) cacheManager) {
+      const client = cacheManager.store.getClient()
+      client.on('error', (error) => {
+        console.error('CacheManager', error)
+      })
+    */
+  configure(consumer: MiddlewareConsumer) {
+    consumer
+      .apply(logger)
+      .forRoutes({ path: 'ab*cd', method: RequestMethod.ALL });
+  }
 }

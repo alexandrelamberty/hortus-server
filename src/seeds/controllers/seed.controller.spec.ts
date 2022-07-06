@@ -2,6 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { SeedController } from './seed.controller';
 import { SeedService } from '../providers/seed.service';
 import { CreateSeedDto } from '../dto/seed/create-seed.dto';
+import { Schema } from 'mongoose';
 
 describe("SeedController Unit Tests", () => {
   let seedController: SeedController;
@@ -10,11 +11,11 @@ describe("SeedController Unit Tests", () => {
     const ApiServiceProvider = {
       provide: SeedService,
       useFactory: () => ({
-        create: jest.fn(() => []),
-        findAll: jest.fn(() => []),
-        findOne: jest.fn(() => { }),
-        update: jest.fn(() => { }),
-        remove: jest.fn(() => { })
+        listSeeds: jest.fn(() => []),
+        createSeed: jest.fn(() => { }),
+        readSeed: jest.fn(() => { }),
+        updateSeed: jest.fn(() => { }),
+        deleteSeed: jest.fn(() => { })
       })
     }
     const app: TestingModule = await Test.createTestingModule({
@@ -28,24 +29,24 @@ describe("SeedController Unit Tests", () => {
 
   it("calling createSeed method", () => {
     const dto = new CreateSeedDto();
-    expect(seedController.create(dto,null)).not.toEqual(null);
+    expect(seedController.createSeed(dto)).not.toEqual(null);
   })
 
   it("calling createSeed method 2", () => {
     const dto = new CreateSeedDto();
-    seedController.create(dto,null);
-    expect(spyService.create).toHaveBeenCalled();
-    expect(spyService.create).toHaveBeenCalledWith(dto, "nothing_for_now");
+    seedController.createSeed(dto);
+    expect(spyService.createSeed).toHaveBeenCalled();
+    expect(spyService.createSeed).toHaveBeenCalledWith(dto);
   })
 
   it("calling getAllSeeds method", () => {
-    seedController.findAll();
-    expect(spyService.findAll).toHaveBeenCalled();
+    seedController.listSeeds({ skip: 0, limit: 0 });
+    expect(spyService.listSeeds).toHaveBeenCalled();
   })
 
   it("calling findSeedById method", () => {
-    seedController.findOne('2');
-    expect(spyService.read).toHaveBeenCalled();
+    seedController.readSeed(new Schema.Types.ObjectId('j'));
+    expect(spyService.readSeed).toHaveBeenCalled();
   })
 
 });

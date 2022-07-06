@@ -4,13 +4,14 @@ import {
   Injectable,
   NotFoundException,
 } from '@nestjs/common'
-import SpeciesNotFoundException from 'src/seeds/exceptions/speciesNotFound.exception'
+import SpeciesNotFoundException from '../../seeds/exceptions/speciesNotFound.exception'
 import { InjectModel } from '@nestjs/mongoose'
 import { throws } from 'assert'
 import { Model, ObjectId } from 'mongoose'
 import { CreateSpeciesDto } from '../dto/species/create-species.dto'
 import { UpdateSpeciesDto } from '../dto/species/update-species.dto'
 import { Species, SpeciesDocument } from '../schemas/species.schema'
+import { PaginationParams } from '../../common/paginationParams'
 
 @Injectable()
 export class SpeciesService {
@@ -19,11 +20,11 @@ export class SpeciesService {
     private readonly speciesModel: Model<SpeciesDocument>
   ) {}
 
-  async findAll(offset: number = 0, limit?: number): Promise<any> {
+  async listSpecies(skip = 0, limit?: number): Promise<any> {
     const query = this.speciesModel
       .find()
       .sort({ _id: 1 })
-      .skip(parseInt(offset.toString()))
+      .skip(parseInt(skip.toString()))
 
     if (limit) {
       query.limit(parseInt(limit.toString()))
@@ -33,18 +34,18 @@ export class SpeciesService {
     return { results, count }
   }
 
-  async create(createSpeciesDto: CreateSpeciesDto): Promise<Species> {
+  async createSpecies(createSpeciesDto: CreateSpeciesDto): Promise<Species> {
     const plantSpecies = new this.speciesModel(createSpeciesDto)
     return await plantSpecies.save()
   }
 
-  async read(id: ObjectId): Promise<Species> {
+  async readSpecies(id: ObjectId): Promise<Species> {
     const result = await this.speciesModel.findById(id).exec()
     if (!result) throw new SpeciesNotFoundException(id)
     return result
   }
 
-  async update(id: ObjectId, updateSpeciesDto: UpdateSpeciesDto) {
+  async updateSpecies(id: ObjectId, updateSpeciesDto: UpdateSpeciesDto) {
     const result = await this.speciesModel
       .findByIdAndUpdate(id, updateSpeciesDto)
       .exec()
@@ -52,7 +53,7 @@ export class SpeciesService {
     return result
   }
 
-  async delete(id: ObjectId) {
+  async deleteSpecies(id: ObjectId) {
     const result = await this.speciesModel.findByIdAndDelete(id).exec()
     if (!result) throw new SpeciesNotFoundException(id)
     return result

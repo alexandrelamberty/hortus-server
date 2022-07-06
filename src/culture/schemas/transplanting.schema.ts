@@ -13,7 +13,7 @@ export class Transplanting {
     default: PhaseStatus.Pending,
     enum: PhaseStatus,
   })
-  status: string;
+  status: string = PhaseStatus.Pending;
 
   @Prop({
     type: String,
@@ -21,19 +21,31 @@ export class Transplanting {
     default: CutlureLocation.Indoor,
     enum: CutlureLocation,
   })
-  location: string;
+  location: string = CutlureLocation.Indoor;
 
   @Prop({
     type: Number,
     required: true,
   })
-  quantity: number;
+  quantity: number = 0;
+
+  @Prop({
+    type: String,
+    default: "neutral",
+  })
+  soil: string = "neutral"
 
   @Prop({
     type: Date,
     required: false,
   })
   startedAt: Date;
+
+  @Prop({
+    type: Date,
+    required: false,
+  })
+  skippedAt: Date;
 
   @Prop({
     type: Date,

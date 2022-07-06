@@ -1,4 +1,6 @@
+# File upload
 /upload
+
 # Environment
 *.env*
 
