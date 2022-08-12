@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { Schema } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 import { CreateSeedDto } from '../dto/create-seed.dto';
 import { SeedService } from '../providers/seed.service';
 import { SeedController } from './seed.controller';
@@ -45,7 +45,7 @@ describe("SeedController Unit Tests", () => {
   })
 
   it("calling findSeedById method", () => {
-    seedController.readSeed(new Schema.Types.ObjectId('j'));
+    seedController.readSeed(new Types.ObjectId('j'));
     expect(spyService.readSeed).toHaveBeenCalled();
   })
 

@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CultureController } from './culture.controller';
 import { CultureService } from '../providers/culture.service';
 import { CreateCultureDto } from '../dto/create-culture.dto';
-import { Schema } from 'mongoose';
+import { Schema, Types } from 'mongoose';
 
 describe("CultureController Unit Tests", () => {
   let cultureController: CultureController;
@@ -12,7 +12,7 @@ describe("CultureController Unit Tests", () => {
     const ApiServiceProvider = {
       provide: CultureService,
       useFactory: () => ({
-        listCultures: jest.fn(({skip,limit}) => []),
+        listCultures: jest.fn(({ skip, limit }) => []),
         createCulture: jest.fn(() => []),
         readCulture: jest.fn(() => { }),
         updateCulture: jest.fn(() => { }),
@@ -47,7 +47,7 @@ describe("CultureController Unit Tests", () => {
   })
 
   it("calling findCultureById method", () => {
-    cultureController.readCulture(new Schema.Types.ObjectId('j'));
+    cultureController.readCulture(new Types.ObjectId('62e7f10b79004284dd5dd3b3'));
     expect(spyService.readCulture).toHaveBeenCalled();
   })
 

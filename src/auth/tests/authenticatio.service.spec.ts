@@ -1,5 +1,5 @@
 
- 
+
 describe('The AuthenticationService', () => {
 
   describe('when creating a cookie', () => {
@@ -7,7 +7,7 @@ describe('The AuthenticationService', () => {
       const userId = "1";
       expect(
         userId
-      ).toEqual('string')
+      ).toEqual('1')
     })
   })
 });

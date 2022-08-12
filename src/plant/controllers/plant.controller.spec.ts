@@ -3,6 +3,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { CreatePlantDto } from '../dto/create-plant.dto';
 import { PlantService } from '../providers/plant.service';
 import { PlantController } from './plant.controller';
+import { UploadedFile, UploadedFiles } from '@nestjs/common';
 
 describe("PlantController Unit Tests", () => {
   let plantController: PlantController;
@@ -34,18 +35,19 @@ describe("PlantController Unit Tests", () => {
 
   it("call createPlant method with non null object ", () => {
     const dto = new CreatePlantDto();
-    plantController.createPlant(dto);
+    const file = new UploadedFile()
+    plantController.createPlant(dto,);
     expect(spyService.createPlant).toHaveBeenCalled();
     expect(spyService.createPlant).toHaveBeenCalledWith(dto);
   })
 
   it("call getAllSpecies method", () => {
-    plantController.listPlants({skip:0,limit:0});
+    plantController.listPlants({ skip: 0, limit: 0 });
     expect(spyService.listPlants).toHaveBeenCalled();
   })
 
   it("call findSpeciesById method", () => {
-    plantController.readPlant(new Schema.Types.ObjectId(''));
+    plantController.readPlant(new Types.ObjectId(''));
     expect(spyService.readPlant).toHaveBeenCalled();
   })
 

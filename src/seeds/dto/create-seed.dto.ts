@@ -8,7 +8,7 @@ import { Plant } from 'src/plant/schemas/plant.schema';
 import { Transplanting } from 'src/seeds/schemas/transplanting.schema';
 
 export class CreateSeedDto {
-  
+
   @TypeClass(() => Plant)
   public plant: Plant
 
