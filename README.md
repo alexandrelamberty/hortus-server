@@ -1,4 +1,4 @@
-[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) [![Node.js CI](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml)
+[![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) ![example workflow](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg)
 
 # Hortus Server
 
@@ -77,8 +77,10 @@ Create a file named `.dev.env` and insert the following
 
 ```properties
 NODE_ENV=development
+# API
 API_URL=localhost
 API_PORT=3333
+# Database (MongoDB)
 DATABASE_ROOT_USER=root
 DATABASE_ROOT_PASSWORD=root
 DATABASE_HOST=localhost
@@ -86,17 +88,21 @@ DATABASE_PORT=27017
 DATABASE_NAME=hortus
 DATABASE_USERNAME=hortus
 DATABASE_PASSWORD=hortus
-DATABASE_URI=mongodb://hortus:hortus@localhost:27017/hortus
-CACHE_HOST=localhost
+DATABASE_URI=mongodb://hortus:hortus@hortus-database:27017/hortus
+# Cache (Redis)
+CACHE_HOST=hortus-cache
 CACHE_PORT=6379
 CACHE_TTL=300
-SESSION_HOST=localhost
+# Session (Redis)
+SESSION_HOST=hortus-session
 SESSION_PORT=6380
 SESSION_TTL=300
-STATIC_DIR=/upload
+# Authentication
 JWT_SECRET=123456
 JWT_EXPIRE=123456
 BCRYPT_HASH=12345
+# File upload
+STATIC_DIR=/upload
 UPLOAD_PATH=/upload
 ```
 
@@ -120,11 +126,14 @@ running.
 docker-compose --env-file .env up database cache session
 ```
 
-## MongoDB
+## Database (MongoDB)
 
-[Mongo Express](http://localhost:8081)
+You can use the service provided in the docker-compose
+[MongoExpress](http://localhost:8081) to browse the database.
 
-## Redis
+## Cache (Redis)
+
+[Redis Commander]()
 
 ```bash
 docker exec -it hortus-cache redis-cli -p 6379
