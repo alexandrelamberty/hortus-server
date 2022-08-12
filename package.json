@@ -37,7 +37,7 @@
     "@nestjs/schedule": "^1.0.1",
     "@nestjs/serve-static": "^2.2.2",
     "@nestjs/swagger": "^5.0.9",
-    "bcrypt-nodejs": "^0.0.3",
+    "bcrypt": ">= 3.0.6",
     "cache-manager": "^3.4.4",
     "cache-manager-redis-store": "^2.0.0",
     "class-transformer": "^0.5.1",
