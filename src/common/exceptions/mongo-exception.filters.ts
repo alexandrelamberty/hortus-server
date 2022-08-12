@@ -12,11 +12,13 @@ import { HttpAdapterHost } from '@nestjs/core'
 @Catch(MongoError)
 export class MongoExceptionFilter implements ExceptionFilter {
   catch(exception: MongoError, host: ArgumentsHost) {
-	const response = host.switchToHttp().getResponse();
+    const ctx = host.switchToHttp()
+    const response = ctx.getResponse()
     console.log(exception)
     switch (exception.code) {
       case 11000:
-		response.status(HttpStatus.CONFLICT).json({ message: exception.errmsg });
+        response.status(HttpStatus.CONFLICT).json({ message: exception.errmsg });
     }
+    response.status(HttpStatus.BAD_REQUEST).json({ message: exception.errmsg });
   }
 }

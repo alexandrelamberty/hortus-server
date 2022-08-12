@@ -1,15 +1,15 @@
 import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MulterModule } from '@nestjs/platform-express';
-import { SeedController } from './controllers/seed.controller';
-import { SeedService } from './providers/seed.service';
-import { Seed, SeedSchema } from './schemas/seed.schema';
+import { PlantController } from './controllers/plant.controller';
+import { PlantService } from './providers/plant.service';
+import { Plant, PlantSchema } from './schemas/plant.schema';
 
 @Module({
   imports: [
     // CacheModule.register(),
     MongooseModule.forFeature([
-      { name: Seed.name, schema: SeedSchema },
+      { name: Plant.name, schema: PlantSchema },
     ]),
 
     MulterModule.register({
@@ -17,10 +17,10 @@ import { Seed, SeedSchema } from './schemas/seed.schema';
     }),
   ],
   providers: [
-    SeedService,
+    PlantService,
   ],
   controllers: [
-    SeedController,
+    PlantController,
   ],
 })
-export class SeedModule {}
+export class PlantModule {}

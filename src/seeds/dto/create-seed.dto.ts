@@ -4,13 +4,13 @@ import { Schema as MongooseSchema } from 'mongoose';
 import { Harvesting } from 'src/seeds/schemas/harvesting.schema';
 import { Planting } from 'src/seeds/schemas/planting.schema';
 import { Seeding } from 'src/seeds/schemas/seeding.schema';
-import { Species } from '../../schemas/species.schema';
+import { Plant } from 'src/plant/schemas/plant.schema';
 import { Transplanting } from 'src/seeds/schemas/transplanting.schema';
 
 export class CreateSeedDto {
   
-  @TypeClass(() => Species)
-  public species: Species
+  @TypeClass(() => Plant)
+  public plant: Plant
 
   @IsString()
   @IsNotEmpty()

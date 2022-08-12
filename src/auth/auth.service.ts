@@ -1,10 +1,12 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
+import { ObjectId, Types } from 'mongoose';
 import { CreateUserDto } from 'src/users/dto/create-user.dto';
 import { UsersService } from '../users/users.service';
-
+import { TokenPayload } from './tokenPayload.interface'
+import { MongoError } from 'mongodb'
 @Injectable()
 export class AuthService {
   constructor(
@@ -15,22 +17,20 @@ export class AuthService {
 
   public async registerUser(createUserDto: CreateUserDto) {
     const salt: string = this.configService.get<string>('BCRYPT_HASH')
+    // Check password match
+
     const hashedPassword = await bcrypt.hash(createUserDto.password, 10);
-    try {
-      const createdUser = await this.usersService.create({
+
+      const user = await this.usersService.create({
         ...createUserDto,
         password: hashedPassword,
       });
-      createdUser.password = undefined;
-      return createdUser;
-    } catch (error) {
-      throw new HttpException(
-        'Something went wrong',
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
-    }
+      user.password = undefined;
+      return user;
+
   }
 
+  // 
   public async validateUser(email: string, plainTextPassword: string) {
     try {
       const user = await this.usersService.findByEmail(email);
@@ -46,16 +46,21 @@ export class AuthService {
   }
 
   public async login(user: any) {
-    const payload = { username: user.username, sub: user.userId };
+    const payload = { username: user.username, sub: user._id };
+    const token = this.jwtService.sign(payload)
     return {
-      access_token: this.jwtService.sign(payload),
+      access_token: token
     };
   }
 
-  public getCookieWithJwtToken(userId: number) {
+  public getCookieWithJwtToken(userId: Types.ObjectId) {
     const payload: TokenPayload = { userId };
     const token = this.jwtService.sign(payload);
-    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXPIRe')}`;
+    return `Authentication=${token}; HttpOnly; Path=/; Max-Age=${this.configService.get('JWT_EXPIRE')}`;
+  }
+
+  public getCookieForLogOut() {
+    return `Authentication=; HttpOnly; Path=/; Max-Age=0`;
   }
 
   private async verifyPassword(

@@ -21,13 +21,14 @@ import { CultureModule } from '../culture/culture.module'
 import { SensorsModule } from '../sensors/sensors.module'
 import { MailModule } from '../mail/mail.module'
 import { logger } from '../common/middleware/logger.middleware'
+import { PlantModule } from 'src/plant/plant.module'
 
 @Module({
   imports: [
     // Configuration - https://docs.nestjs.com/techniques/configuration
     ConfigModule.forRoot({
-      envFilePath: '.env',
-      ignoreEnvFile: false,
+      /*       envFilePath: '.env',
+            ignoreEnvFile: false, */
       isGlobal: true,
       cache: false,
       load: [configuration],
@@ -49,17 +50,17 @@ import { logger } from '../common/middleware/logger.middleware'
     }),
 
     // Cache - https://docs.nestjs.com/techniques/caching
-    CacheModule.registerAsync({
-      imports: [ConfigService],
-      useFactory: async (configService: ConfigService) => ({
-        isGlobal: true,
-        store: redisStore,
-        host: configService.get('cache.host'),
-        port: configService.get('cache.port'),
-        ttl: parseInt(configService.get('cache.ttl')),
-      }),
-      inject: [ConfigService], // Inject DatabaseConfigService
-    }),
+    /*     CacheModule.registerAsync({
+          imports: [ConfigService],
+          useFactory: async (configService: ConfigService) => ({
+            isGlobal: true,
+            store: redisStore,
+            host: configService.get('cache.host'),
+            port: configService.get('cache.port'),
+            ttl: parseInt(configService.get('cache.ttl')),
+          }),
+          inject: [ConfigService], // Inject DatabaseConfigService
+        }), */
 
     // Session TODO: serve the client with express to benefit from express session or check nestjs
     // FIXME
@@ -88,7 +89,9 @@ import { logger } from '../common/middleware/logger.middleware'
     // Domain modules
     AuthModule,
     UsersModule,
+    NotificationModule,
     MailModule,
+    PlantModule,
     SeedModule,
     CultureModule,
     SensorsModule,

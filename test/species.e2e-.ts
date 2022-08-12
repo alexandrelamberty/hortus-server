@@ -4,9 +4,9 @@ import { SeedModule } from '../src/seeds/seed.module';
 import { SpeciesService } from '../src/seeds/providers/species.service';
 import { INestApplication } from '@nestjs/common';
 
-describe('Cats', () => {
+describe('Plant', () => {
   let app: INestApplication;
-  let speciesService = { findAll: () => ['test'] };
+  let speciesService = { listSpecies: () => ['test'] };
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
@@ -20,12 +20,12 @@ describe('Cats', () => {
     await app.init();
   });
 
-  it(`/GET cats`, () => {
+  it(`/GET plants`, () => {
     return request(app.getHttpServer())
-      .get('/cats')
+      .get('/plants')
       .expect(200)
       .expect({
-        data: speciesService.findAll(),
+        data: speciesService.listSpecies(),
       });
   });
 

@@ -1,18 +1,23 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
-export type SpeciesDocument = Species & Document;
+export type PlantDocument = Plant & Document;
 
-@Schema({ collection: 'species' })
-export class Species {
+@Schema()
+export class Plant {
+  @Prop({ type: String, required: false })
+  picture: string
+
+  @Prop({ type: String, required: false })
+  color: string
 
   @Prop({ type: String, required: true })
   name: string;
 
-	@Prop({ type: String, required: false })
+  @Prop({ type: String, required: false })
   name_fr: string;
-  
-	@Prop({ type: String, required: true })
+
+  @Prop({ type: String, required: true })
   family: string;
 
   @Prop({ type: String, required: true })
@@ -29,4 +34,4 @@ export class Species {
 
 }
 
-export const SpeciesSchema = SchemaFactory.createForClass(Species);
+export const PlantSchema = SchemaFactory.createForClass(Plant);

@@ -4,7 +4,9 @@ import {
 } from 'class-validator';
 
 
-export class CreateSpeciesDto {
+export class CreatePlantDto {
+
+  picture: string;
 
   @IsString()
   @IsNotEmpty()
@@ -20,7 +22,7 @@ export class CreateSpeciesDto {
   @IsNotEmpty()
   @MaxLength(255)
   readonly genus: string;
-  
+
   @IsString()
   @IsNotEmpty()
   @MaxLength(255)
@@ -28,7 +30,7 @@ export class CreateSpeciesDto {
 
   // FIXME: check in schema ?
   readonly subspecies: string;
-  
+
   // FIXME: Can be null but restrict type and length
   readonly variant: string;
 }

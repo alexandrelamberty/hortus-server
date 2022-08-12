@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
-import { Model, ObjectId } from 'mongoose';
+import { Model, ObjectId, Types } from 'mongoose';
 import { PaginationParams } from 'src/common/paginationParams';
 import { CreateCultureDto } from '../dto/create-culture.dto';
 import { UpdateCultureDto } from '../dto/update-culture.dto';
@@ -12,12 +12,13 @@ export class CultureService {
   constructor(
     @InjectModel(Culture.name)
     private readonly model: Model<CultureDocument>,
-  ) {}
+  ) { }
 
   async listCultures(skip = 0, limit?: number): Promise<any> {
     const query = this.model
       .find()
       .sort({ _id: 1 })
+      .populate('seed')
       .skip(parseInt(skip.toString()))
 
     if (limit) {
@@ -33,20 +34,20 @@ export class CultureService {
     return createdCrop.save();
   }
 
-  async readCulture(id: ObjectId): Promise<Culture> {
+  async readCulture(id: Types.ObjectId): Promise<Culture> {
     const result = await this.model.findById(id).exec();
     if (!result) throw new CultureNotFoundException(id)
     return result
   }
 
-  async updateCulture(id: ObjectId, updateCultureDto: UpdateCultureDto) {
-    const result =  await this.model.findByIdAndUpdate(id, updateCultureDto).exec();
+  async updateCulture(id: Types.ObjectId, updateCultureDto: UpdateCultureDto) {
+    const result = await this.model.findByIdAndUpdate(id, updateCultureDto).exec();
     if (!result) throw new CultureNotFoundException(id)
     return result
   }
 
-  async deleteCulture(id: ObjectId) {
-    const result =  await this.model.findByIdAndDelete(id).exec();
+  async deleteCulture(id: Types.ObjectId) {
+    const result = await this.model.findByIdAndDelete(id).exec();
     if (!result) throw new CultureNotFoundException(id)
     return result
   }

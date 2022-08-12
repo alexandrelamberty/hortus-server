@@ -1,6 +1,6 @@
-import { Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
-import { ApiOperation, ApiTags } from '@nestjs/swagger'
-import { ObjectId } from 'mongoose'
+import { BadRequestException, Body, Controller, Delete, Get, Param, Post, Put, Query } from '@nestjs/common'
+import { Types } from 'mongoose'
+import { Mongoose, ObjectId } from 'mongoose'
 import { PaginationParams } from '../../common/paginationParams'
 import { CreateCultureDto } from '../dto/create-culture.dto'
 import { UpdateCultureDto } from '../dto/update-culture.dto'
@@ -11,19 +11,19 @@ import { Planting } from '../schemas/planting.schema'
 import { Seeding } from '../schemas/seeding.schema'
 import { Transplanting } from '../schemas/transplanting.schema'
 
-@ApiTags('cultures')
-@Controller('cultures')
+//@UseGuards(JwtAuthGuard)
+@Controller()
 export class CultureController {
   constructor(private readonly cultureService: CultureService) { }
 
-  @Get()
+  @Get("/cultures")
   listCultures(@Query() { skip = 0, limit = 20 }: PaginationParams) {
     return this.cultureService.listCultures(skip, limit)
   }
 
-  @Post()
+  @Post("/cultures")
   createCulture(@Body() createCultureDto: CreateCultureDto) {
-    // FIXME:
+    // FIXME: Default value
     createCultureDto.seeding = new Seeding();
     createCultureDto.seeding.status = PhaseStatus.Pending;
     createCultureDto.transplanting = new Transplanting();
@@ -33,20 +33,32 @@ export class CultureController {
     return result
   }
 
-  @Get(':id')
-  readCulture(@Param('id') id: ObjectId) {
+  @Get('/cultures/:id')
+  readCulture(@Param('id') id: Types.ObjectId) {
     return this.cultureService.readCulture(id)
   }
 
-  @Put(':id')
-  updateCulture(@Param('id') id: ObjectId, @Body() updateCultureDto: UpdateCultureDto) {
+  @Put('/cultures/:id')
+  updateCulture(@Param('id') id: Types.ObjectId, @Body() updateCultureDto: UpdateCultureDto) {
     return this.cultureService.updateCulture(id, updateCultureDto)
   }
 
-  @Delete(':id')
-  deleteCulture(@Param('id') id: ObjectId) {
+  @Delete('/culture/:id')
+  deleteCulture(@Param('id') id: Types.ObjectId) {
     return this.cultureService.deleteCulture(id)
   }
 
-
+  @Delete('/cultures/:ids')
+  deleteCultureByIds(@Param('ids') ids: string) {
+    const aids = ids.split(',')
+    aids.forEach((value) => {
+      const validObjectId = Types.ObjectId.isValid(value)
+      if (!validObjectId) {
+        throw new BadRequestException('Invalid ObjectId')
+      }
+      const di: Types.ObjectId = Types.ObjectId(value)
+      this.cultureService.deleteCulture(di)
+    })
+    return aids
+  }
 }

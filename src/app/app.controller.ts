@@ -10,6 +10,11 @@ export class AppController {
   ) {}
 
   @Get('/')
+  async getHome() {
+    return this.appService.getVersion();
+  }
+
+  @Get('/version')
   async getVersion() {
     return this.appService.getVersion();
   }

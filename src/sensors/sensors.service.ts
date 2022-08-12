@@ -11,19 +11,22 @@ export class SensorsService {
   constructor(
     @InjectModel(Sensor.name)
     private readonly sensorModel: Model<SensorDocument>
-  ) {}
+  ) { }
 
   async findAll(skip = 0, limit?: number): Promise<any> {
-    const query = this.sensorModel
+    const sensors = this.sensorModel
       .find()
-      .sort({ _id: 1 })
+      //.sort({ _id: 1 })
+      //.populate("measurements")
       .skip(parseInt(skip.toString()))
 
     if (limit) {
-      query.limit(parseInt(limit.toString()))
+      sensors.limit(parseInt(limit.toString()))
     }
-    const results = await query
     const count = await this.sensorModel.count()
+    const results = await sensors
+    console.log(count)
+    console.log(results)
     return { results, count }
   }
 
@@ -51,16 +54,15 @@ export class SensorsService {
 
   async addMeasurement(id: string, createMeasurementDto: CreateMeasurementDto): Promise<Sensor> {
     const sensor = await this.sensorModel.findById(id).exec()
-	if(!sensor)
-	{
-	  throw new HttpException(
-		'Sensor with this mac-address does not exist',
-		HttpStatus.NOT_FOUND
-	  )
-	}
-	sensor.measurements.push(createMeasurementDto)
-	sensor.save()
-	return sensor
+    if (sensor) {
+      sensor.measurements.push(createMeasurementDto)
+      sensor.save()
+      return sensor
+    }
+    throw new HttpException(
+      'Sensor with this mac-address does not exist',
+      HttpStatus.NOT_FOUND
+    )
   }
 
   async create(createSensorDto: CreateSensorDto): Promise<Sensor> {
@@ -68,8 +70,8 @@ export class SensorsService {
     return sensor.save()
   }
 
-  async read(id:string): Promise<Sensor> {
-    const sensor = await this.sensorModel.findById(id).exec()
+  async read(id: string): Promise<Sensor> {
+    const sensor = this.sensorModel.findById(id).exec()
     if (sensor) {
       return sensor
     }
@@ -79,11 +81,11 @@ export class SensorsService {
     )
   }
 
-  async update(id: string, updateSensorDto: UpdateSensorDto) {
-    return await this.sensorModel.findByIdAndUpdate(id, updateSensorDto).exec()
+  async update(id: string, updateSensorDto: UpdateSensorDto): Promise<Sensor> {
+    return this.sensorModel.findByIdAndUpdate(id, updateSensorDto).exec()
   }
 
-  async delete(id: string) {
-    return await this.sensorModel.findByIdAndDelete(id).exec()
+  async delete(id: string): Promise<Sensor> {
+    return this.sensorModel.findByIdAndDelete(id).exec()
   }
 }

@@ -24,31 +24,7 @@ export class SensorsController {
   constructor(
     private readonly sensorsService: SensorsService,
     private readonly networkService: NetworkService
-  ) {}
-
-  // NetworkService
-
-  @Get('scan')
-  scanNetwork() {
-    return this.networkService.scanNetwork()
-  }
-
-  @Get('reverse/:ip')
-  dnsRevers(@Param('ip') ip: string) {
-    return this.networkService.dnsReverse(ip)
-  }
-
-  @Get('lookup/:ip')
-  dnslookupservice(@Param('ip') ip: string, @Query('port') port: number) {
-    return this.networkService.dnsLookupService(ip, port)
-  }
-
-  // SensorsService
-
-  @Get('/:sensorid/measurements')
-  getMeasurement() {
-    return 'measurements'
-  }
+  ) { }
 
   @Post('/:sensorid/measurements')
   addMeasurement(
@@ -65,9 +41,9 @@ export class SensorsController {
   }
 
   @Post()
-  create(@Body() createUserDto: CreateSensorDto) {
-    console.log(createUserDto)
-    return this.sensorsService.create(createUserDto)
+  create(@Body() createSensorDto: CreateSensorDto) {
+    console.log(createSensorDto)
+    return this.sensorsService.create(createSensorDto)
   }
 
   @Get('/:id')
@@ -76,8 +52,8 @@ export class SensorsController {
   }
 
   @Put(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateSensorDto) {
-    return this.sensorsService.update(id, updateUserDto)
+  update(@Param('id') id: string, @Body() updateSensorDto: UpdateSensorDto) {
+    return this.sensorsService.update(id, updateSensorDto)
   }
 
   @Delete(':id')

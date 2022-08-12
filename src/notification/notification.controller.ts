@@ -13,15 +13,14 @@ import {
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('notifications')
-@UseInterceptors(CacheInterceptor)
-export class TasksController {
+//@UseInterceptors(CacheInterceptor)
+export class NotificationController {
   constructor() {}
 
   //@CacheKey('myCustomKey')
   //@CacheTTL(300)
   @Get()
-  findAll() {
-    return "Tasks"
+  getAll() {
+    return "Notifications"
   }
-
 }

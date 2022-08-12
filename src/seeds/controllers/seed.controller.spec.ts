@@ -1,8 +1,8 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { SeedController } from './seed.controller';
-import { SeedService } from '../providers/seed.service';
-import { CreateSeedDto } from '../dto/seed/create-seed.dto';
 import { Schema } from 'mongoose';
+import { CreateSeedDto } from '../dto/create-seed.dto';
+import { SeedService } from '../providers/seed.service';
+import { SeedController } from './seed.controller';
 
 describe("SeedController Unit Tests", () => {
   let seedController: SeedController;

@@ -5,8 +5,6 @@ export type MeasurementDocument = Measurement & Document;
 
 @Schema()
 export class Measurement {
-  @Prop({ type: String, required: true, unique: true })
-  sensorId: string;
 
   @Prop({ type: String, required: true, unique: true, lowercase: true })
   value: string;

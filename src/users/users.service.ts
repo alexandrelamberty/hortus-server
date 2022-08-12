@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -10,66 +10,65 @@ export class UsersService {
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>,
-  ) {}
+  ) { }
 
-  async findAll(): Promise<User[]> {
-    return await this.userModel.find().exec();
-  }
+  // FIXME: Pagination
+  async findAll(skip = 0, limit?: number): Promise<any> {
+    const query = this.userModel
+      .find()
+      .sort({ _id: 1 })
+      .skip(parseInt(skip.toString()))
 
-  async findOne(username: string): Promise<User> {
-    const user = await this.userModel.findOne({ username: username }).exec();
-    if (user) {
-      return user;
+    if (limit) {
+      query.limit(parseInt(limit.toString()))
     }
-    throw new HttpException(
-      'User with this username does not exist',
-      HttpStatus.NOT_FOUND,
-    );
+    const results = query
+    const count = this.userModel.count()
+    return { results, count }
   }
 
   async findById(id: string): Promise<User> {
-    const user = await this.userModel.findOne({ id: id }).exec();
-    if (user) {
-      return user;
-    }
-    throw new HttpException(
+    const result = this.userModel.findOne({ id: id }).exec();
+    if (!result) throw new HttpException(
       'User with this id does not exist',
       HttpStatus.NOT_FOUND,
     );
+    return result;
   }
 
   async findByUsername(username: string): Promise<User> {
-    const user = await this.userModel.findOne({ username: username }).exec();
-    if (user) {
-      return user;
-    }
-    throw new HttpException(
+    const result = this.userModel.findOne({ username: username }).exec();
+    if (!result) throw new HttpException(
       'User with this username does not exist',
       HttpStatus.NOT_FOUND,
     );
+    return result;
   }
 
   async findByEmail(email: string): Promise<User> {
-    const user = await this.userModel.findOne({ email: email }).exec();
-    if (user) {
-      return user;
-    }
-    throw new HttpException(
+    const result = this.userModel.findOne({ email: email }).exec();
+    if (!result) throw new HttpException(
       'User with this email does not exist',
       HttpStatus.NOT_FOUND,
     );
+    return result;
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    const plant = new this.userModel(createUserDto);
-    return plant.save();
+    Logger.log("UserService", createUserDto)
+    const user = new this.userModel(createUserDto);
+    return user.save();
   }
 
   async update(id: string, updateUserDto: UpdateUserDto) {
-    return await this.userModel.findByIdAndUpdate(id, updateUserDto).exec();
+    const result = this.userModel.findByIdAndUpdate(id, updateUserDto).exec();
+    if (!result) throw new NotFoundException("User not found.")
+    return result
   }
 
   async delete(id: string) {
-    return await this.userModel.findByIdAndDelete(id).exec();
+    const result = this.userModel.findByIdAndDelete(id).exec();
+    if (!result) throw new NotFoundException("User not found.")
+    return result
   }
 }

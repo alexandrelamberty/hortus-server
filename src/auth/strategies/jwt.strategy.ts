@@ -12,19 +12,19 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
     private readonly userService: UsersService,
   ) {
     super({
-      /*jwtFromRequest: ExtractJwt.fromExtractors([
+      jwtFromRequest: ExtractJwt.fromExtractors([
         (request: Request) => {
           return request?.cookies?.Authentication;
         },
-      ]),*/
-	  jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+      ]),
+      // jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       secretOrKey: configService.get('JWT_SECRET'),
     });
   }
 
   async validate(payload: any) {
     console.log("JwtStrategy:payload: ", payload);
-    //return this.userService.findById(payload.userId);
-   return { userId: payload.sub, username: payload.username };
+    //return this.userService.findById(payload.username);
+    return { userId: payload.sub, username: payload.username };
   }
 }

@@ -2,10 +2,15 @@
 
 # Hortus Server
 
-Gardening planner, monitoring and automation server application that expose a secured api and a websocket real-time communication with [Hortus Web Application](https://github.com/alexandrelamberty/hortus-web-client) and [Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
-The application receive and process data collected from [Hortus Wireless Temperature / Humidity Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/).
+Gardening planner, monitoring and automation server application that expose a
+secured api and a websocket real-time communication with [Hortus Web
+Application](https://github.com/alexandrelamberty/hortus-web-client) and
+[Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
+The application receive and process data collected from [Hortus Wireless
+Temperature / Humidity
+Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/).
 
-It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
+This repository is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 
 ## Development roadmap
 
@@ -16,24 +21,25 @@ It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
   - [ ] Logging
   - [ ] Validation
     - [ ] Class validator
+  - [_] Serialiaztion, UseInterceptors
   - [ ] Exception
   - [x] Database
   - [x] Cache
     - [ ] Secure session and cache
+  - [_] File, Add storage provider to 'bucket', Google, Azure, AWS ?...
+        BucketStorage, LocalStorage
   - [ ] Session cache
-  - [ ] Mail
-  - [ ] Task Scheduling
   - [ ] Auth
-    - [ ] Invitation
     - [ ] Registration
     - [ ] Login
     - [ ] Token
     - [ ] Refresh token
     - [ ] Logout (Refresh token, session, cache, cookies ?)
-- [ ] API
+- [ ] Modules
+  - [_] Plants
+  - [ ] Mail
+  - [ ] Task Scheduling
   - [ ] Sensors management
-- [ ] Docker
-  - [ ] Redis commander
 
 ## Features roadmap
 
@@ -58,7 +64,8 @@ It is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
 
 ## Installation
 
-After you have cloned the repository, install the javascript dependencies with npm, see [`package.json`](package.json)
+After you have cloned the repository, install the JavaScript dependencies with
+NPM, see [`package.json`](package.json)
 
 ```bash
 npm install
@@ -110,7 +117,7 @@ Before running the application all the services it depends on need to be up and
 running.
 
 ```bash
-docker-compose --env-file .env up
+docker-compose --env-file .env up database cache session
 ```
 
 ## MongoDB

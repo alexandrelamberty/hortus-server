@@ -8,8 +8,9 @@ import { Water } from '../enums/water.enum';
 import { Harvesting } from './harvesting.schema';
 import { Planting } from './planting.schema';
 import { Seeding } from './seeding.schema';
-import { Species } from './species.schema';
+import { Plant } from '../../plant/schemas/plant.schema';
 import { Transplanting } from './transplanting.schema';
+import { plainToClassFromExist } from 'class-transformer';
 
 export type SeedDocument = Seed & Document;
 
@@ -18,10 +19,10 @@ export class  Seed {
   
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: 'Species',
+    ref: 'Plant',
     required: true,
   })
-  species: Species;
+  plant: Plant;
 
   @Prop({ type: String, required: true })
   name: string;
@@ -75,14 +76,14 @@ export class  Seed {
 
   @Prop({
     type: [MongooseSchema.Types.ObjectId],
-    ref: Species.name,
+    ref: Plant.name,
     //default: [],
   })
   companions: MongooseSchema.Types.ObjectId[];
 
   @Prop({
     type: [MongooseSchema.Types.ObjectId],
-    ref: Species.name,
+    ref: Plant.name,
     //default: [],
   })
   competitors: MongooseSchema.Types.ObjectId[];
