@@ -6,7 +6,9 @@ import {
   VersioningType
 } from '@nestjs/common'
 import { HttpAdapterHost, NestFactory } from '@nestjs/core'
+import { NestExpressApplication } from '@nestjs/platform-express'
 import * as cookieParser from 'cookie-parser'
+import { join } from 'path'
 import { BadRequestExceptionFilter } from 'src/common/exceptions/bad-request.exception.filter'
 import { ExceptionsLoggerFilter } from 'src/common/exceptions/exceptionLogger.filter'
 import { HttpExceptionFilter } from 'src/common/exceptions/http-exception.filter'
@@ -19,8 +21,8 @@ import { TransformInterceptor } from './common/interceptors/transform.intercepto
 async function bootstrap() {
 
   // Check types or interfaces; NestExpressApplication
-  const app = await NestFactory.create<INestApplication>(AppModule)
-  
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
+
   // Logger - 
   app.use(logger);
 
@@ -32,7 +34,7 @@ async function bootstrap() {
     new BadRequestExceptionFilter(),
     new MongoExceptionFilter()
   )
-  
+
   // Interceptors - 
   //app.useGlobalInterceptors(new TransformInterceptor())
 
@@ -52,6 +54,12 @@ async function bootstrap() {
     allowedHeaders: '*',
     origin: '*',
   })
+
+  // Static assets 
+
+  app.useStaticAssets(join(__dirname, '..', 'upload'), {
+    prefix: '/static/',
+  });
 
   await app.listen(3333)
 }

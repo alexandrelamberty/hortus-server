@@ -67,11 +67,9 @@ import { PlantModule } from 'src/plant/plant.module'
 
     // Static Server - https://docs.nestjs.com/recipes/serve-static
     // https://docs.nestjs.com/techniques/mvc
-    /*
-    ServeStaticModule.forRoot({
-      rootPath: join(__dirname, '..', '/upload'),
-    }),
-    */
+    /*     ServeStaticModule.forRoot({
+          rootPath: join(__dirname, '..', '/upload'),
+        }), */
 
     // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
     ScheduleModule.forRoot(),
