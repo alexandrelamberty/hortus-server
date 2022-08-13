@@ -14,6 +14,10 @@ This repository is part of the [Hortus](https://github.com/alexandrelamberty/hor
 
 ## Development roadmap
 
+- [_] CI
+	- [_] Docker build and push
+	- [_] Node
+- [_] Tests
 - [ ] Core
   - [ ] Configuration
     - [x] Global
