@@ -1,4 +1,4 @@
-![example workflow](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg) [![Docker Image CI](https://github.com/alexandrelamberty/hortus-server/actions/workflows/docker-image-ci.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-server/actions/workflows/docker-image-ci.yml)
+![Node CI](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg) [![Docker Image CI](https://github.com/alexandrelamberty/hortus-server/actions/workflows/docker-image-ci.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-server/actions/workflows/docker-image-ci.yml)
 
 # Hortus Server
 
