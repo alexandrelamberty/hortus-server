@@ -1,7 +1,7 @@
 import * as request from 'supertest';
 import { Test } from '@nestjs/testing';
-import { SeedModule } from '../src/seeds/seed.module';
-import { SpeciesService } from '../src/seeds/providers/species.service';
+import { PlantModule } from '../src/plant/plant.module';
+import { PlantService } from '../src/plant/providers/plant.service';
 import { INestApplication } from '@nestjs/common';
 
 describe('Plant', () => {
@@ -10,9 +10,9 @@ describe('Plant', () => {
 
   beforeAll(async () => {
     const moduleRef = await Test.createTestingModule({
-      imports: [SeedModule],
+      imports: [PlantModule],
     })
-      .overrideProvider(SpeciesService)
+      .overrideProvider(PlantService)
       .useValue(speciesService)
       .compile();
 

@@ -10,8 +10,6 @@
     "node": ">=16.10.0"
   },
   "scripts": {
-    "docker:down": "docker stop hortus-cache hortus-session hortus-database hortus-mongo-express hortus-api hortus-static",
-    "docker:up": "docker-compose --env-file .env up -d cache session database mongo-express",
     "prebuild": "rimraf dist",
     "build": "nest build",
     "start": "nest start",

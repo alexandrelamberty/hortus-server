@@ -62,14 +62,6 @@ import { PlantModule } from 'src/plant/plant.module'
           inject: [ConfigService], // Inject DatabaseConfigService
         }), */
 
-    // Session TODO: serve the client with express to benefit from express session or check nestjs
-    // FIXME
-
-    // Static Server - https://docs.nestjs.com/recipes/serve-static
-    // https://docs.nestjs.com/techniques/mvc
-    /*     ServeStaticModule.forRoot({
-          rootPath: join(__dirname, '..', '/upload'),
-        }), */
 
     // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
     ScheduleModule.forRoot(),
