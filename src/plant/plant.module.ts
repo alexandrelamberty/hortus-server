@@ -13,6 +13,7 @@ import { Plant, PlantSchema } from './schemas/plant.schema';
     ]),
 
     MulterModule.register({
+      // FIXME: config/env 
       dest: './upload',
     }),
   ],
@@ -23,4 +24,4 @@ import { Plant, PlantSchema } from './schemas/plant.schema';
     PlantController,
   ],
 })
-export class PlantModule {}
+export class PlantModule { }

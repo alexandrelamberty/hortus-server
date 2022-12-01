@@ -1,11 +1,11 @@
+# Development
+
 ## Features
 
 - [ ] Add monitoring devices, humidity, temperature, ph
 - [ ] Add controller devices, ventilation, heating, watering
 - [ ] Monitoring alerts vie SMS, email, mobile and web notifications
 - [ ] Automation of ventilation, heating and wateriong
-
-# Development
 
 - [ ] Core
   - [ ] Configuration
@@ -29,7 +29,8 @@
     - [ ] Logout (Refresh token, session, cache, cookies ?)
 - [ ] Modules
   - [ ] Plants
+  - [ ] Seeds
+  - [ ] Culture
   - [ ] Mail
   - [ ] Task Scheduling
-  - [ ] Sensors management
-
+  - [ ] Sensors

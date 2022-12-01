@@ -1,6 +1,6 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { PhaseStatus } from '../enum/phase-status.enum';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { PhaseStatus } from "../enum/phase-status.enum";
 
 export type HarvestingDocument = Harvesting & Document;
 
@@ -18,7 +18,16 @@ export class Harvesting {
     type: Number,
     required: true,
   })
-  quantity: number = 0;
+  quantity = 0;
+
+  // FIXME: weight metric in kg
+  // weight : number
+
+  @Prop({
+    type: Number,
+    required: false,
+  })
+  weight = 0;
 
   @Prop({
     type: Date,

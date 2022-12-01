@@ -1,25 +1,23 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Frost } from '../enums/frost.enum';
-import { Season } from '../enums/season.enum';
-import { Sun } from '../enums/sun.enum';
-import { Type } from '../enums/type.enum';
-import { Water } from '../enums/water.enum';
-import { Harvesting } from './harvesting.schema';
-import { Planting } from './planting.schema';
-import { Seeding } from './seeding.schema';
-import { Plant } from '../../plant/schemas/plant.schema';
-import { Transplanting } from './transplanting.schema';
-import { plainToClassFromExist } from 'class-transformer';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document, Schema as MongooseSchema } from "mongoose";
+import { Plant } from "../../plant/schemas/plant.schema";
+import { Frost } from "../enums/frost.enum";
+import { Season } from "../enums/season.enum";
+import { Sun } from "../enums/sun.enum";
+import { Type } from "../enums/type.enum";
+import { Water } from "../enums/water.enum";
+import { Harvesting } from "./harvesting.schema";
+import { Planting } from "./planting.schema";
+import { Seeding } from "./seeding.schema";
+import { Transplanting } from "./transplanting.schema";
 
 export type SeedDocument = Seed & Document;
 
 @Schema()
-export class  Seed {
-  
+export class Seed {
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: 'Plant',
+    ref: "Plant",
     required: true,
   })
   plant: Plant;
@@ -115,7 +113,7 @@ export class  Seed {
 
 export const SeedSchema = SchemaFactory.createForClass(Seed);
 
-SeedSchema.pre<Seed>('save', function (next) {
+SeedSchema.pre<Seed>("save", function (next) {
   // eslint-disable-next-line @typescript-eslint/no-this-alias
   const seed = this;
   const now = new Date();

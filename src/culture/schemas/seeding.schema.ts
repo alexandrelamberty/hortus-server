@@ -1,7 +1,7 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { CutlureLocation } from '../enum/location.enum';
-import { PhaseStatus } from '../enum/phase-status.enum';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { CutlureLocation } from "../enum/location.enum";
+import { PhaseStatus } from "../enum/phase-status.enum";
 
 export type SeedingDocument = Seeding & Document;
 
@@ -25,13 +25,13 @@ export class Seeding {
     type: Number,
     default: 0,
   })
-  quantity: number = 0;
+  quantity = 0;
 
   @Prop({
     type: String,
     default: "neutral",
   })
-  soil: string = "neutral"
+  soil = "neutral";
 
   @Prop({
     type: Date,

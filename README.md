@@ -10,10 +10,6 @@ use encryption with JWT and BCRYPT.
 
 The API implement the [Hortus API Specification](https://github.com/alexandrelamberty/hortus-api-spec)
 
-## Architecture
-
-This API run as a Docker service and rely on a [MongoDB](https://hub.docker.com/_/mongo) database and a [Redis](https://hub.docker.com/_/redis) cache service.
-
 ## Technologies, languages, frameworks...
 
 - [Docker](https://www.docker.com/)
@@ -37,51 +33,69 @@ complete stack.
 
 ## Development
 
-Create a file named `.env` and insert the following
+### Architecture
+
+This API run as a Docker service and rely on a [MongoDB](https://hub.docker.com/_/mongo) database and a [Redis](https://hub.docker.com/_/redis) cache service.
+
+### Run required services
+
+See [Hortus Readme - Development - API]()
+
+### Environments variables
+
+Create a file named `.env` and insert the following properties
 
 ```properties
-NODE_ENV=dev
-# Database (MongoDB)
-DATABASE_URI=mongodb://hortus:hortus@hortus-database:27017/hortus
-# Cache (Redis)
-CACHE_HOST=hortus-cache
+ENV=dev
+PORT=3333
+PAIRING_KEY=9fca54477c8ad4e70dc5e1084f884aad
+JWT_SECRET=d7a481461577ba4c3c4c6946cca7204b
+JWT_EXPIRE=90
+BCRYPT_HASH=7f91317e30a02bc7b87205e95b842df2
+DATABASE_URI=mongodb://hortus:hortus@localhost:27017/hortus
+STATIC_DIR=/upload
+UPLOAD_PATH=/upload
+CACHE_HOST=localhost
 CACHE_PORT=6379
 CACHE_TTL=300
-# Session (Redis)
-SESSION_HOST=hortus-session
+SESSION_HOST=localhost
 SESSION_PORT=6380
 SESSION_TTL=300
-# Authentication
-JWT_SECRET=123456
-JWT_EXPIRE=123456
-BCRYPT_HASH=12345
 ```
 
 This config will work out of the box in most case. Verify that the ports
 specified in the configuration are not in use.
 
-## Running with NPM
+### Running with NPM 
+
+Run the application 
 
 ```bash
 npm run start:development
 ```
 
-## Running with Docker
+### Tests
 
-```bash
-docker run -p 3333:3333 --network=hortus_default --env-file .env --name hortus-api -d alexandrelamberty/hortus-api:latest
-```
-
-## Tests
+> To implement
 
 ```bash
 npm run tests
 ```
 
-## Build 
+## Build and run with Docker
+
+Build the image, see: [Dockerfile](./Dockerfile).
 
 ```bash
-docker build . -t alexandrelamberty/hortus-api:latest
+docker build . -t alexandrelamberty/hortus-api:{tag}
+```
+
+Run the image, specify the ports mapping, environment variables file and network to join.
+
+FIXME: link source folder
+
+```bash
+docker run -p 3333:3333 --network=hortus_default --env-file .env --name hortus-api -d alexandrelamberty/hortus-api:{tag}
 ```
 
 ## Push to Docker Hub
@@ -89,6 +103,6 @@ docker build . -t alexandrelamberty/hortus-api:latest
 > Automated with GitHub Action, see: [docker.yml](./.github/workflows/docker.yml)
 
 ```bash
-docker tag alexandrelamberty/hortus-api:latest alexandrelamberty/hortus-api:latest
-docker push alexandrelamberty/hortus-api:latest
-```## Publish
+docker tag alexandrelamberty/hortus-api:{tag} alexandrelamberty/hortus-api:{tag}
+docker push alexandrelamberty/hortus-api:{tag}
+```

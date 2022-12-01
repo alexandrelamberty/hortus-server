@@ -1,27 +1,24 @@
-import { CacheInterceptor, CacheModule, CACHE_MANAGER, Inject, MiddlewareConsumer, Module, RequestMethod } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { APP_INTERCEPTOR } from '@nestjs/core'
-import { MongooseModule } from '@nestjs/mongoose'
-import { ServeStaticModule } from '@nestjs/serve-static'
-import * as redisStore from 'cache-manager-redis-store'
-import { join } from 'path'
-import { AppController } from './app.controller'
-import { AppService } from './app.service'
-import { AuthModule } from '../auth/auth.module'
-import { LoggingInterceptor } from '../common/interceptors/logging.interceptor'
-import configuration from '../config/configuration'
-import { DatabaseConfigService } from '../config/providers/DatabaseConfigService'
-import { validate } from '../config/validators/env.validation'
-import { SeedModule } from '../seeds/seed.module'
-import { UsersModule } from '../users/users.module'
-import { MulterModule } from '@nestjs/platform-express'
-import { ScheduleModule } from '@nestjs/schedule'
-import { NotificationModule } from '../notification/notification.module'
-import { CultureModule } from '../culture/culture.module'
-import { SensorsModule } from '../sensors/sensors.module'
-import { MailModule } from '../mail/mail.module'
-import { logger } from '../common/middleware/logger.middleware'
-import { PlantModule } from 'src/plant/plant.module'
+import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
+import { ConfigModule, ConfigService } from "@nestjs/config";
+import { APP_INTERCEPTOR } from "@nestjs/core";
+import { MongooseModule } from "@nestjs/mongoose";
+import { MulterModule } from "@nestjs/platform-express";
+import { ScheduleModule } from "@nestjs/schedule";
+import { PlantModule } from "src/plant/plant.module";
+import { AuthModule } from "../auth/auth.module";
+import { LoggingInterceptor } from "../common/interceptors/logging.interceptor";
+import { logger } from "../common/middleware/logger.middleware";
+import configuration from "../config/configuration";
+import { DatabaseConfigService } from "../config/providers/DatabaseConfigService";
+import { validate } from "../config/validators/env.validation";
+import { CultureModule } from "../culture/culture.module";
+import { MailModule } from "../mail/mail.module";
+import { NotificationModule } from "../notification/notification.module";
+import { SeedModule } from "../seeds/seed.module";
+import { SensorsModule } from "../sensors/sensors.module";
+import { UsersModule } from "../users/users.module";
+import { AppController } from "./app.controller";
+import { AppService } from "./app.service";
 
 @Module({
   imports: [
@@ -39,7 +36,7 @@ import { PlantModule } from 'src/plant/plant.module'
     MongooseModule.forRootAsync({
       imports: [ConfigService],
       useFactory: async (configService: ConfigService) => ({
-        uri: configService.get('mongo.uri'),
+        uri: configService.get("mongo.uri"),
         useNewUrlParser: true,
         // https://stackoverflow.com/questions/51960171/node63208-deprecationwarning-collection-ensureindex-is-deprecated-use-creat
         useFindAndModify: false,
@@ -62,7 +59,6 @@ import { PlantModule } from 'src/plant/plant.module'
           inject: [ConfigService], // Inject DatabaseConfigService
         }), */
 
-
     // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
     ScheduleModule.forRoot(),
 
@@ -70,7 +66,7 @@ import { PlantModule } from 'src/plant/plant.module'
     MulterModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (configService: ConfigService) => ({
-        dest: configService.get('medias.upload'),
+        dest: configService.get("medias.upload"),
         isGlobal: true,
       }),
       inject: [ConfigService],
@@ -112,6 +108,6 @@ export class AppModule {
   configure(consumer: MiddlewareConsumer) {
     consumer
       .apply(logger)
-      .forRoutes({ path: 'ab*cd', method: RequestMethod.ALL });
+      .forRoutes({ path: "ab*cd", method: RequestMethod.ALL });
   }
 }

@@ -1,8 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable } from "@nestjs/common";
 
 @Injectable()
 export class AppService {
   getVersion(): string {
-    return '1.0.0';
+    return "Hortus API v1.0.0";
   }
 }
