@@ -10,11 +10,10 @@ import {
   Put,
   Query,
   UploadedFile,
-  UploadedFiles,
   UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { ObjectId, Types } from "mongoose";
+import { Types } from "mongoose";
 import { PaginationParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { CreatePlantDto } from "../dto/create-plant.dto";

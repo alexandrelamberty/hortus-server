@@ -10,13 +10,11 @@ import {
   Query,
 } from "@nestjs/common";
 import { Types } from "mongoose";
-import { Mongoose, ObjectId } from "mongoose";
 import { PaginationParams } from "../../common/paginationParams";
 import { CreateCultureDto } from "../dto/create-culture.dto";
 import { UpdateCultureDto } from "../dto/update-culture.dto";
 import { PhaseStatus } from "../enum/phase-status.enum";
 import { CultureService } from "../providers/culture.service";
-import { Culture } from "../schemas/culture.schema";
 import { Harvesting } from "../schemas/harvesting.schema";
 import { Planting } from "../schemas/planting.schema";
 import { Seeding } from "../schemas/seeding.schema";
