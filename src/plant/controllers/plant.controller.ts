@@ -14,6 +14,7 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Types } from "mongoose";
+import { SharpPipe } from "src/common/pipe/SharpPipe";
 import { PaginationParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { CreatePlantDto } from "../dto/create-plant.dto";
@@ -38,13 +39,12 @@ export class PlantController {
   @UseInterceptors(FileInterceptor("image"))
   createPlant(
     @Body() createPlantDto: CreatePlantDto,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
     if (file) {
-      Logger.log(file);
-      createPlantDto.picture = file.filename;
+      createPlantDto.picture = file;
     }
-    Logger.log(createPlantDto);
+    Logger.log("createPlantDTO", createPlantDto);
     return this.plantService.createPlant(createPlantDto);
   }
 
@@ -60,11 +60,10 @@ export class PlantController {
   updatePlant(
     @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
     @Body() updatePlantDto: UpdatePlantDto,
-    @UploadedFile() file: Express.Multer.File
+    @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
     if (file) {
-      Logger.log(file);
-      updatePlantDto.picture = file.filename;
+      updatePlantDto.picture = file;
     }
     return this.plantService.updatePlant(id, updatePlantDto);
   }

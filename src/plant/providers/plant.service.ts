@@ -44,8 +44,6 @@ export class PlantService {
       .findByIdAndUpdate(id, updatePlantDto)
       .exec();
     if (!result) throw new PlantNotFoundException(id);
-    // FIXME: object not updated
-    console.log(result);
     return result;
   }
 
