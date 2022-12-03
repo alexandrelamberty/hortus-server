@@ -14,11 +14,13 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Types } from "mongoose";
+import { SharpPipe } from "src/common/pipe/SharpPipe";
 import { CreateSeedDto } from "src/seeds/dto/create-seed.dto";
 import { PaginationParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
 import { SeedService } from "../providers/seed.service";
+import { Seed } from "../schemas/seed.schema";
 
 @Controller("seeds")
 // @UseInterceptors(CacheInterceptor)
@@ -41,16 +43,17 @@ export class SeedController {
   @UseInterceptors(FileInterceptor("image"))
   picture(
     @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
-    @UploadedFile() file: Express.Multer.File
-  ) {
+    @UploadedFile(SharpPipe) file: string
+  ): Promise<Seed> {
+    this.logger.log(file);
     const seed = new UpdateSeedDto();
-    seed.image = file.filename;
+    seed.image = file;
     return this.seedService.updateSeed(id, seed);
   }
 
   @Post()
   createSeed(@Body() body: CreateSeedDto) {
-    this.logger.log("body", body);
+    this.logger.log(body);
     return this.seedService.createSeed(body);
   }
 
