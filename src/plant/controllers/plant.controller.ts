@@ -42,7 +42,7 @@ export class PlantController {
     @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
     if (file) {
-      createPlantDto.picture = file;
+      createPlantDto.image = file;
     }
     Logger.log("createPlantDTO", createPlantDto);
     return this.plantService.createPlant(createPlantDto);
@@ -63,7 +63,7 @@ export class PlantController {
     @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
     if (file) {
-      updatePlantDto.picture = file;
+      updatePlantDto.image = file;
     }
     return this.plantService.updatePlant(id, updatePlantDto);
   }

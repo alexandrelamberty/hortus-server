@@ -10,7 +10,7 @@ use encryption with JWT and BCRYPT.
 
 The API implement the [Hortus API Specification](https://github.com/alexandrelamberty/hortus-api-spec)
 
-## Technologies, languages, frameworks...
+## Technologies, languages, frameworks
 
 - [Docker](https://www.docker.com/)
 - [Node.js](https://nodejs.org/)
@@ -41,7 +41,7 @@ This API run as a Docker service and rely on a [MongoDB](https://hub.docker.com/
 
 See [Hortus Readme - Development - API]()
 
-### Environments variables
+### Environment variables
 
 Create a file named `.env` and insert the following properties
 
@@ -66,9 +66,9 @@ SESSION_TTL=300
 This config will work out of the box in most case. Verify that the ports
 specified in the configuration are not in use.
 
-### Running with NPM 
+### Running with NPM
 
-Run the application 
+Run the application
 
 ```bash
 npm run start:development

@@ -1,7 +1,8 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
-import { CutlureLocation } from '../enum/location.enum';
-import { PhaseStatus } from '../enum/phase-status.enum';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
+import { CutlureLocation } from "../enum/location.enum";
+import { PhaseStatus } from "../enum/phase-status.enum";
+import { Soil } from "../enum/soil.enum";
 
 export type PlantingDocument = Planting & Document;
 
@@ -18,23 +19,24 @@ export class Planting {
   @Prop({
     type: String,
     required: true,
-    default: CutlureLocation.Outdoor,
+    default: CutlureLocation.Outside,
     enum: CutlureLocation,
   })
-  location: string =  CutlureLocation.Outdoor;
+  location: string = CutlureLocation.Outside;
+
+  @Prop({
+    type: String,
+    default: Soil.Chalk,
+    enum: Soil,
+  })
+  soil = Soil.Chalk; // FIXME: @see culture.controller.ts
 
   @Prop({
     type: Number,
     required: false,
     default: 0,
   })
-  quantity: number = 0;
-
-  @Prop({
-    type: String,
-    default: "neutral",
-  })
-  soil: string = "neutral"
+  quantity = 0;
 
   @Prop({
     type: Date,

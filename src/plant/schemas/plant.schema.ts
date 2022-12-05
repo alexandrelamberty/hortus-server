@@ -8,10 +8,14 @@ export class Plant {
   @Prop({ type: String, required: true })
   name: string;
 
-  @Prop({ type: String, required: true })
+  // FIXME: change to true when this is generated server side
+  @Prop({ type: String, required: false })
   binomial: string;
 
-  @Prop({ type: String, required: false })
+  @Prop({ type: String, required: true })
+  image: string;
+
+  @Prop({ type: String, required: true })
   family: string;
 
   @Prop({ type: String, required: true })
@@ -35,14 +39,12 @@ export class Plant {
   @Prop({ type: String, required: false })
   hybrid: string;
 
+  // FIXME: generate server side from picture colors or ui?
   @Prop({ type: String, required: false })
-  picture: string;
+  color: string;
 
-  // @Prop({ type: String, required: false })
-  // color: string;
-
-  // @Prop()
-  // common_names: Array<string>;
+  @Prop({ type: Array<string>, required: false })
+  common_names: Array<string>;
 }
 
 export const PlantSchema = SchemaFactory.createForClass(Plant);

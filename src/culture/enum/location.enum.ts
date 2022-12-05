@@ -1,5 +1,6 @@
 export enum CutlureLocation {
-  Indoor = 'indoor',
-  Frame = 'frame',
-  Outdoor = 'outdoor',
+  Outside = "outside",
+  Inside = "insde",
+  Frame = "frame",
+  Greenhouse = "greenhouse",
 }
