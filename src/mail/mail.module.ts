@@ -1,10 +1,10 @@
-import { HandlebarsAdapter } from '@nestjs-modules/mailer/dist/adapters/handlebars.adapter'
-import { Module } from '@nestjs/common'
-import { MailService } from './mail.service'
-import { MailController } from './mail.controller'
-import { MailerModule } from '@nestjs-modules/mailer'
-import { join } from 'path'
-import { ConfigService } from '@nestjs/config'
+import { HandlebarsAdapter } from "@nestjs-modules/mailer/dist/adapters/handlebars.adapter";
+import { Module } from "@nestjs/common";
+import { MailService } from "./mail.service";
+import { MailController } from "./mail.controller";
+import { MailerModule } from "@nestjs-modules/mailer";
+import { join } from "path";
+import { ConfigService } from "@nestjs/config";
 
 @Module({
   imports: [
@@ -14,18 +14,18 @@ import { ConfigService } from '@nestjs/config'
         // transport: config.get("MAIL_TRANSPORT"),
         // or
         transport: {
-          host: config.get('MAIL_HOST'),
+          host: config.get("MAIL_HOST"),
           secure: false,
           auth: {
-            user: config.get('MAIL_USER'),
-            pass: config.get('MAIL_PASSWORD'),
+            user: config.get("MAIL_USER"),
+            pass: config.get("MAIL_PASSWORD"),
           },
         },
         defaults: {
-          from: `"No Reply" <${config.get('MAIL_FROM')}>`,
+          from: `"No Reply" <${config.get("MAIL_FROM")}>`,
         },
         template: {
-          dir: join(__dirname, 'templates'),
+          dir: join(__dirname, "templates"),
           adapter: new HandlebarsAdapter(),
           options: {
             strict: true,

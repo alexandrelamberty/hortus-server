@@ -4,7 +4,6 @@ import {
   Controller,
   Delete,
   Get,
-  Logger,
   Param,
   Post,
   Put,
@@ -14,73 +13,76 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Types } from "mongoose";
-import { SharpPipe } from "src/common/pipe/SharpPipe";
 import { PaginationParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
+import { SharpPipe } from "../../common/pipe/SharpPipe";
 import { CreatePlantDto } from "../dto/create-plant.dto";
 import { UpdatePlantDto } from "../dto/update-plant.dto";
+import PlantNotFoundException from "../exceptions/plantNotFound.exception";
 import { PlantService } from "../providers/plant.service";
-import { ListPlantsResponse } from "../responses/ListPlantsResponse";
+import { PlantsResponse } from "../responses/plants.responses";
 import { Plant } from "../schemas/plant.schema";
 
-@Controller("plants")
+@Controller("/plants")
 export class PlantController {
   constructor(private readonly plantService: PlantService) {}
 
-  // TODO: No pagination implementation ?
   @Get()
-  listPlants(
+  async listPlants(
     @Query() { skip, limit }: PaginationParams
-  ): Promise<ListPlantsResponse> {
-    return this.plantService.listPlants(skip, limit);
+  ): Promise<PlantsResponse> {
+    return this.plantService.getAll(skip, limit);
+  }
+
+  @Get("/:id")
+  async getById(@Param("id", ParseObjectIdPipe) id: string): Promise<Plant> {
+    try {
+      return await this.plantService.getById(id);
+    } catch (err) {
+      throw new PlantNotFoundException(id);
+    }
   }
 
   @Post()
-  @UseInterceptors(FileInterceptor("image"))
-  createPlant(
-    @Body() createPlantDto: CreatePlantDto,
+  @UseInterceptors(FileInterceptor("file"))
+  async createPlant(
+    @Body() plant: CreatePlantDto,
+    @UploadedFile(SharpPipe) file: string
+  ): Promise<Plant> {
+    if (!file) {
+      throw new BadRequestException("bad request", "no file");
+    } else {
+      plant.image = file;
+    }
+    return this.plantService.insert(plant);
+  }
+
+  @Put()
+  @UseInterceptors(FileInterceptor("file"))
+  async updatePlant(
+    @Param("id", ParseObjectIdPipe) id: string,
+    @Body() plant: UpdatePlantDto,
     @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
     if (file) {
-      createPlantDto.image = file;
+      plant.image = file;
     }
-    Logger.log("createPlantDTO", createPlantDto);
-    return this.plantService.createPlant(createPlantDto);
+    return this.plantService.update(id, plant);
   }
 
-  @Get(":id")
-  readPlant(
-    @Param("id", ParseObjectIdPipe) id: Types.ObjectId
-  ): Promise<Plant> {
-    return this.plantService.readPlant(id);
-  }
-
-  @Put(":id")
-  @UseInterceptors(FileInterceptor("image"))
-  updatePlant(
-    @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
-    @Body() updatePlantDto: UpdatePlantDto,
-    @UploadedFile(SharpPipe) file: string
-  ): Promise<Plant> {
-    if (file) {
-      updatePlantDto.image = file;
-    }
-    return this.plantService.updatePlant(id, updatePlantDto);
-  }
-
-  // TODO: Delete picture from storage
   @Delete("/multiple/:ids")
-  deletePlantByIds(@Param("ids") ids: string) {
+  async deletePlantByIds(
+    @Param("ids") ids: string
+  ): Promise<{ deleted: boolean }> {
     const aids = ids.split(",");
-    aids.forEach((value) => {
-      const validObjectId = Types.ObjectId.isValid(value);
-      Logger.log(value);
+    aids.forEach((id) => {
+      const validObjectId = Types.ObjectId.isValid(id);
       if (!validObjectId) {
         throw new BadRequestException("Invalid ObjectId");
       }
-      const di: Types.ObjectId = Types.ObjectId(value);
-      this.plantService.deletePlant(di);
+      // TODO: Delete picture from storage
+      this.plantService.delete(id);
     });
-    return aids;
+    return { deleted: true };
   }
 }

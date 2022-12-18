@@ -1,10 +1,11 @@
-import { Catch, ArgumentsHost } from '@nestjs/common';
-import { BaseExceptionFilter } from '@nestjs/core';
+import { Catch, ArgumentsHost, Logger } from "@nestjs/common";
+import { BaseExceptionFilter } from "@nestjs/core";
 
 @Catch()
 export class ExceptionsLoggerFilter extends BaseExceptionFilter {
   catch(exception: unknown, host: ArgumentsHost) {
     super.catch(exception, host);
-    console.log('ExceptionsLoggerFilter > Exception thrown', exception);
+
+    console.log(exception);
   }
 }

@@ -7,6 +7,11 @@ export class CreatePlantDto {
   readonly name: string;
 
   @IsString()
+  @IsNotEmpty()
+  @MaxLength(255)
+  readonly binomial: string;
+
+  @IsString()
   @MaxLength(255)
   readonly family: string;
 
@@ -20,11 +25,11 @@ export class CreatePlantDto {
   @MaxLength(255)
   readonly species: string;
 
-  image: string;
+  image?: string;
 
-  readonly subspecies: string;
-  readonly variety: string;
-  readonly forma: string;
-  readonly cultivar: string;
-  readonly hybrid: string;
+  readonly subspecies?: string;
+  readonly variety?: string;
+  readonly forma?: string;
+  readonly cultivar?: string;
+  readonly hybrid?: string;
 }

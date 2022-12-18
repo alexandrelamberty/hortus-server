@@ -14,7 +14,7 @@ export class SharpPipe
         .resize(800, 800)
         .webp({ effort: 3 })
         .toFile(path.join("./upload", filename), function (err, info) {
-          Logger.log(err, info);
+          new Logger(SharpPipe.name).log(err, info);
         });
 
       return filename;

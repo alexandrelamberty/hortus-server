@@ -1,25 +1,11 @@
-import {
-  Body,
-  CacheInterceptor,
-  Controller,
-  Delete,
-  Get,
-  Param,
-  Post,
-  Put,
-  UploadedFile,
-  UseInterceptors,
-} from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
-import { MailService } from './mail.service'
+import { Controller, Get } from "@nestjs/common";
+import { MailService } from "./mail.service";
 
 // FIXME: Don't need a controller this could be only internal?!
-@Controller('mail')
+@Controller("mail")
 export class MailController {
-  constructor(
-	private readonly mailService: MailService,
-  ) {}
-  
+  constructor(private readonly mailService: MailService) {}
+
   @Get("confirmation")
   sendUserConfirmation() {
     // return this.mailService.sendUserConfirmation()
@@ -29,5 +15,4 @@ export class MailController {
   sendUserInvitation() {
     // return this.mailService.sendUserInvitation()
   }
-  
 }

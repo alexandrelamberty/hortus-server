@@ -1,7 +1,6 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
-import { Model, ObjectId, Types } from "mongoose";
-import { PaginationParams } from "../../common/paginationParams";
+import { Model, Types } from "mongoose";
 import { CreateSeedDto } from "../dto/create-seed.dto";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
 import SeedNotFoundException from "../exceptions/seedNotFound.exception";
