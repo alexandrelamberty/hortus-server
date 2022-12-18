@@ -9,23 +9,24 @@ import {
   Query,
   UseGuards,
 } from "@nestjs/common";
-import { PaginationParams } from "src/common/paginationParams";
-import { ParseObjectIdPipe } from "src/common/pipe/ParseObjectIdPipe";
+import { PaginationParams } from "../../common/paginationParams";
+import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
-import { UsersService } from "../providers/users.service";
-import { UsersResponse } from "../responses/users.responses";
+import { UserService } from "../providers/user.service";
 import { User } from "../schemas/user.schema";
+import { UsersResponse } from "../responses/user.responses";
 
 @UseGuards(JwtAuthGuard)
 @Controller("users")
-export class UsersController {
-  constructor(private readonly usersService: UsersService) {}
+export class UserController {
+  constructor(private readonly usersService: UserService) {}
 
   @Get()
   async getAll(@Query() query: PaginationParams): Promise<UsersResponse> {
-    const result = await this.usersService.getAll(query);
+    // FIXME: pass query directly ?
+    const result = await this.usersService.getAll(query.skip, query.limit);
     return result;
   }
 

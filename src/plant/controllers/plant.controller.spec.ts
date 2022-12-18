@@ -31,7 +31,7 @@ describe("PlantController Unit Tests", () => {
               },
               { name: "Test Plant 3", family: "Test Family 3", genus: "" },
             ]),
-            getOne: jest.fn().mockImplementation((id: string) =>
+            getById: jest.fn().mockImplementation((id: string) =>
               Promise.resolve({
                 name: testPlant1,
                 family: testFamily1,
@@ -44,17 +44,17 @@ describe("PlantController Unit Tests", () => {
             //   .mockImplementation((name: string) =>
             //     Promise.resolve({ name, family: testPlant1, age: 4 })
             //   ),
-            insertOne: jest
+            insert: jest
               .fn()
               .mockImplementation((plant: CreatePlantDto) =>
                 Promise.resolve({ _id: "a uuid", ...plant })
               ),
-            updateOne: jest
+            update: jest
               .fn()
               .mockImplementation((plant: UpdatePlantDto) =>
                 Promise.resolve({ _id: "a uuid", ...plant })
               ),
-            deleteOne: jest.fn().mockResolvedValue({ deleted: true }),
+            delete: jest.fn().mockResolvedValue({ deleted: true }),
           },
         },
       ],
@@ -116,7 +116,7 @@ describe("PlantController Unit Tests", () => {
         genus: "4",
         species: "",
       };
-      expect(controller.createPlant(dto, "")).resolves.toEqual({
+      expect(controller.insert(dto, "")).resolves.toEqual({
         _id: "a uuid",
         ...dto,
       });
@@ -125,6 +125,7 @@ describe("PlantController Unit Tests", () => {
 
   describe("updatePlant", () => {
     it("should update a new plant", () => {
+      const id = "";
       const dto: UpdatePlantDto = {
         _id: "a uuid",
         name: "New Cat 1",
@@ -133,31 +134,31 @@ describe("PlantController Unit Tests", () => {
         species: "",
       };
 
-      expect(controller.updatePlant(dto, "")).resolves.toEqual({
-        _id: "a uuid",
+      expect(controller.update(id, dto, null)).resolves.toEqual({
+        _id: id,
         ...dto,
       });
     });
   });
 
-  // describe("deletePlantByIds", () => {
-  //   it("should return that it deleted a plant", () => {
-  //     expect(
-  //       controller.deletePlantByIds(
-  //         "638e04dab2bcf419a0c362c1,638e04dab2bcf419a0c362c1"
-  //       )
-  //     ).resolves.toEqual({
-  //       deleted: true,
-  //     });
-  //   });
-  //   it("should return that it did not delete a cat", () => {
-  //     const deleteSpy = jest
-  //       .spyOn(service, "deleteOne")
-  //       .mockResolvedValueOnce({ deleted: false });
-  //     expect(
-  //       controller.deletePlantByIds("a uuid that does not exist")
-  //     ).resolves.toEqual({ deleted: false });
-  //     expect(deleteSpy).toBeCalledWith("a uuid that does not exist");
-  //   });
-  // });
+  describe("deletePlantByIds", () => {
+    it("should return that it deleted a plant", () => {
+      expect(
+        controller.deletePlantByIds(
+          "638e04dab2bcf419a0c362c1,638e04dab2bcf419a0c362c1"
+        )
+      ).resolves.toEqual({
+        deleted: true,
+      });
+    });
+    it("should return that it did not delete a cat", () => {
+      const deleteSpy = jest
+        .spyOn(service, "delete")
+        .mockResolvedValueOnce({ deleted: false });
+      expect(
+        controller.deletePlantByIds("a uuid that does not exist")
+      ).resolves.toEqual({ deleted: false });
+      expect(deleteSpy).toBeCalledWith("a uuid that does not exist");
+    });
+  });
 });

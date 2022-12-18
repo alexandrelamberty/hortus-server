@@ -45,7 +45,7 @@ export class PlantController {
 
   @Post()
   @UseInterceptors(FileInterceptor("file"))
-  async createPlant(
+  async insert(
     @Body() plant: CreatePlantDto,
     @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
@@ -59,7 +59,7 @@ export class PlantController {
 
   @Put()
   @UseInterceptors(FileInterceptor("file"))
-  async updatePlant(
+  async update(
     @Param("id", ParseObjectIdPipe) id: string,
     @Body() plant: UpdatePlantDto,
     @UploadedFile(SharpPipe) file: string

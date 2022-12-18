@@ -69,10 +69,14 @@ describe("PlantService", () => {
             // FIXME: Mock implemention for skip() and value ?
             find: jest.fn(),
             findById: jest.fn(),
+            findByIdAndDelete: jest.fn(),
+            findByIdAndUpdate: jest.fn(),
             findOne: jest.fn(),
             update: jest.fn(),
             create: jest.fn(),
             remove: jest.fn(),
+            sort: jest.fn(),
+            skip: jest.fn(),
             exec: jest.fn(),
           },
         },
@@ -124,7 +128,7 @@ describe("PlantService", () => {
       "Daucus",
       "D. carrota"
     );
-    const foundPlant = await service.getOne("123");
+    const foundPlant = await service.getById("123");
     expect(foundPlant).toEqual(findMockPlant);
   });
 
@@ -140,7 +144,7 @@ describe("PlantService", () => {
         image: "638e04dab2bcf419a0c362c1.webp",
       })
     );
-    const newPlant = await service.insertOne({
+    const newPlant = await service.insert({
       name: "Carrot",
       binomial: "Daucus carota",
       family: "Apiaceae",

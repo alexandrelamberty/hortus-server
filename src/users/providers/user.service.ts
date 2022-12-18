@@ -1,26 +1,22 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model } from "mongoose";
-import { PaginationParams } from "src/common/paginationParams";
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
 import { User, UserDocument } from "../schemas/user.schema";
 
 @Injectable()
-export class UsersService {
+export class UserService {
   constructor(
     @InjectModel(User.name)
     private readonly userModel: Model<UserDocument>
   ) {}
 
-  async getAll({
-    skip,
-    limit,
-  }: PaginationParams): Promise<{ users: User[]; count: number }> {
-    const query = this.userModel
-      .find()
-      .sort({ _id: 1 })
-      .skip(parseInt(skip.toString()));
+  async getAll(
+    skip = 0,
+    limit?: number
+  ): Promise<{ users: User[]; count: number }> {
+    const query = this.userModel.find().skip(parseInt(skip.toString()));
 
     if (limit) {
       query.limit(parseInt(limit.toString()));
@@ -50,7 +46,7 @@ export class UsersService {
     return result;
   }
 
-  async delete(id: string) {
+  async delete(id: string): Promise<any> {
     const result = this.userModel.findByIdAndDelete(id).exec();
     return result;
   }

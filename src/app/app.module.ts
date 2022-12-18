@@ -16,7 +16,7 @@ import { NotificationModule } from "../notification/notification.module";
 import { PlantModule } from "../plant/plant.module";
 import { SeedModule } from "../seeds/seed.module";
 import { SensorsModule } from "../sensors/sensors.module";
-import { UsersModule } from "../users/users.module";
+import { UsersModule } from "../users/user.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 

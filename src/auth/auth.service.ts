@@ -4,7 +4,7 @@ import { JwtService } from "@nestjs/jwt";
 import * as bcrypt from "bcrypt";
 import { Types } from "mongoose";
 import { CreateUserDto } from "src/users/dto/create-user.dto";
-import { UsersService } from "../users/providers/users.service";
+import { UsersService } from "../users/providers/user.service";
 import { TokenPayload } from "./tokenPayload.interface";
 @Injectable()
 export class AuthService {
