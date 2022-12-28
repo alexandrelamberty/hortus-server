@@ -1,11 +1,13 @@
-import { Injectable } from '@nestjs/common';
-import { Cron, CronExpression } from '@nestjs/schedule';
+import { Injectable } from "@nestjs/common";
+import { Cron } from "@nestjs/schedule";
 
 @Injectable()
 export class NotificationService {
-  @Cron('* * 0 * * *', {
-    name: 'notifications',
-    timeZone: 'Europe/Paris',
+  @Cron("* * 0 * * *", {
+    name: "notifications",
+    timeZone: "Europe/Paris",
   })
-  triggerNotifications() { }
+  triggerNotifications() {
+    // TODO: to be implemented
+  }
 }

@@ -10,7 +10,7 @@ on:
     branches: ["master", "stagging"]
 jobs:
   build:
-    name: "React build and tests"
+    name: "Node build and tests"
     runs-on: ubuntu-latest
     strategy:
       matrix:

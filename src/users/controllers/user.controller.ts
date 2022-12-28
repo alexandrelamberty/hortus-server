@@ -7,18 +7,20 @@ import {
   Patch,
   Post,
   Query,
-  UseGuards,
+  // UseGuards,
 } from "@nestjs/common";
-import { PaginationParams } from "../../common/paginationParams";
-import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
-import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
+
+import { PaginationParams } from "@common/paginationParams";
+import { ParseObjectIdPipe } from "@common/pipe/ParseObjectIdPipe";
+// import { JwtAuthGuard } from "@auth/guards/jwt-auth.guard";
+
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
 import { UserService } from "../providers/user.service";
 import { User } from "../schemas/user.schema";
 import { UsersResponse } from "../responses/user.responses";
 
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 @Controller("users")
 export class UserController {
   constructor(private readonly usersService: UserService) {}
@@ -26,13 +28,23 @@ export class UserController {
   @Get()
   async getAll(@Query() query: PaginationParams): Promise<UsersResponse> {
     // FIXME: pass query directly ?
-    const result = await this.usersService.getAll(query.skip, query.limit);
+    const result = await this.usersService.getAll(query.page, query.limit);
     return result;
   }
 
   @Get("/:id")
   getById(@Param("id", ParseObjectIdPipe) id: string): Promise<User> {
     return this.usersService.findById(id);
+  }
+
+  @Get("/:id")
+  getByUsername(@Param("username") username: string): Promise<User> {
+    return this.usersService.findByUsername(username);
+  }
+
+  @Get("/:id")
+  getByEmail(@Param("email") email: string): Promise<User> {
+    return this.usersService.findByEmail(email);
   }
 
   @Post()

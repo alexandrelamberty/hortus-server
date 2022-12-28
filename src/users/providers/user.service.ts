@@ -31,6 +31,11 @@ export class UserService {
     return result;
   }
 
+  async findByUsername(username: string): Promise<User> {
+    const result = this.userModel.findOne({ username: username }).exec();
+    return result;
+  }
+
   async findByEmail(email: string): Promise<User> {
     const result = this.userModel.findOne({ email: email }).exec();
     return result;
@@ -41,12 +46,12 @@ export class UserService {
     return returnPlant;
   }
 
-  async update(id: string, user: UpdateUserDto) {
+  async update(id: string, user: UpdateUserDto): Promise<User> {
     const result = this.userModel.findByIdAndUpdate(id, user).exec();
     return result;
   }
 
-  async delete(id: string): Promise<any> {
+  async delete(id: string): Promise<User> {
     const result = this.userModel.findByIdAndDelete(id).exec();
     return result;
   }

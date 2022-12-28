@@ -1,4 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
+
 import { CreateUserDto } from "../dto/create-user.dto";
 import { UpdateUserDto } from "../dto/update-user.dto";
 import { UserService } from "../providers/user.service";
@@ -30,7 +31,10 @@ describe("UserController Unit Tests", () => {
                 name: testUser,
               })
             ),
-            getByName: jest
+            getByUsername: jest
+              .fn()
+              .mockImplementation((name: string) => Promise.resolve({ name })),
+            getByEmail: jest
               .fn()
               .mockImplementation((name: string) => Promise.resolve({ name })),
             insert: jest
@@ -73,64 +77,66 @@ describe("UserController Unit Tests", () => {
     });
   });
 
-  // describe("getById", () => {
-  //   it("should get a single User", () => {
-  //     expect(controller.getById("a strange id")).resolves.toEqual({
-  //       _id: "a strange id",
-  //       email: testUser,
-  //     });
+  describe("getById", () => {
+    it("should get a single User", () => {
+      expect(controller.getById("a strange id")).resolves.toEqual({
+        _id: "a strange id",
+        email: testUser,
+      });
 
-  //     expect(controller.getById("a different id")).resolves.toEqual({
-  //       _id: "a different id",
-  //       email: testUser,
-  //     });
-  //   });
-  // });
+      expect(controller.getById("a different id")).resolves.toEqual({
+        _id: "a different id",
+        email: testUser,
+      });
+    });
+  });
 
-  // describe("insert", () => {
-  //   it("should create a new User", () => {
-  //     const dto: CreateUserDto = {
-  //       email: "mail@briangreen.com",
-  //       password: "123",
-  //       confirmPassword: "123",
-  //     };
+  describe("insert", () => {
+    it("should create a new User", () => {
+      const dto: CreateUserDto = {
+        email: "mail@briangreen.com",
+        password: "123",
+        confirmPassword: "123",
+      };
+      // FIXME not equal but contains ?
+      expect(controller.insert(dto)).resolves.toEqual({
+        _id: "a uuid",
+        ...dto,
+      });
+    });
+  });
 
-  //     expect(controller.insert(dto)).resolves.toEqual({
-  //       _id: "a uuid",
-  //       ...dto,
-  //     });
-  //   });
-  // });
+  describe("update", () => {
+    it("should update a User", () => {
+      const id = "638e04dab2bcf419a0c362c1";
+      const dto: UpdateUserDto = {
+        email: "email@mail.com",
+      };
 
-  // describe("update", () => {
-  //   it("should update a User", () => {
-  //     const id = "638e04dab2bcf419a0c362c1";
-  //     const dto: UpdateUserDto = {
-  //       email: "email@mail.com",
-  //     };
+      expect(controller.update(id, dto)).resolves.toEqual({
+        _id: id,
+        ...dto,
+      });
+    });
+  });
 
-  //     expect(controller.update(id, dto)).resolves.toEqual({
-  //       _id: id,
-  //       ...dto,
-  //     });
-  //   });
-  // });
+  describe("delete", () => {
+    it("should return that it deleted a User", () => {
+      expect(controller.delete("638e04dab2bcf419a0c362c1")).resolves.toEqual({
+        deleted: true,
+      });
+    });
+    it("should return that it did not delete a User", () => {
+      const deleteSpy = jest.spyOn(service, "delete").mockResolvedValueOnce({
+        email: "",
+        username: "",
+        password: "",
+      });
 
-  // describe("delete", () => {
-  //   it("should return that it deleted a User", () => {
-  //     expect(controller.delete("638e04dab2bcf419a0c362c1")).resolves.toEqual({
-  //       deleted: true,
-  //     });
-  //   });
-  //   it("should return that it did not delete a User", () => {
-  //     const deleteSpy = jest
-  //       .spyOn(service, "delete")
-  //       .mockResolvedValueOnce({ deleted: false });
-
-  //     expect(controller.delete("123")).resolves.toEqual({
-  //       deleted: false,
-  //     });
-  //     expect(deleteSpy).toBeCalledWith("123");
-  //   });
-  // });
+      expect(controller.delete("123")).resolves.toEqual({
+        deleted: false,
+      });
+      expect(deleteSpy).toBeCalledWith("123");
+    });
+  });
 });

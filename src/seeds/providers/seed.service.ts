@@ -1,9 +1,10 @@
 import { Injectable, Logger } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
+
 import { CreateSeedDto } from "../dto/create-seed.dto";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
-import SeedNotFoundException from "../exceptions/seedNotFound.exception";
+import SeedNotFoundException from "../exceptions/seed.exceptions";
 import { Seed, SeedDocument } from "../schemas/seed.schema";
 
 @Injectable()

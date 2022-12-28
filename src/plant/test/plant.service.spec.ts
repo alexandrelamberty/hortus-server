@@ -1,13 +1,14 @@
-import { Test, TestingModule } from "@nestjs/testing";
-import { PlantService } from "../providers/plant.service";
-import { getModelToken } from "@nestjs/mongoose";
-import { Model, Query } from "mongoose";
-import { Plant } from "../interfaces/plant.interface";
-import { PlantDocument } from "../schemas/plant.schema";
 import { createMock } from "@golevelup/ts-jest";
+import { getModelToken } from "@nestjs/mongoose";
+import { Test, TestingModule } from "@nestjs/testing";
+import { Model, Query } from "mongoose";
+import { PlantService } from "../providers/plant.service";
+
+import { Plant, PlantDocument } from "../schemas/plant.schema";
+import { plantStub } from "./stubs/plant.stub";
 
 const mockPlant = (
-  _id = "638e04dab2bcf419a0c362c1",
+  id = "638e04dab2bcf419a0c362c1",
   name = "Carrot",
   binomial = "Daucus carota",
   family = "Apiaceae",
@@ -15,7 +16,7 @@ const mockPlant = (
   species = "D. carota",
   image = "638e04dab2bcf419a0c362c1.webp"
 ): Plant => ({
-  _id,
+  _id: id,
   name,
   binomial,
   family,
@@ -25,7 +26,7 @@ const mockPlant = (
 });
 
 const mockPlantDoc = (mock?: Partial<Plant>): Partial<PlantDocument> => ({
-  _id: mock?._id || "638e04dab2bcf419a0c362c1",
+  id: mock?._id || "638e04dab2bcf419a0c362c1",
   name: mock?.name || "Carrot",
   binomial: mock?.binomial || "Daucus carota",
   family: mock?.family || "Apiaceae",
@@ -36,14 +37,14 @@ const mockPlantDoc = (mock?: Partial<Plant>): Partial<PlantDocument> => ({
 
 const plantArray = [
   mockPlant(),
-  mockPlant("Vitani", "a new uuid", "", "Tabby"),
-  mockPlant("Simba", "the king", "", "Lion"),
+  mockPlant("638e04dab2bcf419a0c362c1", "a new uuid", "", "Tabby"),
+  mockPlant("638e04dab2bcf419a0c362c1", "the king", "", "Lion"),
 ];
 
 const plantDocArray = [
   mockPlantDoc(),
   mockPlantDoc({
-    _id: "a new uuid",
+    _id: "638e04dab2bcf419a0c362c1",
     name: "Vitani",
     binomial: "",
     family: "Tabby",
@@ -52,9 +53,14 @@ const plantDocArray = [
   }),
 ];
 
+const plantDocRespose = {
+  plants: plantDocArray,
+  count: 2,
+};
+
 describe("PlantService", () => {
   let service: PlantService;
-  let model: Model<Plant>;
+  let model: Model<PlantDocument>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
@@ -67,7 +73,7 @@ describe("PlantService", () => {
             new: jest.fn().mockResolvedValue(mockPlant()),
             constructor: jest.fn().mockResolvedValue(mockPlant()),
             // FIXME: Mock implemention for skip() and value ?
-            find: jest.fn(),
+            find: jest.fn().mockResolvedValue(plantDocRespose),
             findById: jest.fn(),
             findByIdAndDelete: jest.fn(),
             findByIdAndUpdate: jest.fn(),
@@ -77,6 +83,7 @@ describe("PlantService", () => {
             remove: jest.fn(),
             sort: jest.fn(),
             skip: jest.fn(),
+            count: jest.fn(),
             exec: jest.fn(),
           },
         },
@@ -84,7 +91,7 @@ describe("PlantService", () => {
     }).compile();
 
     service = module.get<PlantService>(PlantService);
-    model = module.get<Model<Plant>>(getModelToken("Plant"));
+    model = module.get<Model<PlantDocument>>(getModelToken("Plant"));
   });
 
   afterEach(() => {
@@ -96,40 +103,51 @@ describe("PlantService", () => {
   });
 
   describe("listPlants", () => {
-    it("should return all plants", async () => {
-      jest.spyOn(model, "find").mockReturnValue({
-        exec: jest.fn().mockResolvedValueOnce(plantDocArray),
-      } as any);
-      const plants = await service.getAll();
-      expect(plants).toEqual(plantArray);
+    describe("when getAll is called", () => {
+      let plants: Plant[];
+
+      beforeEach(async () => {
+        jest.spyOn(model, "find");
+        plants = await service.findAll(0, 0);
+      });
+
+      it("should return all plants", async () => {
+        expect(model.find).toBeCalled();
+      });
+
+      it("should return all plants", async () => {
+        expect(plants).toEqual(plantStub());
+      });
     });
   });
 
-  it("should getOne by id", async () => {
-    jest.spyOn(model, "findOne").mockReturnValueOnce(
-      createMock<Query<PlantDocument, PlantDocument>>({
-        exec: jest.fn().mockResolvedValueOnce(
-          mockPlantDoc({
-            _id: "123",
-            name: "Carrot",
-            binomial: "Daucus carrota",
-            family: "Apiaceae",
-            genus: "Daucus",
-            species: "D. carrota",
-          })
-        ),
-      }) as any
-    );
-    const findMockPlant = mockPlant(
-      "123",
-      "Carrot",
-      "Daucus carrota",
-      "Apiaceae",
-      "Daucus",
-      "D. carrota"
-    );
-    const foundPlant = await service.getById("123");
-    expect(foundPlant).toEqual(findMockPlant);
+  describe("listPlants", () => {
+    it("should getOne by id", async () => {
+      jest.spyOn(model, "findById").mockReturnValueOnce(
+        createMock<Query<PlantDocument, PlantDocument>>({
+          exec: jest.fn().mockResolvedValueOnce(
+            mockPlantDoc({
+              _id: "123",
+              name: "Carrot",
+              binomial: "Daucus carrota",
+              family: "Apiaceae",
+              genus: "Daucus",
+              species: "D. carrota",
+            })
+          ),
+        }) as any
+      );
+      const findMockPlant = mockPlant(
+        "123",
+        "Carrot",
+        "Daucus carrota",
+        "Apiaceae",
+        "Daucus",
+        "D. carrota"
+      );
+      const foundPlant = await service.getById("123");
+      expect(foundPlant).toEqual(findMockPlant);
+    });
   });
 
   it("should insert a new plant", async () => {
@@ -144,7 +162,7 @@ describe("PlantService", () => {
         image: "638e04dab2bcf419a0c362c1.webp",
       })
     );
-    const newPlant = await service.insert({
+    const newPlant = await service.create({
       name: "Carrot",
       binomial: "Daucus carota",
       family: "Apiaceae",

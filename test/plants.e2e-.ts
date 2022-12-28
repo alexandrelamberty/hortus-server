@@ -4,7 +4,7 @@ import * as request from "supertest";
 import { PlantModule } from "../src/plant/plant.module";
 import { PlantService } from "../src/plant/providers/plant.service";
 
-describe("Plants", () => {
+describe("PlantsController (e2e)", () => {
   let app: INestApplication;
   let speciesService = { listSpecies: () => ["test"] };
 
@@ -20,21 +20,64 @@ describe("Plants", () => {
     await app.init();
   });
 
-  it(`/GET plants`, () => {
-    return request(app.getHttpServer()).get("/plants").expect(200).expect({
-      data: speciesService.listSpecies(),
+  describe("/GET plants", () => {
+    it(`get plants`, () => {
+      return request(app.getHttpServer()).get("/plants").expect(200).expect({
+        data: speciesService.listSpecies(),
+      });
+    });
+    it(`return server error`, () => {
+      return request(app.getHttpServer()).get("/plants").expect(200).expect({
+        data: speciesService.listSpecies(),
+      });
     });
   });
 
-  it(`/POST plants`, () => {
-    return request(app.getHttpServer()).get("/plants").expect(200).expect({
-      data: speciesService.listSpecies(),
+  describe("/POST plants", () => {
+    it(`post a plant`, () => {
+      return request(app.getHttpServer()).post("/plants").expect(200).expect({
+        data: speciesService.listSpecies(),
+      });
+    });
+    it(`return request error`, () => {
+      return request(app.getHttpServer())
+        .post("/plants")
+        .expect(400)
+        .expect({});
     });
   });
 
-  it(`/PATCH plants`, () => {
-    return request(app.getHttpServer()).get("/plants").expect(200).expect({
-      data: speciesService.listSpecies(),
+  describe("/PATCH plants", () => {
+    it(`patch a plant`, () => {
+      return request(app.getHttpServer()).patch("/plants").expect(200).expect({
+        data: speciesService.listSpecies(),
+      });
+    });
+    it(`return not found error`, () => {
+      return request(app.getHttpServer())
+        .post("/plants")
+        .expect(404)
+        .expect({});
+    });
+    it(`return request error`, () => {
+      return request(app.getHttpServer())
+        .post("/plants")
+        .expect(400)
+        .expect({});
+    });
+  });
+
+  describe("/DELETE plants", () => {
+    it(`delete a plant`, () => {
+      return request(app.getHttpServer()).get("/plants").expect(200).expect({
+        data: speciesService.listSpecies(),
+      });
+    });
+    it(`return request error`, () => {
+      return request(app.getHttpServer())
+        .post("/plants")
+        .expect(400)
+        .expect({});
     });
   });
 

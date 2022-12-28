@@ -15,17 +15,21 @@ describe("AppController (e2e)", () => {
     await app.init();
   });
 
-  it("/ (GET)", () => {
-    return request(app.getHttpServer())
-      .get("/")
-      .expect(200)
-      .expect("Nidus API");
+  describe("[GET] /", () => {
+    it("sould return 'Nidus API'", () => {
+      return request(app.getHttpServer())
+        .get("/")
+        .expect(200)
+        .expect("Nidus API");
+    });
   });
 
-  it("/version (GET)", () => {
-    return request(app.getHttpServer())
-      .get("/version")
-      .expect(200)
-      .expect("1.0.0");
+  describe("[GET] /", () => {
+    it("/version (GET)", () => {
+      return request(app.getHttpServer())
+        .get("/version")
+        .expect(200)
+        .expect("1.0.0");
+    });
   });
 });

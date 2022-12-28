@@ -1,5 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { Document } from "mongoose";
+
 import { CutlureLocation } from "../enum/location.enum";
 import { PhaseStatus } from "../enum/phase-status.enum";
 import { Soil } from "../enum/soil.enum";

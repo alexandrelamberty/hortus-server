@@ -8,3 +8,9 @@ export interface PlantsResponse {
   plants: Plant[];
   count: number;
 }
+
+export interface PlantDeleteResponse {
+  ok?: number;
+  n?: number;
+  deletedCount?: number;
+}

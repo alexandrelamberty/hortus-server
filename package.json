@@ -47,7 +47,7 @@
     "handlebars": "^4.7.7",
     "joi": "^17.4.2",
     "local-devices": "^3.0.0",
-    "mongoose": "^5.13.14",
+    "mongoose": "^5.13.15",
     "nestjs": "^0.0.1",
     "network-list": "^1.1.5",
     "nodemailer": "^6.7.7",

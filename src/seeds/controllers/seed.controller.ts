@@ -14,8 +14,9 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Types } from "mongoose";
-import { SharpPipe } from "src/common/pipe/SharpPipe";
-import { CreateSeedDto } from "src/seeds/dto/create-seed.dto";
+
+import { SharpPipe } from "../../common/pipe/SharpPipe";
+import { CreateSeedDto } from "../../seeds/dto/create-seed.dto";
 import { PaginationParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
@@ -30,13 +31,13 @@ export class SeedController {
   constructor(private readonly seedService: SeedService) {}
 
   @Get("sow")
-  listSeedsToSow(@Query() { skip = 0, limit = 10 }: PaginationParams) {
-    return this.seedService.listSeedsToSow(skip, limit);
+  listSeedsToSow(@Query() { page = 0, limit = 10 }: PaginationParams) {
+    return this.seedService.listSeedsToSow(page, limit);
   }
 
   @Get()
-  listSeeds(@Query() { skip = 0, limit = 10 }: PaginationParams) {
-    return this.seedService.listSeeds(skip, limit);
+  listSeeds(@Query() { page = 0, limit = 10 }: PaginationParams) {
+    return this.seedService.listSeeds(page, limit);
   }
 
   @Post(":id/upload")

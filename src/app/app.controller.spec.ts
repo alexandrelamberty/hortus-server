@@ -15,14 +15,18 @@ describe("AppController", () => {
   });
 
   describe("getHome()", () => {
-    it("should return 'Nidus API'", () => {
-      expect(appController.getHome()).toBe("Nidus API");
+    describe("when called", () => {
+      it("should return 'Nidus API'", () => {
+        expect(appController.getHome()).toBe("Nidus API");
+      });
     });
   });
 
   describe("getVersion()", () => {
-    it("should return '1.0.0'", () => {
-      expect(appController.getVersion()).toBe("1.0.0");
+    describe("when called", () => {
+      it("should return '1.0.0'", () => {
+        expect(appController.getVersion()).toBe("1.0.0");
+      });
     });
   });
 });

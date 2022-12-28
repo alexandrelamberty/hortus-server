@@ -1,15 +1,17 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Seed } from "@seeds/schemas/seed.schema";
+import * as mongoose from "mongoose";
 import { Document, Schema as MongooseSchema } from "mongoose";
-import { Seed } from "../../seeds/schemas/seed.schema";
 import { Harvesting } from "./harvesting.schema";
 import { Planting } from "./planting.schema";
 import { Seeding } from "./seeding.schema";
 import { Transplanting } from "./transplanting.schema";
-
 export type CultureDocument = Culture & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Culture {
+  _id: string;
+
   @Prop({
     type: MongooseSchema.Types.ObjectId,
     ref: "Seed",
@@ -45,7 +47,7 @@ export class Culture {
   })
   harvesting: Harvesting;
 
-  @Prop({ type: Date, default: Date.now() })
+  @Prop({ type: Date })
   createdAt: Date;
 
   @Prop({ type: Date })
@@ -54,13 +56,6 @@ export class Culture {
 
 export const CultureSchema = SchemaFactory.createForClass(Culture);
 
-CultureSchema.pre<Culture>("save", function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const crop = this;
-  const now = new Date();
-  crop.updatedAt = now;
-  if (!crop.createdAt) {
-    crop.createdAt = now;
-  }
-  next();
-});
+export const CultureSchemaFactory = (): mongoose.Schema<any> => {
+  return CultureSchema;
+};

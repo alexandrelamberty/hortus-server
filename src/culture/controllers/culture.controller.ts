@@ -10,7 +10,9 @@ import {
   Query,
 } from "@nestjs/common";
 import { Types } from "mongoose";
-import { PaginationParams } from "../../common/paginationParams";
+
+import { PaginationParams } from "@common/paginationParams";
+
 import { CreateCultureDto } from "../dto/create-culture.dto";
 import { UpdateCultureDto } from "../dto/update-culture.dto";
 import { PhaseStatus } from "../enum/phase-status.enum";
@@ -26,8 +28,8 @@ export class CultureController {
   constructor(private readonly cultureService: CultureService) {}
 
   @Get("/cultures")
-  listCultures(@Query() { skip = 0, limit = 20 }: PaginationParams) {
-    return this.cultureService.listCultures(skip, limit);
+  listCultures(@Query() { page = 0, limit = 20 }: PaginationParams) {
+    return this.cultureService.listCultures(page, limit);
   }
 
   @Post("/cultures")

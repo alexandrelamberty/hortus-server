@@ -1,9 +1,10 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
+
 import { CreateCultureDto } from "../dto/create-culture.dto";
 import { UpdateCultureDto } from "../dto/update-culture.dto";
-import CultureNotFoundException from "../exceptions/cultureNotFound.exception";
+import CultureNotFoundException from "../exceptions/cultures.exceptions";
 import { Culture, CultureDocument } from "../schemas/culture.schema";
 
 @Injectable()

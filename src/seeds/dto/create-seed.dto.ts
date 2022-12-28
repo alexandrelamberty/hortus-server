@@ -1,11 +1,13 @@
 import { Type as TypeClass } from "class-transformer";
 import { IsNotEmpty, IsString, MaxLength } from "class-validator";
 import { Schema as MongooseSchema } from "mongoose";
-import { Harvesting } from "src/seeds/schemas/harvesting.schema";
-import { Planting } from "src/seeds/schemas/planting.schema";
-import { Seeding } from "src/seeds/schemas/seeding.schema";
-import { Plant } from "src/plant/schemas/plant.schema";
-import { Transplanting } from "src/seeds/schemas/transplanting.schema";
+
+import { Plant } from "@plant/schemas/plant.schema";
+
+import { Harvesting } from "../schemas/harvesting.schema";
+import { Planting } from "../schemas/planting.schema";
+import { Seeding } from "../schemas/seeding.schema";
+import { Transplanting } from "../schemas/transplanting.schema";
 
 export class CreateSeedDto {
   @TypeClass(() => Plant)

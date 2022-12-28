@@ -1,5 +1,5 @@
 import { Test, TestingModule } from "@nestjs/testing";
-import { AppService } from "./app.service";
+import { AppService } from "@app/app.service";
 
 describe("AppService", () => {
   let service: AppService;
@@ -16,13 +16,22 @@ describe("AppService", () => {
     expect(service).toBeDefined();
   });
 
-  it("should return home text", async () => {
-    const result = service.getHome();
-    expect(result).toEqual("Nidus API");
+  describe("getHome()", () => {
+    describe("when called", () => {
+      it("should return 'Nidus API'", () => {
+        const result = service.getHome();
+        expect(result).toEqual("Nidus API");
+      });
+    });
   });
 
-  it("should return version text", async () => {
-    const result = service.getVersion();
-    expect(result).toEqual("1.0.0");
+  describe("getVersion()", () => {
+    describe("when called", () => {
+      // Mocke function
+      it("should return '1.0.0'", () => {
+        const result = service.getVersion();
+        expect(result).toEqual("1.0.0");
+      });
+    });
   });
 });

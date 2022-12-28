@@ -4,12 +4,14 @@ import { HttpAdapterHost, NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import * as cookieParser from "cookie-parser";
 import { join } from "path";
-import { BadRequestExceptionFilter } from "src/common/exceptions/bad-request.exception.filter";
-import { ExceptionsLoggerFilter } from "src/common/exceptions/exceptionLogger.filter";
-import { HttpExceptionFilter } from "src/common/exceptions/http-exception.filter";
-import { MongoExceptionFilter } from "src/common/exceptions/mongo-exception.filters";
-import { logger } from "src/common/middleware/logger.middleware";
-import { AppModule } from "./app/app.module";
+
+import { AppModule } from "@app/app.module";
+
+import { BadRequestExceptionFilter } from "@common/exceptions/bad-request.exception.filter";
+import { ExceptionsLoggerFilter } from "@common/exceptions/exceptionLogger.filter";
+import { HttpExceptionFilter } from "@common/exceptions/http-exception.filter";
+import { MongoExceptionFilter } from "@common/exceptions/mongo-exception.filters";
+import { logger } from "@common/middleware/logger.middleware";
 
 async function bootstrap() {
   // Check types or interfaces; NestExpressApplication

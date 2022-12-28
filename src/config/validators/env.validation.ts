@@ -1,4 +1,4 @@
-import { plainToClass } from 'class-transformer';
+import { plainToClass } from "class-transformer";
 import {
   IsDefined,
   IsNotEmpty,
@@ -7,13 +7,13 @@ import {
   IsNumber,
   IsString,
   validateSync,
-} from 'class-validator';
+} from "class-validator";
 
 enum Environment {
-  Development = 'development',
-  Production = 'production',
-  Test = 'test',
-  Provision = 'provision',
+  Development = "development",
+  Production = "production",
+  Test = "test",
+  Provision = "provision",
 }
 
 class EnvironmentVariables {

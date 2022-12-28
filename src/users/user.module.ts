@@ -1,6 +1,7 @@
 import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MulterModule } from "@nestjs/platform-express";
+
 import { UserController } from "./controllers/user.controller";
 import { UserService } from "./providers/user.service";
 import { User, UserSchema } from "./schemas/user.schema";

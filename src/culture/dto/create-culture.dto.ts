@@ -1,15 +1,15 @@
-import { IsNotEmpty, IsString, MaxLength, IsNumber, IsDate, ValidateNested, IsDefined, IsNotEmptyObject } from 'class-validator';
-import { Type as TypeClass } from 'class-transformer';
-import { Seed } from '../../seeds/schemas/seed.schema';
-import { Harvesting } from '../schemas/harvesting.schema';
-import { Planting } from '../schemas/planting.schema';
-import { Seeding } from '../schemas/seeding.schema';
-import { Transplanting } from '../schemas/transplanting.schema';
-import { ApiProperty } from '@nestjs/swagger';
+import { Type as TypeClass } from "class-transformer";
+import { ValidateNested } from "class-validator";
+
+import { Seed } from "@seeds/schemas/seed.schema";
+
+import { Harvesting } from "../schemas/harvesting.schema";
+import { Planting } from "../schemas/planting.schema";
+import { Seeding } from "../schemas/seeding.schema";
+import { Transplanting } from "../schemas/transplanting.schema";
 
 export class CreateCultureDto {
-
-	@TypeClass(() => Seed)
+  @TypeClass(() => Seed)
   public seed: Seed;
 
   @ValidateNested()

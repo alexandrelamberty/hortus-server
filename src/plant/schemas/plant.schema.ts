@@ -1,10 +1,15 @@
+import { Logger } from "@nestjs/common";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
+import { SeedDocument } from "@seeds/schemas/seed.schema";
+import * as mongoose from "mongoose";
+import { Document, model, Model } from "mongoose";
 
 export type PlantDocument = Plant & Document;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Plant {
+  _id: string;
+
   @Prop({ type: String, required: true })
   name: string;
 
@@ -20,30 +25,52 @@ export class Plant {
   @Prop({ type: String, required: true })
   species: string;
 
-  @Prop({ type: String, required: true })
+  @Prop({ type: String, required: false })
   image: string;
 
   @Prop({ type: String, required: false })
-  subspecies: string;
+  subspecies?: string;
 
   @Prop({ type: String, required: false })
-  variety: string;
+  variety?: string;
 
   @Prop({ type: String, required: false })
-  forma: string;
+  forma?: string;
 
   @Prop({ type: String, required: false })
-  cultivar: string;
+  cultivar?: string;
 
   @Prop({ type: String, required: false })
-  hybrid: string;
+  hybrid?: string;
 
   @Prop({ type: Array<string>, required: false })
-  common_names: Array<string>;
+  common_names?: Array<string>;
 
-  // FIXME: generate server side from picture colors or ui?
   @Prop({ type: String, required: false })
-  color: string;
+  color?: string;
+
+  @Prop({ type: Date })
+  createdAt: Date;
+
+  @Prop({ type: Date })
+  updatedAt: Date;
 }
 
 export const PlantSchema = SchemaFactory.createForClass(Plant);
+
+export const PlantModel: Model<PlantDocument> = model<PlantDocument>(
+  "Plant",
+  PlantSchema
+);
+
+export const PlantSchemaFactory = (
+  seedModel: Model<SeedDocument>
+): mongoose.Schema<any> => {
+  // remove all seed derived from this plant
+  // PlantSchema.pre("deleteOne", function (next) {
+  //   // const filter = this.getFilter();
+  //   // seedModel.deleteMany({ plant: filter._id }, next).exec();
+  // });
+
+  return PlantSchema;
+};
