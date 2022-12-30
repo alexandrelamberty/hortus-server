@@ -1,0 +1,34 @@
+name: Docker
+on:
+  push:
+    branches:
+      - "master"
+      - "develop/**"
+      - "releases/**"
+      - "features/**"
+  pull_request:
+    branches: ["master", "stagging"]
+  workflow_dispatch:
+jobs:
+  build:
+    name: "Push Docker image to Docker Hub"
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v2
+      - name: What
+        run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+      - name: Login to DockerHub
+        uses: docker/login-action@v1
+        with:
+          username: ${{secrets.DOCKER_USER}}
+          password: ${{secrets.DOCKER_PASSWORD}}
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        with:
+          push: true
+          tags: alexandrelamberty/hortus-api:${{env.BRANCH}}

@@ -1,5 +1,5 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document } from 'mongoose';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document } from "mongoose";
 
 @Schema()
 export class Seeding extends Document {
@@ -12,4 +12,5 @@ export class Seeding extends Document {
   @Prop({ required: true })
   germination: number;
 }
+
 export const SeedingSchema = SchemaFactory.createForClass(Seeding);

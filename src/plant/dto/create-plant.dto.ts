@@ -1,36 +1,52 @@
-import {
-  IsNotEmpty, IsString,
-  MaxLength
-} from 'class-validator';
-
+import { IsNotEmpty, IsOptional, IsString, MaxLength } from "class-validator";
 
 export class CreatePlantDto {
-
-  picture: string;
+  @IsString()
+  @IsOptional()
+  @MaxLength(255)
+  image?: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
-  readonly name: string;
+  @MaxLength(25)
+  readonly name!: string;
+
+  @IsString()
+  @MaxLength(25)
+  readonly family!: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
-  readonly family: string;
+  @MaxLength(25)
+  readonly genus!: string;
 
   @IsString()
   @IsNotEmpty()
-  @MaxLength(255)
-  readonly genus: string;
+  @MaxLength(25)
+  readonly species!: string;
 
   @IsString()
-  @IsNotEmpty()
-  @MaxLength(255)
-  readonly species: string;
+  @IsOptional()
+  @MaxLength(25)
+  readonly subspecies?: string;
 
-  // FIXME: check in schema ?
-  readonly subspecies: string;
+  @IsString()
+  @IsOptional()
+  @MaxLength(25)
+  readonly variety?: string;
 
-  // FIXME: Can be null but restrict type and length
-  readonly variant: string;
+  @IsString()
+  @IsOptional()
+  @MaxLength(25)
+  readonly forma?: string;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(25)
+  readonly cultivar?: string;
+
+  @IsString()
+  @IsOptional()
+  @MaxLength(25)
+  readonly hybrid?: string;
 }

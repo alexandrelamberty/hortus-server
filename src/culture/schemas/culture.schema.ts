@@ -1,67 +1,74 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Seed } from '../../seeds/schemas/seed.schema';
-import { Harvesting } from './harvesting.schema';
-import { Planting } from './planting.schema';
-import { Seeding } from './seeding.schema';
-import { Transplanting } from './transplanting.schema';
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import * as mongoose from "mongoose";
+import { Document, Schema as MongooseSchema } from "mongoose";
+import { Seed } from "../../seeds/schemas/seed.schema";
+import { HarvestingPhase, HarvestingSchema } from "./harvesting";
+import { PlantingPhase, PlantingSchema } from "./planting";
+import { SeedingPhase as SowingPhase, SeedingSchema } from "./seeding";
+import { TransplantingPhase, TransplantingSchema } from "./transplanting";
 
 export type CultureDocument = Culture & Document;
-
-@Schema()
+/**
+ * A class representing a culture in a cultivation process.
+ *
+ * The `Culture` class is a Mongoose schema that represents a culture in a
+ * cultivation process. It includes fields for a seed, as well as details about
+ * the seeding, transplanting, planting, and harvesting phases of the
+ * cultivation process.
+ */
+@Schema({ timestamps: true })
 export class Culture {
+  _id: string;
 
+  /**
+   * The seed used in the culture.
+   *
+   * This should be a reference to a `Seed` document in the seeds collection.
+   */
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: 'Seed',
+    ref: "Seed",
     required: true,
   })
   seed: Seed;
 
   @Prop({
-    type: Seeding,
-    ref: 'Seeding',
-    required: true,
+    type: SeedingSchema,
+    ref: "SeedingPhase",
+    default: () => ({}),
   })
-  seeding: Seeding;
+  seeding: SowingPhase;
 
   @Prop({
-    type: Transplanting,
-    ref: 'Transplanting',
-    required: false,
+    type: TransplantingSchema,
+    ref: "TransplantingPhase",
+    default: () => ({}),
   })
-  transplanting: Transplanting;
+  transplanting: TransplantingPhase;
 
   @Prop({
-    type: Planting,
-    ref: 'Planting',
-    required: true,
+    type: PlantingSchema,
+    ref: "PlantingPhase",
+    default: () => ({}),
   })
-  planting: Planting;
+  planting: PlantingPhase;
 
   @Prop({
-    type: Harvesting,
-    ref: 'Harvesting',
-    required: true,
+    type: HarvestingSchema,
+    ref: "HarvestingPhase",
+    default: () => ({}),
   })
-  harvesting: Harvesting;
+  harvesting: HarvestingPhase;
 
-  @Prop({ type: Date, default: Date.now() })
+  @Prop({ type: Date, required: false })
   createdAt: Date;
 
-  @Prop({ type: Date })
+  @Prop({ type: Date, required: false })
   updatedAt: Date;
 }
 
 export const CultureSchema = SchemaFactory.createForClass(Culture);
 
-CultureSchema.pre<Culture>('save', function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const crop = this;
-  const now = new Date();
-  crop.updatedAt = now;
-  if (!crop.createdAt) {
-    crop.createdAt = now;
-  }
-  next();
-});
+export const CultureSchemaFactory = (): mongoose.Schema<any> => {
+  return CultureSchema;
+};

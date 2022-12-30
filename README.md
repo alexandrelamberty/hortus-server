@@ -1,148 +1,96 @@
-![Node CI](https://github.com/alexandrelamberty/hortus-server/actions/workflows/node.js.yml/badge.svg) [![Docker Image CI](https://github.com/alexandrelamberty/hortus-server/actions/workflows/docker-image-ci.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-server/actions/workflows/docker-image-ci.yml)
+[![Build & Tests](https://github.com/alexandrelamberty/hortus-api/actions/workflows/node.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-api/actions/workflows/node.yml)
+[![Docker](https://github.com/alexandrelamberty/hortus-api/actions/workflows/docker.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-api/actions/workflows/docker.yml)
 
-# Hortus Server
+# Hortus API
 
-Gardening planner, monitoring and automation server application that expose a
-secured api and a websocket real-time communication with [Hortus Web
-Application](https://github.com/alexandrelamberty/hortus-web-client) and
-[Hortus Mobile](https://github.com/alexandrelamberty/hortus-mobile).
-The application receive and process data collected from [Hortus Wireless
-Temperature / Humidity
-Sensor](https://github.com/alexandrelamberty/hortus-wireless-temperature-sensor/).
+Gardening planner API part of the
+[Hortus](https://github.com/alexandrelamberty/hortus) project.
 
-This repository is part of the [Hortus](https://github.com/alexandrelamberty/hortus) project
+This application expose an API with NestJS that connect to a MongoDB and Redis databases. It use authentication/encryption with JWT and BCRYPT.
 
-## Development roadmap
+The API implement the [Hortus API Specification](https://github.com/alexandrelamberty/hortus-api-spec)
 
-- [_] CI
-	- [_] Docker build and push
-	- [_] Node
-- [_] Tests
-- [ ] Core
-  - [ ] Configuration
-    - [x] Global
-    - [ ] Module
-  - [ ] Logging
-  - [ ] Validation
-    - [ ] Class validator
-  - [_] Serialiaztion, UseInterceptors
-  - [ ] Exception
-  - [x] Database
-  - [x] Cache
-    - [ ] Secure session and cache
-  - [_] File, Add storage provider to 'bucket', Google, Azure, AWS ?...
-        BucketStorage, LocalStorage
-  - [ ] Session cache
-  - [ ] Auth
-    - [ ] Registration
-    - [ ] Login
-    - [ ] Token
-    - [ ] Refresh token
-    - [ ] Logout (Refresh token, session, cache, cookies ?)
-- [ ] Modules
-  - [_] Plants
-  - [ ] Mail
-  - [ ] Task Scheduling
-  - [ ] Sensors management
-
-## Features roadmap
-
-- [ ] Add monitoring devices, humidity, temperature, ph
-- [ ] Add controller devices, ventilation, heating, watering
-- [ ] Monitoring alerts vie SMS, email, mobile and web notifications
-- [ ] Automation of ventilation, heating and wateriong
-
-## Technologies and frameworks
+## Technologies, languages, frameworks
 
 - [Docker](https://www.docker.com/)
 - [Node.js](https://nodejs.org/)
 - [NestJS](https://nestjs.com/)
-- [Socket.io](https://socket.io/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [MongoDB](https://www.mongodb.com/)
 - [Redis](https://redis.io/)
 
 ## Requirements
 
-- [NPM](https://www.npmjs.com/)
 - [Docker](https://www.docker.com/)
+- [NPM](https://www.npmjs.com/) for development
 
-## Installation
+## Usage
 
-After you have cloned the repository, install the JavaScript dependencies with
-NPM, see [`package.json`](package.json)
+This application is part of a Docker stack. see:
+[Hortus](https://github.com/alexandrelamberty/hortus) project to run the
+complete stack.
 
-```bash
-npm install
-```
+## Development
 
-## Configuration
+This API run as a Docker service and rely on a [MongoDB](https://hub.docker.com/_/mongo) database and a [Redis](https://hub.docker.com/_/redis) cache service.
 
-Create a file named `.dev.env` and insert the following
+### Run required services
+
+See [Hortus]()
+
+### Environment variables
+
+Create a file named `.env` and insert the following properties
 
 ```properties
-NODE_ENV=development
-# API
-API_URL=localhost
-API_PORT=3333
-# Database (MongoDB)
-DATABASE_ROOT_USER=root
-DATABASE_ROOT_PASSWORD=root
-DATABASE_HOST=localhost
-DATABASE_PORT=27017
-DATABASE_NAME=hortus
-DATABASE_USERNAME=hortus
-DATABASE_PASSWORD=hortus
-DATABASE_URI=mongodb://hortus:hortus@hortus-database:27017/hortus
-# Cache (Redis)
-CACHE_HOST=hortus-cache
-CACHE_PORT=6379
-CACHE_TTL=300
-# Session (Redis)
-SESSION_HOST=hortus-session
-SESSION_PORT=6380
-SESSION_TTL=300
-# Authentication
-JWT_SECRET=123456
-JWT_EXPIRE=123456
-BCRYPT_HASH=12345
-# File upload
+ENV=dev
+PORT=3333
+PAIRING_KEY=9fca54477c8ad4e70dc5e1084f884aad
+JWT_SECRET=d7a481461577ba4c3c4c6946cca7204b
+JWT_EXPIRE=90
+BCRYPT_HASH=7f91317e30a02bc7b87205e95b842df2
+DATABASE_URI=mongodb://hortus:hortus@localhost:27017/hortus
 STATIC_DIR=/upload
 UPLOAD_PATH=/upload
+CACHE_HOST=localhost
+CACHE_PORT=6379
+CACHE_TTL=300
+SESSION_HOST=localhost
+SESSION_PORT=6380
+SESSION_TTL=300
 ```
 
 This config will work out of the box in most case. Verify that the ports
 specified in the configuration are not in use.
 
-## Build
+### Running with NPM
 
-Build all the services.
+Run the application
 
 ```bash
-docker-compose --env-file .dev.env build
+npm run start:development
 ```
 
-## Development
+### Tests
 
-Before running the application all the services it depends on need to be up and
-running.
+> To implement
 
 ```bash
-docker-compose --env-file .env up database cache session
+npm run tests
 ```
 
-## Database (MongoDB)
+## Build and run with Docker
 
-You can use the service provided in the docker-compose
-[MongoExpress](http://localhost:8081) to browse the database.
-
-## Cache (Redis)
-
-[Redis Commander]()
+Build the image, see: [Dockerfile](./Dockerfile).
 
 ```bash
-docker exec -it hortus-cache redis-cli -p 6379
+docker build . -t alexandrelamberty/hortus-api:{tag}
 ```
 
+Run the image, specify the ports mapping, environment variables file and network to join.
+
+FIXME: link source folder
+
 ```bash
-docker exec -it hortus-cache redis-cli -p 6380
+docker run -p 3333:3333 --network=hortus_default --env-file .env --name hortus-api -d alexandrelamberty/hortus-api:{tag}
 ```

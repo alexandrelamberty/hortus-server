@@ -2,4 +2,15 @@
 **/.git
 **/.github
 **/node_modules
+**/.docker
+**/coverage
+**/migrations
+**/tests
 Dockerfile
+*.env
+.eslintrc.js
+.gitignore
+.dockerignore
+docker-compose.yml
+DEVELOPMENT.md
+README.md

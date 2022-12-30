@@ -1,4 +1,7 @@
-import { PartialType } from '@nestjs/mapped-types';
-import { CreateCultureDto } from './create-culture.dto';
+import { PartialType } from "@nestjs/mapped-types";
+import { CreateCultureDto } from "./create-culture.dto";
 
-export class UpdateCultureDto extends PartialType(CreateCultureDto) { }
+/**
+ * A data transfer object (DTO) for updating a culture.
+ */
+export class UpdateCultureDto extends PartialType(CreateCultureDto) {}

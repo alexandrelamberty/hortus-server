@@ -1,28 +1,31 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { Document, Schema as MongooseSchema } from 'mongoose';
-import { Frost } from '../enums/frost.enum';
-import { Season } from '../enums/season.enum';
-import { Sun } from '../enums/sun.enum';
-import { Type } from '../enums/type.enum';
-import { Water } from '../enums/water.enum';
-import { Harvesting } from './harvesting.schema';
-import { Planting } from './planting.schema';
-import { Seeding } from './seeding.schema';
-import { Plant } from '../../plant/schemas/plant.schema';
-import { Transplanting } from './transplanting.schema';
-import { plainToClassFromExist } from 'class-transformer';
+import { CultureDocument } from "@culture/schemas/culture.schema";
+import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { Document, Model, Schema as MongooseSchema } from "mongoose";
+
+import { Plant } from "../../plant/schemas/plant.schema";
+import { Frost } from "../enums/frost.enum";
+import { Season } from "../enums/season.enum";
+import { Sun } from "../enums/sun.enum";
+import { Type } from "../enums/type.enum";
+import { Water } from "../enums/water.enum";
+import { Harvesting } from "./harvesting.schema";
+import { Planting } from "./planting.schema";
+import { Seeding } from "./seeding.schema";
+import { Transplanting } from "./transplanting.schema";
+import { Logger } from "@nestjs/common";
 
 export type SeedDocument = Seed & Document;
 
-@Schema()
-export class  Seed {
-  
+@Schema({ timestamps: true })
+export class Seed {
+  _id: string;
+
   @Prop({
     type: MongooseSchema.Types.ObjectId,
-    ref: 'Plant',
+    ref: "Plant",
     required: true,
   })
-  plant: Plant;
+  plant: string | Plant;
 
   @Prop({ type: String, required: true })
   name: string;
@@ -106,22 +109,27 @@ export class  Seed {
   @Prop({ required: false })
   rows: number;
 
-  @Prop({ type: Date, default: Date.now })
+  @Prop({ type: Date })
   createdAt: Date;
 
-  @Prop({ type: Date, default: Date.now })
+  @Prop({ type: Date })
   updatedAt: Date;
 }
 
 export const SeedSchema = SchemaFactory.createForClass(Seed);
 
-SeedSchema.pre<Seed>('save', function (next) {
-  // eslint-disable-next-line @typescript-eslint/no-this-alias
-  const seed = this;
-  const now = new Date();
-  seed.updatedAt = now;
-  if (!seed.createdAt) {
-    seed.createdAt = now;
-  }
-  next();
-});
+export const SeedSchemaFactory = (
+  cultureModel: Model<CultureDocument>
+): MongooseSchema<any> => {
+  // remove all culture derived from this seed
+  SeedSchema.pre<Plant>(
+    "remove",
+    { document: true, query: true },
+    async function () {
+      Logger.log(this._id);
+      await cultureModel.deleteMany({ seed_id: this._id });
+    }
+  );
+
+  return SeedSchema;
+};

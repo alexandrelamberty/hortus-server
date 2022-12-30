@@ -9,9 +9,21 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./",
-    "incremental": true
+    "baseUrl": "./src",
+    "incremental": true,
+    "rootDirs": ["src", "test"],
+    "paths": {
+      "@app/*": ["./app/*"],
+      "@common/*": ["./common/*"],
+      "@config/*": ["./config/*"],
+      "@culture/*": ["./culture/*"],
+      "@seeds/*": ["./seeds/*"],
+      "@notification/*": ["./notification/*"],
+      "@plant/*": ["./plant/*"],
+      "@users/*": ["./users/*"],
+      "@mail/*": ["./mail/*"]
+    }
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "dist"]
 }

@@ -7,8 +7,6 @@
   "transform": {
     "^.+\\.(t|j)s$": "ts-jest"
   },
-	"moduleNameMapper": {
-    "^@Shared/(.)*$": "<rootDir>./$1"
-  },
-  "moduleDirectories": ["node_modules", "<rootDir>"]
+
+  "moduleDirectories": ["node_modules", "<rootDir>", "src"]
 }

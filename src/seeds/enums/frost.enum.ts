@@ -1,4 +1,4 @@
 export enum Frost {
-  Tolerant = 'tolerent',
-  NonTolerant = 'non_tolerent',
+  Tolerant = "tolerent",
+  NonTolerant = "non_tolerent",
 }

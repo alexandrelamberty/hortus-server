@@ -1,4 +1,4 @@
-import { plainToClass } from 'class-transformer';
+import { plainToClass } from "class-transformer";
 import {
   IsDefined,
   IsNotEmpty,
@@ -7,13 +7,13 @@ import {
   IsNumber,
   IsString,
   validateSync,
-} from 'class-validator';
+} from "class-validator";
 
 enum Environment {
-  Development = 'development',
-  Production = 'production',
-  Test = 'test',
-  Provision = 'provision',
+  Development = "development",
+  Production = "production",
+  Test = "test",
+  Provision = "provision",
 }
 
 class EnvironmentVariables {
@@ -21,46 +21,6 @@ class EnvironmentVariables {
   @IsNotEmpty()
   @IsEnum(Environment)
   NODE_ENV: Environment;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsPort()
-  API_PORT: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  DATABASE_ROOT_USER: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  DATABASE_ROOT_PASSWORD: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  DATABASE_HOST: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsPort()
-  DATABASE_PORT: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  DATABASE_NAME: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  DATABASE_USERNAME: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  DATABASE_PASSWORD: string;
 
   @IsDefined()
   @IsNotEmpty()
@@ -79,11 +39,6 @@ class EnvironmentVariables {
 
   @IsDefined()
   @IsNotEmpty()
-  @IsNumber()
-  CACHE_TTL: number;
-
-  @IsDefined()
-  @IsNotEmpty()
   @IsString()
   SESSION_HOST: string;
 
@@ -91,11 +46,6 @@ class EnvironmentVariables {
   @IsNotEmpty()
   @IsPort()
   SESSION_PORT: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsNumber()
-  SESSION_TTL: number;
 
   @IsDefined()
   @IsNotEmpty()

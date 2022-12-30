@@ -1,7 +1,6 @@
 import {
   BadRequestException,
   Body,
-  CacheInterceptor,
   Controller,
   Delete,
   Get,
@@ -12,85 +11,88 @@ import {
   Query,
   UploadedFile,
   UseInterceptors,
-} from '@nestjs/common'
-import { FileInterceptor } from '@nestjs/platform-express'
-import { ApiTags } from '@nestjs/swagger'
-import { ObjectId, Types } from 'mongoose'
-import { ParseObjectIdPipe } from '../../common/pipe/ParseObjectIdPipe'
-import { CreateSeedDto } from 'src/seeds/dto/create-seed.dto'
-import { UpdateSeedDto } from '../dto/update-seed.dto'
-import { SeedService } from '../providers/seed.service'
-import { Seed } from '../schemas/seed.schema'
-import { PaginationParams } from '../../common/paginationParams'
+} from "@nestjs/common";
+import { FileInterceptor } from "@nestjs/platform-express";
+import { Types } from "mongoose";
+import { PaginationQueryParams } from "../../common/paginationParams";
+import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
+import { SharpPipe } from "../../common/pipe/SharpPipe";
+import { CreateSeedDto } from "../../seeds/dto/create-seed.dto";
+import { UpdateSeedDto } from "../dto/update-seed.dto";
+import { SeedService } from "../providers/seed.service";
+import { Seed, SeedDocument } from "../schemas/seed.schema";
 
-@Controller('seeds')
-// @UseInterceptors(CacheInterceptor)
+/**
+ * Controller class for managing requests to the seeds endpoint.
+ */
+@Controller("seeds")
 export class SeedController {
-  private readonly logger = new Logger(SeedController.name)
+  private readonly logger = new Logger(SeedController.name);
 
-  constructor(private readonly seedService: SeedService) { }
+  constructor(private readonly seedService: SeedService) {}
 
-  @Get("sow")
-  listSeedsToSow(@Query() { skip = 0, limit = 10 }: PaginationParams) {
-    return this.seedService.listSeedsToSow(skip, limit)
+  @Get("seedings")
+  findAllToSow(
+    @Query() { page = 0, limit = 10 }: PaginationQueryParams,
+    @Query("start") start: number,
+    @Query("end") end: number
+  ) {
+    return this.seedService.findAllToSow(start, end, page, limit);
   }
 
   @Get()
-  listSeeds(@Query() { skip = 0, limit = 10 }: PaginationParams) {
-    return this.seedService.listSeeds(skip, limit)
+  findAll(@Query() { page = 1, limit = 10 }: PaginationQueryParams) {
+    return this.seedService.findAll(page, limit);
   }
 
-  @Post(":id/upload")
-  @UseInterceptors(FileInterceptor('image'))
-  picture(
-    @Param('id', ParseObjectIdPipe) id: Types.ObjectId,
-    @UploadedFile() file: Express.Multer.File
-  ) {
-    this.logger.log('id', id)
-    this.logger.log('file', file)
-    var seed = new UpdateSeedDto();
-    seed.image = file.filename;
-    this.logger.log('seed', seed)
-    return this.seedService.updateSeed(id, seed)
+  @Get(":id")
+  findById(@Param("id", ParseObjectIdPipe) id: Types.ObjectId) {
+    return this.seedService.findById(id);
   }
 
   @Post()
-  createSeed(
-    @Body() body: CreateSeedDto
-  ) {
-    this.logger.log('body', body)
-    return this.seedService.createSeed(body)
+  create(@Body() body: CreateSeedDto) {
+    this.logger.log(body);
+    return this.seedService.create(body);
   }
 
-  @Get(':id')
-  readSeed(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
-    return this.seedService.readSeed(id)
+  @Post(":id/upload")
+  @UseInterceptors(FileInterceptor("image"))
+  uploadImage(
+    @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
+    @UploadedFile(SharpPipe) file: string
+  ): Promise<SeedDocument> {
+    this.logger.log(file);
+    const seed = new UpdateSeedDto();
+    seed.image = file;
+    return this.seedService.update(id, seed);
   }
 
-  @Put(':id')
-  updateSeed(
-    @Param('id', ParseObjectIdPipe) id: Types.ObjectId,
+  @Put(":id")
+  update(
+    @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
     @Body() body: UpdateSeedDto
   ) {
-    return this.seedService.updateSeed(id, body)
+    return this.seedService.update(id, body);
   }
 
-  @Delete(':id')
-  deleteSeed(@Param('id', ParseObjectIdPipe) id: Types.ObjectId) {
-    return this.seedService.deleteSeed(id)
+  @Delete(":id")
+  delete(@Param("id", ParseObjectIdPipe) id: Types.ObjectId) {
+    return this.seedService.deleteSeed(id);
   }
 
-  @Delete('/seeds/:ids')
-  deleteCultureByIds(@Param('ids') ids: string) {
-    const aids = ids.split(',')
+  @Delete("/multiple/:ids")
+  deleteMany(@Param("ids") ids: string) {
+    // FIXME: decorator to check ids and create deleteMany in service
+    const aids = ids.split(",");
     aids.forEach((value) => {
-      const validObjectId = Types.ObjectId.isValid(value)
+      const validObjectId = Types.ObjectId.isValid(value);
       if (!validObjectId) {
-        throw new BadRequestException('Invalid ObjectId')
+        throw new BadRequestException("Invalid ObjectId");
       }
-      const di: Types.ObjectId = Types.ObjectId(value)
-      this.seedService.deleteSeed(di)
-    })
-    return aids
+      const di: Types.ObjectId = Types.ObjectId(value);
+      this.seedService.deleteSeed(di);
+    });
+    return aids;
   }
 }

@@ -1,5 +1,5 @@
 export enum Season {
-  Annual = 'annual',
-  Biennial = 'biennal',
-  Perenial = 'perenial',
+  Annual = "annual",
+  Biennial = "biennal",
+  Perenial = "perenial",
 }
