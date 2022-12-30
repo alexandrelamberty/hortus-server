@@ -5,6 +5,7 @@ export const plantStub = (): Plant => {
     _id: "",
     name: "Carrot",
     binomial: "D. carota",
+    trinomial: "D. carota",
     family: "Apiaceae",
     genus: "Daucus",
     species: "D. carota",

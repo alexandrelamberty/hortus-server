@@ -10,7 +10,7 @@ import {
   // UseGuards,
 } from "@nestjs/common";
 
-import { PaginationParams } from "@common/paginationParams";
+import { PaginationQueryParams } from "@common/paginationParams";
 import { ParseObjectIdPipe } from "@common/pipe/ParseObjectIdPipe";
 // import { JwtAuthGuard } from "@auth/guards/jwt-auth.guard";
 
@@ -26,7 +26,7 @@ export class UserController {
   constructor(private readonly usersService: UserService) {}
 
   @Get()
-  async getAll(@Query() query: PaginationParams): Promise<UsersResponse> {
+  async getAll(@Query() query: PaginationQueryParams): Promise<UsersResponse> {
     // FIXME: pass query directly ?
     const result = await this.usersService.getAll(query.page, query.limit);
     return result;

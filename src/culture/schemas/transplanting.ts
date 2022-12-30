@@ -1,38 +1,37 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-
+import { CutlureLocation } from "../enum/culture-location.enum";
 import { PhaseStatus } from "../enum/phase-status.enum";
+import { SoilType } from "../enum/soil-type.enum";
 
-export type HarvestingDocument = Harvesting & Document;
-
-@Schema()
-export class Harvesting {
+@Schema({ _id: false })
+export class TransplantingPhase {
   @Prop({
     type: String,
     required: true,
-    default: PhaseStatus.Pending,
     enum: PhaseStatus,
+    default: PhaseStatus.Pending,
   })
   status: string = PhaseStatus.Pending;
 
   @Prop({
-    type: Number,
-    required: true,
+    type: String,
+    enum: CutlureLocation,
   })
-  quantity = 0;
+  location: string;
 
-  // FIXME: weight metric in kg
-  // weight : number
+  @Prop({
+    type: String,
+    enum: SoilType,
+  })
+  soil: string;
 
   @Prop({
     type: Number,
-    required: false,
   })
-  weight = 0;
+  quantity: number;
 
   @Prop({
     type: Date,
-    required: false,
   })
   startedAt: Date;
 
@@ -49,4 +48,5 @@ export class Harvesting {
   endedAt: Date;
 }
 
-export const HarvestingSchema = SchemaFactory.createForClass(Harvesting);
+export const TransplantingSchema =
+  SchemaFactory.createForClass(TransplantingPhase);

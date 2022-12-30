@@ -1,43 +1,36 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
-
-import { CutlureLocation } from "../enum/location.enum";
+import { CutlureLocation } from "../enum/culture-location.enum";
 import { PhaseStatus } from "../enum/phase-status.enum";
-import { Soil } from "../enum/soil.enum";
+import { SoilType } from "../enum/soil-type.enum";
 
-export type PlantingDocument = Planting & Document;
-
-@Schema()
-export class Planting {
+@Schema({ _id: false })
+export class PlantingPhase {
   @Prop({
     type: String,
     required: true,
-    default: PhaseStatus.Pending,
     enum: PhaseStatus,
+    default: PhaseStatus.Pending,
   })
   status: string = PhaseStatus.Pending;
 
   @Prop({
     type: String,
-    required: true,
-    default: CutlureLocation.Outside,
+    required: false,
     enum: CutlureLocation,
   })
-  location: string = CutlureLocation.Outside;
+  location: string;
 
   @Prop({
     type: String,
-    default: Soil.Chalk,
-    enum: Soil,
+    enum: SoilType,
   })
-  soil = Soil.Chalk; // FIXME: @see culture.controller.ts
+  soil: string;
 
   @Prop({
     type: Number,
     required: false,
-    default: 0,
   })
-  quantity = 0;
+  quantity;
 
   @Prop({
     type: Date,
@@ -58,4 +51,4 @@ export class Planting {
   endedAt: Date;
 }
 
-export const PlantingSchema = SchemaFactory.createForClass(Planting);
+export const PlantingSchema = SchemaFactory.createForClass(PlantingPhase);

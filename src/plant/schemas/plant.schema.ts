@@ -1,8 +1,7 @@
-import { Logger } from "@nestjs/common";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { SeedDocument } from "@seeds/schemas/seed.schema";
 import * as mongoose from "mongoose";
-import { Document, model, Model } from "mongoose";
+import { Document, Model, model } from "mongoose";
 
 export type PlantDocument = Plant & Document;
 
@@ -12,9 +11,6 @@ export class Plant {
 
   @Prop({ type: String, required: true })
   name: string;
-
-  @Prop({ type: String, required: true })
-  binomial: string;
 
   @Prop({ type: String, required: true })
   family: string;
@@ -42,6 +38,12 @@ export class Plant {
 
   @Prop({ type: String, required: false })
   hybrid?: string;
+
+  @Prop({ type: String, required: false })
+  binomial?: string;
+
+  @Prop({ type: String, required: false })
+  trinomial?: string;
 
   @Prop({ type: Array<string>, required: false })
   common_names?: Array<string>;

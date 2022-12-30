@@ -1,32 +1,18 @@
 import { Module } from "@nestjs/common";
-import { MongooseModule, getModelToken } from "@nestjs/mongoose";
+import { MongooseModule } from "@nestjs/mongoose";
 import { MulterModule } from "@nestjs/platform-express";
 import { memoryStorage } from "multer";
-
-import { Seed, SeedSchemaFactory } from "@seeds/schemas/seed.schema";
-
 import { PlantController } from "./controllers/plant.controller";
 import { PlantService } from "./providers/plant.service";
-import { Plant, PlantSchemaFactory } from "./schemas/plant.schema";
-import { Culture } from "@culture/schemas/culture.schema";
+import { Plant, PlantSchema } from "./schemas/plant.schema";
 
 @Module({
   imports: [
     // CacheModule.register(),
-    MongooseModule.forFeatureAsync([
+    MongooseModule.forFeature([
       {
         name: Plant.name,
-        useFactory: PlantSchemaFactory,
-        inject: [getModelToken(Seed.name)],
-      },
-      {
-        name: Seed.name,
-        useFactory: SeedSchemaFactory,
-        inject: [getModelToken(Culture.name)],
-      },
-      {
-        name: Culture.name,
-        useFactory: SeedSchemaFactory,
+        schema: PlantSchema,
       },
     ]),
 

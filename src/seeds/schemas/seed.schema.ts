@@ -121,7 +121,7 @@ export const SeedSchema = SchemaFactory.createForClass(Seed);
 export const SeedSchemaFactory = (
   cultureModel: Model<CultureDocument>
 ): MongooseSchema<any> => {
-  // remove all seed derived from this plant
+  // remove all culture derived from this seed
   SeedSchema.pre<Plant>(
     "remove",
     { document: true, query: true },

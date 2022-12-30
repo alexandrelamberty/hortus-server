@@ -5,11 +5,11 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
-      "request": "launch",
-      "name": "Launch Chrome against localhost",
-      "url": "http://localhost:8080",
-      "webRoot": "${workspaceFolder}"
+      "name": "Attach to Chrome",
+      "port": 9229,
+      "request": "attach",
+      "type": "node",
+      "skipFiles": ["<node_intrernals>/*"]
     }
   ]
 }

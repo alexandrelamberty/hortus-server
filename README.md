@@ -5,8 +5,7 @@
 Gardening planner API part of the
 [Hortus](https://github.com/alexandrelamberty/hortus) project.
 
-This application expose an API with NestJS that connect to a MongoDB and Redis databases.
-use encryption with JWT and BCRYPT.
+This application expose an API with NestJS that connect to a MongoDB and Redis databases. It use authentication/encryption with JWT and BCRYPT.
 
 The API implement the [Hortus API Specification](https://github.com/alexandrelamberty/hortus-api-spec)
 
@@ -15,10 +14,9 @@ The API implement the [Hortus API Specification](https://github.com/alexandrelam
 - [Docker](https://www.docker.com/)
 - [Node.js](https://nodejs.org/)
 - [NestJS](https://nestjs.com/)
-- [Typescript](https://www.typescriptlang.org/)
+- [TypeScript](https://www.typescriptlang.org/)
 - [MongoDB](https://www.mongodb.com/)
 - [Redis](https://redis.io/)Z
-- [Socket.io](https://socket.io/)
 
 ## Requirements
 
@@ -33,13 +31,11 @@ complete stack.
 
 ## Development
 
-### Architecture
-
 This API run as a Docker service and rely on a [MongoDB](https://hub.docker.com/_/mongo) database and a [Redis](https://hub.docker.com/_/redis) cache service.
 
 ### Run required services
 
-See [Hortus Readme - Development - API]()
+See [Hortus]()
 
 ### Environment variables
 
@@ -96,13 +92,4 @@ FIXME: link source folder
 
 ```bash
 docker run -p 3333:3333 --network=hortus_default --env-file .env --name hortus-api -d alexandrelamberty/hortus-api:{tag}
-```
-
-## Push to Docker Hub
-
-> Automated with GitHub Action, see: [docker.yml](./.github/workflows/docker.yml)
-
-```bash
-docker tag alexandrelamberty/hortus-api:{tag} alexandrelamberty/hortus-api:{tag}
-docker push alexandrelamberty/hortus-api:{tag}
 ```

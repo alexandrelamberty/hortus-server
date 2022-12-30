@@ -1,24 +1,20 @@
 import { MiddlewareConsumer, Module, RequestMethod } from "@nestjs/common";
 import { ConfigModule, ConfigService } from "@nestjs/config";
-import { APP_FILTER, APP_INTERCEPTOR } from "@nestjs/core";
+import { APP_INTERCEPTOR } from "@nestjs/core";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MulterModule } from "@nestjs/platform-express";
-import { ScheduleModule } from "@nestjs/schedule";
-
-import { LoggingInterceptor } from "@common/interceptors/logging.interceptor";
-import { logger } from "@common/middleware/logger.middleware";
-import configuration from "@config/configuration";
-import { DatabaseConfigService } from "@config/providers/DatabaseConfigService";
-import { validate } from "@config/validators/env.validation";
-import { CultureModule } from "@culture/culture.module";
-import { NotificationModule } from "@notification/notification.module";
-import { PlantModule } from "@plant/plant.module";
-import { SeedModule } from "@seeds/seed.module";
-
+import { LoggingInterceptor } from "../common/interceptors/logging.interceptor";
+import { logger } from "../common/middleware/logger.middleware";
+import configuration from "../config/configuration";
+import { DatabaseConfigService } from "../config/providers/DatabaseConfigService";
+import { validate } from "../config/validators/env.validation";
+import { CultureModule } from "../culture/culture.module";
+import { MailModule } from "../mail/mail.module";
+import { NotificationModule } from "../notification/notification.module";
+import { PlantModule } from "../plant/plant.module";
+import { SeedModule } from "../seeds/seed.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
-import { MailModule } from "@mail/mail.module";
-import { MongoExceptionFilter } from "@common/exceptions/mongo-exception.filters";
 
 @Module({
   imports: [
@@ -60,7 +56,7 @@ import { MongoExceptionFilter } from "@common/exceptions/mongo-exception.filters
         }), */
 
     // Task Scheduling - https://docs.nestjs.com/techniques/task-scheduling
-    ScheduleModule.forRoot(),
+    // ScheduleModule.forRoot(),
 
     // File upload
     MulterModule.registerAsync({
@@ -87,10 +83,10 @@ import { MongoExceptionFilter } from "@common/exceptions/mongo-exception.filters
     // provide: APP_INTERCEPTOR,
     // useClass: CacheInterceptor,
     // },
-    {
-      provide: APP_FILTER,
-      useClass: MongoExceptionFilter,
-    },
+    // {
+    //   provide: APP_FILTER,
+    //   useClass: MongoExceptionFilter,
+    // },
     {
       provide: APP_INTERCEPTOR,
       useClass: LoggingInterceptor,

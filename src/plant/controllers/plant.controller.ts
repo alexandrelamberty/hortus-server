@@ -14,22 +14,20 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Types } from "mongoose";
-
-import { PaginationParams } from "@common/paginationParams";
-import { ParseObjectIdPipe } from "@common/pipe/ParseObjectIdPipe";
-import { SharpPipe } from "@common/pipe/SharpPipe";
-
+import { PaginationQueryParams } from "../../common/paginationParams";
+import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
+import { SharpPipe } from "../../common/pipe/SharpPipe";
 import { CreatePlantDto } from "../dto/create-plant.dto";
 import { UpdatePlantDto } from "../dto/update-plant.dto";
 import PlantNotFoundException from "../exceptions/plant.exceptions";
 import { PlantService } from "../providers/plant.service";
+import { PlantDeleteResponse } from "../responses/plants.responses";
 import { Plant } from "../schemas/plant.schema";
-import { PlantDeleteResponse } from "@plant/responses/plants.responses";
 
 /**
- * Controller class for managing plants.
+ * Controller class for managing requests to the plants endpoint.
  */
-@Controller("/plants")
+@Controller("plants")
 export class PlantController {
   /**
    * Creates an instance of PlantController.
@@ -43,7 +41,9 @@ export class PlantController {
    * @returns List of plants.
    */
   @Get()
-  async findAll(@Query() { page, limit }: PaginationParams): Promise<Plant[]> {
+  async findAll(
+    @Query() { page, limit }: PaginationQueryParams
+  ): Promise<Plant[]> {
     return this.plantService.findAll(page, limit);
   }
 
@@ -53,9 +53,9 @@ export class PlantController {
    * @returns List of plants with names that contain the specified string.
    */
   @Get("/find")
-  async searchByName(@Query("name") name: string): Promise<Plant[]> {
+  async findByName(@Query("name") name: string): Promise<Plant[]> {
     Logger.log(name);
-    return this.plantService.searchByName(name);
+    return this.plantService.findByName(name);
   }
 
   /**
@@ -65,12 +65,10 @@ export class PlantController {
    * @throws {PlantNotFoundException} If the plant with the specified ID is not found.
    */
   @Get("/:id")
-  async getById(@Param("id", ParseObjectIdPipe) id: string): Promise<Plant> {
-    try {
-      return await this.plantService.findById(id);
-    } catch (err) {
-      throw new PlantNotFoundException(id);
-    }
+  async findById(
+    @Param("id", ParseObjectIdPipe) id: Types.ObjectId
+  ): Promise<Plant> {
+    return this.plantService.findById(id);
   }
 
   /**
@@ -82,7 +80,7 @@ export class PlantController {
    */
   @Post()
   @UseInterceptors(FileInterceptor("file"))
-  async insert(
+  async create(
     @Body() plant: CreatePlantDto,
     @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
@@ -108,7 +106,7 @@ export class PlantController {
   @Put(":id")
   @UseInterceptors(FileInterceptor("file"))
   async update(
-    @Param("id", ParseObjectIdPipe) id: string,
+    @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
     @Body() plant: UpdatePlantDto,
     @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
@@ -118,7 +116,7 @@ export class PlantController {
     try {
       return this.plantService.update(id, plant);
     } catch (err) {
-      // delete file
+      // FIXME: delete file
       throw new PlantNotFoundException(id);
     }
   }
@@ -131,13 +129,9 @@ export class PlantController {
    */
   @Delete(":id")
   async delete(
-    @Param("id", ParseObjectIdPipe) id: string
+    @Param("id", ParseObjectIdPipe) id: Types.ObjectId
   ): Promise<PlantDeleteResponse> {
-    try {
-      return this.plantService.delete(id);
-    } catch (err) {
-      throw new PlantNotFoundException(id);
-    }
+    return this.plantService.delete(id);
   }
 
   /**
@@ -148,6 +142,7 @@ export class PlantController {
    */
   @Post("multiple")
   async deleteMany(@Body() ids: string[]): Promise<{ deleted: boolean }> {
+    // FIXME: decorator to check ids and create deleteMany in service
     ids.forEach((id: string) => {
       const validObjectId = Types.ObjectId.isValid(id);
       if (!validObjectId) {
@@ -155,7 +150,7 @@ export class PlantController {
       }
       try {
         // TODO: Delete picture from storage
-        this.plantService.delete(id);
+        this.plantService.delete(Types.ObjectId.createFromHexString(id));
       } catch (e) {
         Logger.log(e);
       }
