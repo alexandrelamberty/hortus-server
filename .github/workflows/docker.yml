@@ -8,6 +8,7 @@ on:
       - "features/**"
   pull_request:
     branches: ["master", "stagging"]
+  workflow_dispatch:
 jobs:
   build:
     name: "Push Docker image to Docker Hub"

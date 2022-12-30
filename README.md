@@ -16,7 +16,7 @@ The API implement the [Hortus API Specification](https://github.com/alexandrelam
 - [NestJS](https://nestjs.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [MongoDB](https://www.mongodb.com/)
-- [Redis](https://redis.io/)Z
+- [Redis](https://redis.io/)
 
 ## Requirements
 

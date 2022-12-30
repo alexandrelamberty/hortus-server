@@ -9,8 +9,6 @@ import configuration from "../config/configuration";
 import { DatabaseConfigService } from "../config/providers/DatabaseConfigService";
 import { validate } from "../config/validators/env.validation";
 import { CultureModule } from "../culture/culture.module";
-import { MailModule } from "../mail/mail.module";
-import { NotificationModule } from "../notification/notification.module";
 import { PlantModule } from "../plant/plant.module";
 import { SeedModule } from "../seeds/seed.module";
 import { AppController } from "./app.controller";
@@ -68,12 +66,10 @@ import { AppService } from "./app.service";
       inject: [ConfigService],
     }),
 
-    // Modules
+    // Features modules
     PlantModule,
     SeedModule,
     CultureModule,
-    NotificationModule,
-    MailModule,
   ],
   controllers: [AppController],
   providers: [

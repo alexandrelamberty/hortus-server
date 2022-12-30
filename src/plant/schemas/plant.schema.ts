@@ -7,7 +7,7 @@ export type PlantDocument = Plant & Document;
 
 @Schema({ timestamps: true })
 export class Plant {
-  _id: string;
+  _id: mongoose.Types.ObjectId;
 
   @Prop({ type: String, required: true })
   name: string;

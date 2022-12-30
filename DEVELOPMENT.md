@@ -33,4 +33,3 @@
   - [ ] Culture
   - [ ] Mail
   - [ ] Task Scheduling
-  - [ ] Sensors
