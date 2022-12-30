@@ -5,11 +5,10 @@ import { NestExpressApplication } from "@nestjs/platform-express";
 import * as cookieParser from "cookie-parser";
 import { join } from "path";
 import { AppModule } from "./app/app.module";
-import { HttpExceptionFilter } from "./common/exceptions/http-exception.filter";
 import { MongoCastFilter } from "./common/exceptions/mongo-cast.filters";
 import { MongoErrorFilter } from "./common/exceptions/mongo-error.filters";
-import { MongoValidationFilter } from "./common/exceptions/mongo-validation.filters";
 import { MongoNativeErrorFilter } from "./common/exceptions/mongo-native-error.filter";
+import { MongoValidationFilter } from "./common/exceptions/mongo-validation.filters";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

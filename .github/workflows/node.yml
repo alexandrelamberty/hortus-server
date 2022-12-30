@@ -37,3 +37,19 @@ jobs:
 
       - name: Run tests
         run: npm test
+        env:
+          NODE_ENV: "development"
+          PORT: "3333"
+          PAIRING_KEY: "9fca54477c8ad4e70dc5e1084f884aad"
+          JWT_SECRET: "d7a481461577ba4c3c4c6946cca7204b"
+          JWT_EXPIRE: "90"
+          BCRYPT_HASH: "7f91317e30a02bc7b87205e95b842df2"
+          DATABASE_URI: "mongodb://hortus:hortus@localhost:27017/hortus"
+          STATIC_DIR: "/upload"
+          UPLOAD_PATH: "/upload"
+          CACHE_HOST: "localhost"
+          CACHE_PORT: "6379"
+          CACHE_TTL: "300"
+          SESSION_HOST: "localhost"
+          SESSION_PORT: "6380"
+          SESSION_TTL: "300"

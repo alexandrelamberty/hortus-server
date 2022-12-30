@@ -8,7 +8,11 @@ describe("AppController (e2e)", () => {
 
   beforeEach(async () => {
     const moduleFixture: TestingModule = await Test.createTestingModule({
-      imports: [AppModule],
+      imports: [
+        AppModule.register({}),
+        // FIXME: To implement : https://stackoverflow.com/questions/67432760/nestjs-e2e-testing-smuggle-inject-custom-environment-variables-before-conf
+        // ConfigModule.register({ env: ... }),
+      ],
     }).compile();
 
     app = moduleFixture.createNestApplication();
