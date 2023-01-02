@@ -5,6 +5,7 @@ import { memoryStorage } from "multer";
 import { PlantsController } from "./controllers/plants.controller";
 import { PlantsService } from "./plants.service";
 import { Plant, PlantSchema } from "./schemas/plant.schema";
+import { PlantsRepository } from "./plants.repository";
 
 @Module({
   imports: [
@@ -21,7 +22,7 @@ import { Plant, PlantSchema } from "./schemas/plant.schema";
       storage: memoryStorage(),
     }),
   ],
-  providers: [PlantsService],
+  providers: [PlantsService, PlantsRepository],
   controllers: [PlantsController],
 })
 export class PlantModule {}
