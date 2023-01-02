@@ -2,8 +2,8 @@ import { Module } from "@nestjs/common";
 import { MongooseModule } from "@nestjs/mongoose";
 import { MulterModule } from "@nestjs/platform-express";
 import { memoryStorage } from "multer";
-import { PlantController } from "./controllers/plant.controller";
-import { PlantService } from "./providers/plant.service";
+import { PlantsController } from "./controllers/plants.controller";
+import { PlantsService } from "./plants.service";
 import { Plant, PlantSchema } from "./schemas/plant.schema";
 
 @Module({
@@ -21,7 +21,7 @@ import { Plant, PlantSchema } from "./schemas/plant.schema";
       storage: memoryStorage(),
     }),
   ],
-  providers: [PlantService],
-  controllers: [PlantController],
+  providers: [PlantsService],
+  controllers: [PlantsController],
 })
 export class PlantModule {}

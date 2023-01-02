@@ -24,6 +24,10 @@
       "@mail/*": ["./mail/*"]
     }
   },
-  "include": ["src/**/*.ts"],
+  "include": [
+    "src/**/*.ts",
+    "src/plant/__tests__/plants.service.spec.ts",
+    "src/plant/__tests__/plants.controller.spec.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

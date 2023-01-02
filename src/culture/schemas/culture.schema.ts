@@ -2,10 +2,14 @@ import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import * as mongoose from "mongoose";
 import { Document, Schema as MongooseSchema } from "mongoose";
 import { Seed } from "../../seeds/schemas/seed.schema";
-import { HarvestingPhase, HarvestingSchema } from "./harvesting";
-import { PlantingPhase, PlantingSchema } from "./planting";
-import { SeedingPhase as SowingPhase, SeedingSchema } from "./seeding";
-import { TransplantingPhase, TransplantingSchema } from "./transplanting";
+import { HarvestingPhase, HarvestingSchema } from "./harvesting.schema";
+import { PlantingPhase, PlantingSchema } from "./planting.schema";
+import { SeedingPhase as SowingPhase, SeedingSchema } from "./seeding.schema";
+import {
+  TransplantingPhase,
+  TransplantingSchema,
+} from "./transplanting.schema";
+import { ObjectId } from "mongodb";
 
 export type CultureDocument = Culture & Document;
 /**
@@ -18,7 +22,7 @@ export type CultureDocument = Culture & Document;
  */
 @Schema({ timestamps: true })
 export class Culture {
-  _id: string;
+  _id: ObjectId;
 
   /**
    * The seed used in the culture.
@@ -26,11 +30,11 @@ export class Culture {
    * This should be a reference to a `Seed` document in the seeds collection.
    */
   @Prop({
-    type: MongooseSchema.Types.ObjectId,
+    type: ObjectId,
     ref: "Seed",
     required: true,
   })
-  seed: Seed;
+  seed: Seed | ObjectId;
 
   @Prop({
     type: SeedingSchema,

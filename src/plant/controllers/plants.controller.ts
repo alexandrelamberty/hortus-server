@@ -14,26 +14,25 @@ import {
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { Types } from "mongoose";
-import { PaginationQueryParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { SharpPipe } from "../../common/pipe/SharpPipe";
 import { CreatePlantDto } from "../dto/create-plant.dto";
+import { PlantsQueryParams } from "../dto/query-plants.dto";
 import { UpdatePlantDto } from "../dto/update-plant.dto";
 import PlantNotFoundException from "../exceptions/plant.exceptions";
-import { PlantService } from "../providers/plant.service";
-import { PlantDeleteResponse } from "../responses/plants.responses";
+import { PlantsService } from "../plants.service";
 import { Plant } from "../schemas/plant.schema";
 
 /**
  * Controller class for managing requests to the plants endpoint.
  */
 @Controller("plants")
-export class PlantController {
+export class PlantsController {
   /**
    * Creates an instance of PlantController.
    * @param plantService Service for managing plants.
    */
-  constructor(private readonly plantService: PlantService) {}
+  constructor(private readonly plantService: PlantsService) {}
 
   /**
    * Retrieves a paginated list of all plants.
@@ -41,10 +40,8 @@ export class PlantController {
    * @returns List of plants.
    */
   @Get()
-  async findAll(
-    @Query() { page, limit }: PaginationQueryParams
-  ): Promise<Plant[]> {
-    return this.plantService.findAll(page, limit);
+  async getAllPlants(@Query() query: PlantsQueryParams): Promise<Plant[]> {
+    return this.plantService.getAllPlants(query);
   }
 
   /**
@@ -53,9 +50,9 @@ export class PlantController {
    * @returns List of plants with names that contain the specified string.
    */
   @Get("/find")
-  async findByName(@Query("name") name: string): Promise<Plant[]> {
+  async getPlantByName(@Query("name") name: string): Promise<Plant> {
     Logger.log(name);
-    return this.plantService.findByName(name);
+    return this.plantService.getPlantByName(name);
   }
 
   /**
@@ -65,10 +62,10 @@ export class PlantController {
    * @throws {PlantNotFoundException} If the plant with the specified ID is not found.
    */
   @Get("/:id")
-  async findById(
+  async getPlantById(
     @Param("id", ParseObjectIdPipe) id: Types.ObjectId
   ): Promise<Plant> {
-    return this.plantService.findById(id);
+    return this.plantService.getPlantById(id);
   }
 
   /**
@@ -80,7 +77,7 @@ export class PlantController {
    */
   @Post()
   @UseInterceptors(FileInterceptor("file"))
-  async create(
+  async createPlant(
     @Body() plant: CreatePlantDto,
     @UploadedFile(SharpPipe) file: string
   ): Promise<Plant> {
@@ -92,7 +89,7 @@ export class PlantController {
     } else {
       plant.image = file;
     }
-    return this.plantService.create(plant);
+    return this.plantService.createPlant(plant);
   }
 
   /**
@@ -105,7 +102,7 @@ export class PlantController {
    */
   @Put(":id")
   @UseInterceptors(FileInterceptor("file"))
-  async update(
+  async updatePlant(
     @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
     @Body() plant: UpdatePlantDto,
     @UploadedFile(SharpPipe) file: string
@@ -114,7 +111,7 @@ export class PlantController {
       plant.image = file;
     }
     try {
-      return this.plantService.update(id, plant);
+      return this.plantService.updatePlant(id, plant);
     } catch (err) {
       // FIXME: delete file
       throw new PlantNotFoundException(id);
@@ -128,10 +125,10 @@ export class PlantController {
    * @throws PlantNotFoundException if a plant with the specified ID could not be found.
    */
   @Delete(":id")
-  async delete(
+  async deletePlant(
     @Param("id", ParseObjectIdPipe) id: Types.ObjectId
-  ): Promise<PlantDeleteResponse> {
-    return this.plantService.delete(id);
+  ): Promise<Plant> {
+    return this.plantService.deletePlant(id);
   }
 
   /**
@@ -141,7 +138,7 @@ export class PlantController {
    * @throws BadRequestException if any of the provided IDs are invalid.
    */
   @Post("multiple")
-  async deleteMany(@Body() ids: string[]): Promise<{ deleted: boolean }> {
+  async deleteManyPlants(@Body() ids: string[]): Promise<{ deleted: boolean }> {
     // FIXME: decorator to check ids and create deleteMany in service
     ids.forEach((id: string) => {
       const validObjectId = Types.ObjectId.isValid(id);
@@ -150,7 +147,7 @@ export class PlantController {
       }
       try {
         // TODO: Delete picture from storage
-        this.plantService.delete(Types.ObjectId.createFromHexString(id));
+        this.plantService.deletePlant(Types.ObjectId.createFromHexString(id));
       } catch (e) {
         Logger.log(e);
       }

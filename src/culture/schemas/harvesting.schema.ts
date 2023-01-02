@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
 import { PhaseStatus } from "../enum/phase-status.enum";
-import { Harvest, HarvestSchema } from "./harvest";
+import { Harvest, HarvestSchema } from "./harvest.schema";
 
 @Schema({ _id: false })
 export class HarvestingPhase {

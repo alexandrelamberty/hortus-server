@@ -1,7 +1,8 @@
 import { CultureDocument } from "@culture/schemas/culture.schema";
+import { Logger } from "@nestjs/common";
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
+import { ObjectId } from "mongodb";
 import { Document, Model, Schema as MongooseSchema } from "mongoose";
-
 import { Plant } from "../../plant/schemas/plant.schema";
 import { Frost } from "../enums/frost.enum";
 import { Season } from "../enums/season.enum";
@@ -12,13 +13,12 @@ import { Harvesting } from "./harvesting.schema";
 import { Planting } from "./planting.schema";
 import { Seeding } from "./seeding.schema";
 import { Transplanting } from "./transplanting.schema";
-import { Logger } from "@nestjs/common";
 
 export type SeedDocument = Seed & Document;
 
 @Schema({ timestamps: true })
 export class Seed {
-  _id: string;
+  _id: ObjectId;
 
   @Prop({
     type: MongooseSchema.Types.ObjectId,
