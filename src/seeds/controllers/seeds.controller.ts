@@ -17,43 +17,42 @@ import { Types } from "mongoose";
 import { PaginationQueryParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { SharpPipe } from "../../common/pipe/SharpPipe";
-import { CreateSeedDto } from "../../seeds/dto/create-seed.dto";
+import { CreateSeedDto } from "../dto/create-seed.dto";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
-import { SeedService } from "../providers/seed.service";
-import { Seed, SeedDocument } from "../schemas/seed.schema";
+import { SeedDocument } from "../schemas/seed.schema";
+import { SeedsService } from "../seeds.service";
 
 /**
  * Controller class for managing requests to the seeds endpoint.
  */
 @Controller("seeds")
-export class SeedController {
-  private readonly logger = new Logger(SeedController.name);
+export class SeedsController {
+  private readonly logger = new Logger(SeedsController.name);
 
-  constructor(private readonly seedService: SeedService) {}
+  constructor(private readonly seedService: SeedsService) {}
 
   @Get("seedings")
-  findAllToSow(
+  getAllSeedsToSow(
     @Query() { page = 0, limit = 10 }: PaginationQueryParams,
     @Query("start") start: number,
     @Query("end") end: number
   ) {
-    return this.seedService.findAllToSow(start, end, page, limit);
+    return this.seedService.getAllSeedsToSow(start, end, page, limit);
   }
-
   @Get()
-  findAll(@Query() { page = 1, limit = 10 }: PaginationQueryParams) {
-    return this.seedService.findAll(page, limit);
+  getAllSeeds(@Query() query: PaginationQueryParams) {
+    return this.seedService.getAllSeeds(query);
   }
 
   @Get(":id")
-  findById(@Param("id", ParseObjectIdPipe) id: Types.ObjectId) {
-    return this.seedService.findById(id);
+  getSeedById(@Param("id", ParseObjectIdPipe) id: Types.ObjectId) {
+    return this.seedService.getSeedById(id);
   }
 
   @Post()
-  create(@Body() body: CreateSeedDto) {
+  createSeed(@Body() body: CreateSeedDto) {
     this.logger.log(body);
-    return this.seedService.create(body);
+    return this.seedService.createSeed(body);
   }
 
   @Post(":id/upload")
@@ -65,24 +64,24 @@ export class SeedController {
     this.logger.log(file);
     const seed = new UpdateSeedDto();
     seed.image = file;
-    return this.seedService.update(id, seed);
+    return this.seedService.updateSeed(id, seed);
   }
 
   @Put(":id")
-  update(
+  updateSeed(
     @Param("id", ParseObjectIdPipe) id: Types.ObjectId,
     @Body() body: UpdateSeedDto
   ) {
-    return this.seedService.update(id, body);
+    return this.seedService.updateSeed(id, body);
   }
 
   @Delete(":id")
-  delete(@Param("id", ParseObjectIdPipe) id: Types.ObjectId) {
+  deleteSeed(@Param("id", ParseObjectIdPipe) id: Types.ObjectId) {
     return this.seedService.deleteSeed(id);
   }
 
   @Delete("/multiple/:ids")
-  deleteMany(@Param("ids") ids: string) {
+  deleteManySeeds(@Param("ids") ids: string) {
     // FIXME: decorator to check ids and create deleteMany in service
     const aids = ids.split(",");
     aids.forEach((value) => {

@@ -15,7 +15,7 @@ import { DatabaseConfigService } from "../config/providers/DatabaseConfigService
 import { validate } from "../config/validators/env.validation";
 import { CultureModule } from "../culture/culture.module";
 import { PlantModule } from "../plant/plant.module";
-import { SeedModule } from "../seeds/seed.module";
+import { SeedsModule } from "../seeds/seeds.module";
 import { AppController } from "./app.controller";
 import { AppService } from "./app.service";
 
@@ -73,7 +73,7 @@ import { AppService } from "./app.service";
 
     // Features modules
     PlantModule,
-    SeedModule,
+    SeedsModule,
     CultureModule,
   ],
   controllers: [AppController],

@@ -1,8 +1,7 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { Document } from "mongoose";
 
 @Schema()
-export class Transplanting extends Document {
+export class Transplanting {
   @Prop({ required: true })
   start: number;
 

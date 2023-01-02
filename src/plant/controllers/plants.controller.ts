@@ -17,7 +17,7 @@ import { Types } from "mongoose";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { SharpPipe } from "../../common/pipe/SharpPipe";
 import { CreatePlantDto } from "../dto/create-plant.dto";
-import { PlantsQueryParams } from "../dto/query-plants.dto";
+import { PlantsQueryParams } from "../dto/plant-query.dto";
 import { UpdatePlantDto } from "../dto/update-plant.dto";
 import PlantNotFoundException from "../exceptions/plant.exceptions";
 import { PlantsService } from "../plants.service";

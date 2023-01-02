@@ -25,7 +25,7 @@ export class Seed {
     ref: "Plant",
     required: true,
   })
-  plant: string | Plant;
+  plant: ObjectId | Plant;
 
   @Prop({ type: String, required: true })
   name: string;
@@ -45,20 +45,17 @@ export class Seed {
 
   @Prop({
     type: Array,
-    required: false,
   })
   harvest: number[];
 
   @Prop({
     type: String,
-    required: true,
     enum: Season,
   })
   season: string;
 
   @Prop({
     type: String,
-    required: true,
     enum: Sun,
   })
   sun: string;
@@ -80,6 +77,7 @@ export class Seed {
   @Prop({
     type: [MongooseSchema.Types.ObjectId],
     ref: Plant.name,
+    required: false,
     //default: [],
   })
   companions: MongooseSchema.Types.ObjectId[];
@@ -87,20 +85,21 @@ export class Seed {
   @Prop({
     type: [MongooseSchema.Types.ObjectId],
     ref: Plant.name,
+    required: false,
     //default: [],
   })
   competitors: MongooseSchema.Types.ObjectId[];
 
-  @Prop({ type: Seeding })
+  @Prop({ type: Seeding, required: true })
   seeding: Seeding;
 
-  @Prop({ type: Transplanting })
+  @Prop({ type: Transplanting, required: true })
   transplanting: Transplanting;
 
-  @Prop({ type: Planting })
+  @Prop({ type: Planting, required: true })
   planting: Planting;
 
-  @Prop({ type: Harvesting })
+  @Prop({ type: Harvesting, required: true })
   harvesting: Harvesting;
 
   @Prop({ required: false })

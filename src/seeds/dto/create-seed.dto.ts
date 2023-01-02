@@ -17,6 +17,7 @@ import { Frost } from "../enums/frost.enum";
 import { Season } from "../enums/season.enum";
 import { Sun } from "../enums/sun.enum";
 import { Water } from "../enums/water.enum";
+import { ObjectId } from "mongodb";
 
 export class SowingDto {
   @IsNumber()
@@ -64,7 +65,7 @@ export class HarvestingDto {
 
 export class CreateSeedDto {
   @TypeClass(() => Plant)
-  public plant: Plant;
+  public plant: Plant | ObjectId;
 
   @IsNotEmpty()
   @IsString()
@@ -83,7 +84,7 @@ export class CreateSeedDto {
   public type: string;
 
   @IsNotEmpty()
-  public harvest: [];
+  public harvest: number[];
 
   @IsNotEmpty()
   @IsString()

@@ -3,8 +3,8 @@ import { MongooseModule } from "@nestjs/mongoose";
 import { MulterModule } from "@nestjs/platform-express";
 import { memoryStorage } from "multer";
 
-import { SeedController } from "./controllers/seed.controller";
-import { SeedService } from "./providers/seed.service";
+import { SeedsController } from "./controllers/seeds.controller";
+import { SeedsService } from "./seeds.service";
 import { Seed, SeedSchema } from "./schemas/seed.schema";
 
 @Module({
@@ -22,7 +22,7 @@ import { Seed, SeedSchema } from "./schemas/seed.schema";
       storage: memoryStorage(),
     }),
   ],
-  providers: [SeedService],
-  controllers: [SeedController],
+  providers: [SeedsService],
+  controllers: [SeedsController],
 })
-export class SeedModule {}
+export class SeedsModule {}

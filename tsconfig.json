@@ -27,7 +27,8 @@
   "include": [
     "src/**/*.ts",
     "src/plant/__tests__/plants.service.spec.ts",
-    "src/plant/__tests__/plants.controller.spec.ts"
+    "src/plant/__tests__/plants.controller.spec.ts",
+    "src/plant/__tests__/plants.repository.spec.ts"
   ],
   "exclude": ["node_modules", "dist"]
 }

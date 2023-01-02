@@ -6,7 +6,7 @@ import { CreatePlantDto } from "./dto/create-plant.dto";
 import { UpdatePlantDto } from "./dto/update-plant.dto";
 import { Plant, PlantDocument } from "./schemas/plant.schema";
 import PlantNotFoundException from "./exceptions/plant.exceptions";
-import { PlantsQueryParams } from "./dto/query-plants.dto";
+import { PlantsQueryParams } from "./dto/plant-query.dto";
 
 /**
  * This is a service class for interacting with a Plant model in a MongoDB

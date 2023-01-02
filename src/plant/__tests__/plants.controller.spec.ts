@@ -3,14 +3,12 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { ObjectId } from "mongodb";
 import { PlantsController } from "../controllers/plants.controller";
 import { CreatePlantDto } from "../dto/create-plant.dto";
-import { PlantsQueryParams } from "../dto/query-plants.dto";
+import { PlantsQueryParams } from "../dto/plant-query.dto";
 import { PlantsService } from "../plants.service";
 import { Plant } from "../schemas/plant.schema";
 import { plantStub } from "./stubs/plant.stub";
 
 jest.mock("../plants.service");
-
-// jest.mock("../plants.controller");
 
 describe("PlantsController Unit Tests", () => {
   let app: INestApplication;

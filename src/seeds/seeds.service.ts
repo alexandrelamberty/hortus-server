@@ -1,10 +1,11 @@
 import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
-import { CreateSeedDto } from "../dto/create-seed.dto";
-import { UpdateSeedDto } from "../dto/update-seed.dto";
-import SeedNotFoundException from "../exceptions/seed.exceptions";
-import { Seed, SeedDocument } from "../schemas/seed.schema";
+import { CreateSeedDto } from "./dto/create-seed.dto";
+import { UpdateSeedDto } from "./dto/update-seed.dto";
+import SeedNotFoundException from "./exceptions/seed.exceptions";
+import { Seed, SeedDocument } from "./schemas/seed.schema";
+import { SeedQueryParams } from "./dto/seed-query.dto";
 
 /**
  * This is a service class for interacting with a Seed model in a MongoDB
@@ -12,7 +13,7 @@ import { Seed, SeedDocument } from "../schemas/seed.schema";
  * database.
  */
 @Injectable()
-export class SeedService {
+export class SeedsService {
   /**
    * Creates an instance of SeedService.
    * @param model Mongoose model for Seed documents.
@@ -22,7 +23,7 @@ export class SeedService {
     private readonly model: Model<SeedDocument>
   ) {}
 
-  async findAllToSow(
+  async getAllSeedsToSow(
     start: number,
     end: number,
     page = 1,
@@ -40,32 +41,32 @@ export class SeedService {
     return { results, count };
   }
 
-  async findAll(page = 0, limit?: number): Promise<any> {
-    const skip = (page - 1) * limit;
+  async getAllSeeds(query: SeedQueryParams): Promise<any> {
+    const skip = (query.page - 1) * query.limit;
     const results = await this.model
       .find()
       .populate("plant")
       .populate("companions")
       .populate("competitors")
-      .skip(parseInt(skip.toString()))
-      .limit(parseInt(limit.toString()));
+      .skip(skip)
+      .limit(query.limit);
     const count = await this.model.countDocuments();
     return { results, count };
   }
 
-  async findById(id: Types.ObjectId): Promise<Seed> {
+  async getSeedById(id: Types.ObjectId): Promise<Seed> {
     const result = await this.model.findById(id).populate("species").exec();
     if (!result) throw new SeedNotFoundException(id);
     return result;
   }
 
-  async create(createSeedDto: CreateSeedDto): Promise<Seed> {
+  async createSeed(createSeedDto: CreateSeedDto): Promise<Seed> {
     let seed = await new this.model(createSeedDto).save();
     seed = await seed.populate("plant").execPopulate();
     return seed;
   }
 
-  async update(id: Types.ObjectId, updateSeedDto: UpdateSeedDto) {
+  async updateSeed(id: Types.ObjectId, updateSeedDto: UpdateSeedDto) {
     let seed = await this.model.findByIdAndUpdate(id, updateSeedDto).exec();
     if (!Seed) throw new SeedNotFoundException(id);
     seed = await seed.populate("plant").execPopulate();
