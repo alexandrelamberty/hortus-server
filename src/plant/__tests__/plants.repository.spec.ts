@@ -28,9 +28,9 @@ describe("PlantsRepository", () => {
               sort: jest.fn().mockImplementation((...args) => ({
                 skip: jest.fn().mockImplementation((...arg) => ({
                   populate: jest.fn().mockImplementation((...arg) => ({
-                    limit: jest
-                      .fn()
-                      .mockImplementation((...arg) => [plantStub()]),
+                    limit: jest.fn().mockImplementation((...arg) => ({
+                      exec: jest.fn().mockReturnValueOnce([plantStub]),
+                    })),
                   })),
                 })),
               })),
@@ -69,7 +69,17 @@ describe("PlantsRepository", () => {
       let plants: Plant[];
 
       beforeEach(async () => {
-        jest.spyOn(model, "find");
+        jest.spyOn(model, "find").mockReturnValueOnce(
+          createMock<Query<PlantDocument, PlantDocument>>({
+            find: jest.fn().mockImplementation(() => ({
+              skip: jest.fn().mockImplementation((...arg) => ({
+                limit: jest.fn().mockImplementation((...arg) => ({
+                  exec: jest.fn().mockImplementation((...arg) => [plantStub()]),
+                })),
+              })),
+            })),
+          }) as any
+        );
         const query: PlantsQueryParams = {
           page: 1,
           limit: 10,
