@@ -43,18 +43,18 @@ export class PlantsController {
    */
   @Get()
   async getAllPlants(
-    @Query() query: QueryPlantParams,
+    @Query() { page, limit }: QueryPlantParams,
     @Response() res: Res
-  ): Promise<any> {
-    const results = await this.plantService.getAllPlants(query);
+  ) {
+    const results = await this.plantService.getAllPlants({ page, limit });
     return res
       .set({
         "Pagination-Count": results.count,
-        "Pagination-Page": query.page,
-        "Pagination-Limit": query.limit,
+        "Pagination-Page": page,
+        "Pagination-Limit": limit,
         "Content-Type": "application/json",
       })
-      .json(results.results);
+      .json(results.plants);
   }
 
   /**

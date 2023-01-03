@@ -32,7 +32,7 @@ export class CultureService {
       .skip(Number(skip))
       .limit(Number(limit))
       .exec();
-    const count = await this.model.count();
+    const count = await this.model.countDocuments();
     return { results, count };
   }
 

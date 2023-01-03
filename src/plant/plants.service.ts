@@ -10,7 +10,9 @@ import { Plant } from "./schemas/plant.schema";
 export class PlantsService {
   constructor(private readonly plantsRepository: PlantsRepository) {}
 
-  async getAllPlants(query: QueryPlantParams): Promise<any> {
+  async getAllPlants(
+    query: QueryPlantParams
+  ): Promise<{ plants: Plant[]; count: number }> {
     const results = await this.plantsRepository.getAllPlants(
       query.page,
       query.limit

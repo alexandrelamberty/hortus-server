@@ -26,18 +26,23 @@ export class PlantsRepository {
   /**
    * Retrieves a paginated list of all plants.
    * @param page Page number (defaults to 1).
-   * @param limit Number of plants to retrieve per page (defaults to 10).
-   * @returns List of plants.
+   * @param limit Number of plants to retrieve per page (defaults to 20).
+   * @returns {plants: PlantDocument[], count: number} - An object containing
+   * the array of retrieved plants and the total number of plants in the
+   * database.
    */
-  async getAllPlants(page = 1, limit = 20): Promise<any> {
+  async getAllPlants(
+    page = 1,
+    limit = 20
+  ): Promise<{ plants: PlantDocument[]; count: number }> {
     const skip = (page - 1) * limit;
-    const results = await this.model
+    const plants = await this.model
       .find()
       .skip(Number(skip))
       .limit(Number(limit))
       .exec();
     const count = await this.model.countDocuments();
-    return { results, count };
+    return { plants, count };
   }
 
   /**
