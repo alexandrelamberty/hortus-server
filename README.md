@@ -1,5 +1,6 @@
 [![Build & Tests](https://github.com/alexandrelamberty/hortus-api/actions/workflows/node.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-api/actions/workflows/node.yml)
 [![Docker](https://github.com/alexandrelamberty/hortus-api/actions/workflows/docker.yml/badge.svg)](https://github.com/alexandrelamberty/hortus-api/actions/workflows/docker.yml)
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/19ca9ef2399847beb273a3a7fd615386)](https://www.codacy.com/gh/alexandrelamberty/hortus-api/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=alexandrelamberty/hortus-api&amp;utm_campaign=Badge_Grade)
 
 # Hortus API
 
