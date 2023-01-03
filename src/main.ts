@@ -18,8 +18,10 @@ async function bootstrap() {
 
   // Cors - https://docs.nestjs.com/security/cors#cors
   app.enableCors({
-    allowedHeaders: "*",
-    origin: "*",
+    origin: "http://localhost:3000",
+    allowedHeaders:
+      "X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept, Observe",
+    exposedHeaders: "Pagination-Count, Pagination-Page, Pagination-Limit",
   });
 
   // Exception Filters - https://docs.nestjs.com/exception-filters
