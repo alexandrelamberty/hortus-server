@@ -1,5 +1,6 @@
 import {
   DynamicModule,
+  Logger,
   MiddlewareConsumer,
   Module,
   RequestMethod,
@@ -97,24 +98,9 @@ import { AppService } from "./app.service";
 })
 export class AppModule {
   static register(options: any): DynamicModule {
-    console.log(options);
-    // Set environment variabls here
-    process.env["NODE_ENV"] = "development";
-    process.env.PORT = "3333";
-    process.env["PAIRING_KEY"] = "9fca54477c8ad4e70dc5e1084f884aad";
-    process.env["JWT_SECRET"] = "d7a481461577ba4c3c4c6946cca7204b";
-    process.env["JWT_EXPIRE"] = "90";
-    process.env["BCRYPT_HASH"] = "7f91317e30a02bc7b87205e95b842df2";
-    process.env.DATABASE_URI = "mongodb://hortus:hortus@localhost:27017/hortus";
-    process.env["STATIC_DIR"] = "/upload";
-    process.env["UPLOAD_PATH"] = "/upload";
-    process.env["CACHE_HOST"] = "localhost";
-    process.env["CACHE_PORT"] = "6379";
-    process.env["CACHE_TTL"] = "300";
-    process.env["SESSION_HOST"] = "localhost";
-    process.env["SESSION_PORT"] = "6380";
-    process.env["SESSION_TTL"] = "300";
-
+    Logger.log(options);
+    // FIXME: inject fake but correct environment variable
+    // For testing with GitHub
     return {
       module: AppModule,
     };
