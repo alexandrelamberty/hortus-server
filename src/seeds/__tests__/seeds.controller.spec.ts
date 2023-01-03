@@ -1,20 +1,29 @@
+import { createMock } from "@golevelup/ts-jest";
 import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
+import { Response } from "express";
 import { ObjectId } from "mongodb";
 import { SeedsController } from "../controllers/seeds.controller";
 import { CreateSeedDto } from "../dto/create-seed.dto";
 import { SeedQueryParams } from "../dto/seed-query.dto";
+import { UpdateSeedDto } from "../dto/update-seed.dto";
+import { Frost } from "../enums/frost.enum";
+import { Season } from "../enums/season.enum";
+import { Sun } from "../enums/sun.enum";
+import { Type } from "../enums/type.enum";
+import { Water } from "../enums/water.enum";
 import { Seed } from "../schemas/seed.schema";
 import { SeedsService } from "../seeds.service";
 import { seedStub } from "./stubs/seed.stub";
-import { Type } from "../enums/type.enum";
-import { Season } from "../enums/season.enum";
-import { Frost } from "../enums/frost.enum";
-import { Water } from "../enums/water.enum";
-import { Sun } from "../enums/sun.enum";
-import { UpdateSeedDto } from "../dto/update-seed.dto";
 
 jest.mock("../seeds.service");
+
+const mockResponseObject = () => {
+  return createMock<Response>({
+    json: jest.fn().mockReturnThis(),
+    status: jest.fn().mockReturnThis(),
+  });
+};
 
 describe("SeedsController Unit Tests", () => {
   let app: INestApplication;
@@ -43,11 +52,15 @@ describe("SeedsController Unit Tests", () => {
 
   describe("getAllseeds", () => {
     describe("when getAllTasks is called", () => {
-      let seeds: Seed[];
+      const response = mockResponseObject();
+      let seeds: Promise<any>;
 
       beforeEach(async () => {
-        const query: SeedQueryParams = {};
-        seeds = await controller.getAllSeeds(query);
+        const query: SeedQueryParams = { page: 1, limit: 10 };
+        // jest
+        //   .spyOn(seedsService, "findAll")
+        //   .mockImplementation(jest.fn().mockResolvedValueOnce(mockedCarsList));
+        seeds = await controller.getAllSeeds(query, response);
       });
 
       test("then it should call the service", () => {

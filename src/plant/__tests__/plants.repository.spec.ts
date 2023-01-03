@@ -6,7 +6,7 @@ import { Model, Query } from "mongoose";
 import { PlantsRepository } from "../plants.repository";
 import { Plant, PlantDocument } from "../schemas/plant.schema";
 import { plantStub } from "./stubs/plant.stub";
-import { PlantsQueryParams } from "../dto/plant-query.dto";
+import { PlantsQueryParams } from "../dto/query-plant.dto";
 import { CreatePlantDto } from "../dto/create-plant.dto";
 
 // jest.mock("../plants.repository");
@@ -46,7 +46,7 @@ describe("PlantsRepository", () => {
             remove: jest.fn().mockResolvedValueOnce(plantStub()),
             limit: jest.fn().mockResolvedValueOnce([plantStub()]),
             count: jest.fn(),
-            exec: jest.fn(),
+            // exec: jest.fn(),
           },
         },
       ],
@@ -65,26 +65,18 @@ describe("PlantsRepository", () => {
   });
 
   describe("getAllPlants", () => {
-    describe("when getPlants is called", () => {
+    describe("when getAllPlants is called", () => {
       let plants: Plant[];
 
       beforeEach(async () => {
-        jest.spyOn(model, "find").mockReturnValueOnce(
-          createMock<Query<PlantDocument, PlantDocument>>({
-            find: jest.fn().mockImplementation(() => ({
-              skip: jest.fn().mockImplementation((...arg) => ({
-                limit: jest.fn().mockImplementation((...arg) => ({
-                  exec: jest.fn().mockImplementation((...arg) => [plantStub()]),
-                })),
-              })),
-            })),
-          }) as any
-        );
+        jest.spyOn(model, "find").mockResolvedValue([plantStub()]);
+
         const query: PlantsQueryParams = {
           page: 1,
           limit: 10,
         };
-        plants = await repository.getPlants(query);
+        plants = await repository.getAllPlants(query);
+        console.log(plants);
       });
 
       it("should call model find", async () => {
@@ -98,25 +90,34 @@ describe("PlantsRepository", () => {
   });
 
   describe("createPlant", () => {
-    it("should insert a new plant", async () => {
-      const dto: CreatePlantDto = {
-        name: "Plant title",
-        family: "",
-        genus: "",
-        species: "",
-      };
+    describe("when createPlant is called", () => {
+      let plant: Plant;
+      beforeEach(async () => {
+        jest.spyOn(model, "create").mockReturnValueOnce(
+          createMock<Query<PlantDocument, PlantDocument>>({
+            exec: jest.fn().mockImplementation(() => plantStub()),
+          }) as any
+        );
+        const dto: CreatePlantDto = {
+          name: "Plant title",
+          family: "",
+          genus: "",
+          species: "",
+        };
+        plant = await repository.createPlant(dto);
+        console.log(plant);
+      });
+      it("should call model create", async () => {
+        expect(model.create).toBeCalled();
+      });
 
-      jest
-        .spyOn(model, "create")
-        .mockImplementationOnce(() => Promise.resolve(plantStub()));
-
-      const newPlant = await repository.createPlant(dto);
-
-      expect(newPlant).toEqual(plantStub());
+      it("should return the newly inserted plant", async () => {
+        expect(plant).toEqual(plantStub());
+      });
     });
   });
 
-  describe("getById", () => {
+  describe("getPlantById", () => {
     it("should getOne by id", async () => {
       const objectID = ObjectId.createFromHexString("638e04dab2bcf419a0c362c1");
 
@@ -127,6 +128,21 @@ describe("PlantsRepository", () => {
       );
 
       const foundPlant = await repository.getPlantById(objectID);
+      expect(foundPlant).toEqual(plantStub());
+    });
+  });
+
+  describe("getPlantByName", () => {
+    it("should getOne by id", async () => {
+      const name = "";
+
+      jest.spyOn(model, "findOne").mockReturnValueOnce(
+        createMock<Query<PlantDocument, PlantDocument>>({
+          exec: jest.fn().mockResolvedValueOnce(plantStub()),
+        }) as any
+      );
+
+      const foundPlant = await repository.getPlantByName(name);
       expect(foundPlant).toEqual(plantStub());
     });
   });

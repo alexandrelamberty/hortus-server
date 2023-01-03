@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { Types } from "mongoose";
 import { CreatePlantDto } from "../dto/create-plant.dto";
-import { PlantsQueryParams } from "../dto/plant-query.dto";
+import { PlantsQueryParams } from "../dto/query-plant.dto";
 import { UpdatePlantDto } from "../dto/update-plant.dto";
 import { PlantsService } from "../plants.service";
 import { plantStub } from "./stubs/plant.stub";
