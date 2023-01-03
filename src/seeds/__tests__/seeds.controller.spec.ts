@@ -5,7 +5,7 @@ import { Response } from "express";
 import { ObjectId } from "mongodb";
 import { SeedsController } from "../controllers/seeds.controller";
 import { CreateSeedDto } from "../dto/create-seed.dto";
-import { SeedQueryParams } from "../dto/seed-query.dto";
+import { QuerySeedParams } from "../dto/query-seed.dto";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
 import { Frost } from "../enums/frost.enum";
 import { Season } from "../enums/season.enum";
@@ -56,7 +56,7 @@ describe("SeedsController Unit Tests", () => {
       let seeds: Promise<any>;
 
       beforeEach(async () => {
-        const query: SeedQueryParams = { page: 1, limit: 10 };
+        const query: QuerySeedParams = { page: 1, limit: 10 };
         // jest
         //   .spyOn(seedsService, "findAll")
         //   .mockImplementation(jest.fn().mockResolvedValueOnce(mockedCarsList));

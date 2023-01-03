@@ -6,7 +6,7 @@ import { Model, Query } from "mongoose";
 import { PlantsRepository } from "../plants.repository";
 import { Plant, PlantDocument } from "../schemas/plant.schema";
 import { plantStub } from "./stubs/plant.stub";
-import { PlantsQueryParams } from "../dto/query-plant.dto";
+import { QueryPlantParams } from "../dto/query-plant.dto";
 import { CreatePlantDto } from "../dto/create-plant.dto";
 
 // jest.mock("../plants.repository");
@@ -71,7 +71,7 @@ describe("PlantsRepository", () => {
       beforeEach(async () => {
         jest.spyOn(model, "find").mockResolvedValue([plantStub()]);
 
-        const query: PlantsQueryParams = {
+        const query: QueryPlantParams = {
           page: 1,
           limit: 10,
         };

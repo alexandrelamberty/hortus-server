@@ -1,7 +1,7 @@
 import { Test, TestingModule } from "@nestjs/testing";
 import { ObjectId } from "mongodb";
 import { CreateSeedDto } from "../dto/create-seed.dto";
-import { SeedQueryParams } from "../dto/seed-query.dto";
+import { QuerySeedParams } from "../dto/query-seed.dto";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
 import { SeedsService } from "../seeds.service";
 import { seedStub } from "./stubs/seed.stub";
@@ -27,7 +27,7 @@ describe("SeedsService", () => {
   describe("getAllSeeds", () => {
     describe("when getAllTasks is called", () => {
       it("should return an array of Seeds", async () => {
-        const query: SeedQueryParams = {
+        const query: QuerySeedParams = {
           page: 1,
           limit: 10,
         };

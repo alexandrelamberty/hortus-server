@@ -3,7 +3,7 @@ import { Test, TestingModule } from "@nestjs/testing";
 import { ObjectId } from "mongodb";
 import { PlantsController } from "../controllers/plants.controller";
 import { CreatePlantDto } from "../dto/create-plant.dto";
-import { PlantsQueryParams } from "../dto/query-plant.dto";
+import { QueryPlantParams } from "../dto/query-plant.dto";
 import { PlantsService } from "../plants.service";
 import { Plant } from "../schemas/plant.schema";
 import { plantStub } from "./stubs/plant.stub";
@@ -40,7 +40,7 @@ describe("PlantsController Unit Tests", () => {
       let plants: Plant[];
 
       beforeEach(async () => {
-        const query: PlantsQueryParams = {};
+        const query: QueryPlantParams = {};
         plants = await controller.getAllPlants(query);
       });
 
