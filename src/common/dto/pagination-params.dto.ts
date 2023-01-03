@@ -6,12 +6,12 @@ export class PaginationQueryParams {
   @IsNumber()
   @Min(1)
   @Type(() => Number)
-  readonly page?: number;
+  page = 1;
 
   @IsOptional()
   @IsNumber()
   @Min(5)
   @Max(100)
   @Type(() => Number)
-  readonly limit?: number;
+  limit = 20;
 }
