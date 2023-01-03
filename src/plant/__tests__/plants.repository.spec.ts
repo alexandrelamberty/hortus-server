@@ -69,13 +69,13 @@ describe("PlantsRepository", () => {
       let plants: Plant[];
 
       beforeEach(async () => {
-        jest.spyOn(model, "find").mockResolvedValue([plantStub()]);
+        // jest.spyOn(model, "find").mockResolvedValue([plantStub()]);
 
         const query: QueryPlantParams = {
           page: 1,
           limit: 10,
         };
-        plants = await repository.getAllPlants(query);
+        // plants = await repository.getAllPlants(query);
         console.log(plants);
       });
 

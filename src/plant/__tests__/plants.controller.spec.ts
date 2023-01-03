@@ -1,5 +1,7 @@
+import { createMock } from "@golevelup/ts-jest";
 import { INestApplication, ValidationPipe } from "@nestjs/common";
 import { Test, TestingModule } from "@nestjs/testing";
+import { Response } from "express";
 import { ObjectId } from "mongodb";
 import { PlantsController } from "../controllers/plants.controller";
 import { CreatePlantDto } from "../dto/create-plant.dto";
@@ -9,6 +11,13 @@ import { Plant } from "../schemas/plant.schema";
 import { plantStub } from "./stubs/plant.stub";
 
 jest.mock("../plants.service");
+
+const mockResponseObject = () => {
+  return createMock<Response>({
+    json: jest.fn().mockReturnThis(),
+    status: jest.fn().mockReturnThis(),
+  });
+};
 
 describe("PlantsController Unit Tests", () => {
   let app: INestApplication;
@@ -37,11 +46,12 @@ describe("PlantsController Unit Tests", () => {
 
   describe("getAllplants", () => {
     describe("when getAllTasks is called", () => {
-      let plants: Plant[];
+      const response = mockResponseObject();
+      let result: Promise<any>;
 
       beforeEach(async () => {
-        const query: QueryPlantParams = {};
-        plants = await controller.getAllPlants(query);
+        const query: QueryPlantParams = { page: 1, limit: 10 };
+        result = await controller.getAllPlants(query, response);
       });
 
       test("then it should call the service", () => {
@@ -49,7 +59,7 @@ describe("PlantsController Unit Tests", () => {
       });
 
       test("then it should return an array of plants", () => {
-        expect(plants).toEqual([plantStub()]);
+        expect(result).toEqual([plantStub()]);
       });
     });
   });

@@ -45,7 +45,7 @@ export class PlantsController {
   async getAllPlants(
     @Query() { page, limit }: QueryPlantParams,
     @Response() res: Res
-  ) {
+  ): Promise<any> {
     const results = await this.plantService.getAllPlants({ page, limit });
     return res
       .set({
