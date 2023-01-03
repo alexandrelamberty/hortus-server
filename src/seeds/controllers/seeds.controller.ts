@@ -9,15 +9,18 @@ import {
   Post,
   Put,
   Query,
+  Response,
   UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Response as Res } from "express";
 import { Types } from "mongoose";
 import { PaginationQueryParams } from "../../common/paginationParams";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { SharpPipe } from "../../common/pipe/SharpPipe";
 import { CreateSeedDto } from "../dto/create-seed.dto";
+import { QuerySeedParams } from "../dto/query-seed.dto";
 import { UpdateSeedDto } from "../dto/update-seed.dto";
 import { SeedDocument } from "../schemas/seed.schema";
 import { SeedsService } from "../seeds.service";
@@ -33,15 +36,27 @@ export class SeedsController {
 
   @Get("seedings")
   getAllSeedsToSow(
-    @Query() { page = 0, limit = 10 }: PaginationQueryParams,
+    @Query() { page = 1, limit = 10 }: PaginationQueryParams,
     @Query("start") start: number,
     @Query("end") end: number
   ) {
     return this.seedService.getAllSeedsToSow(start, end, page, limit);
   }
+
   @Get()
-  getAllSeeds(@Query() query: PaginationQueryParams) {
-    return this.seedService.getAllSeeds(query);
+  async getAllSeeds(
+    @Query() query: QuerySeedParams,
+    @Response() res: Res
+  ): Promise<any> {
+    const results = await this.seedService.getAllSeeds(query);
+    return res
+      .set({
+        "Pagination-Count": results.count,
+        "Pagination-Page": query.page,
+        "Pagination-Limit": query.limit,
+        "Content-Type": "application/json",
+      })
+      .json(results.results);
   }
 
   @Get(":id")
@@ -51,7 +66,6 @@ export class SeedsController {
 
   @Post()
   createSeed(@Body() body: CreateSeedDto) {
-    this.logger.log(body);
     return this.seedService.createSeed(body);
   }
 

@@ -8,6 +8,7 @@ import {
   Patch,
   Post,
   Query,
+  Response,
 } from "@nestjs/common";
 import { Types } from "mongoose";
 import { PaginationQueryParams } from "../../common/paginationParams";
@@ -18,7 +19,7 @@ import { PhaseDetails } from "../dto/phase-details.dto";
 import { UpdateCultureDto } from "../dto/update-culture.dto";
 import { CultureService } from "../providers/culture.service";
 import { Culture } from "../schemas/culture.schema";
-
+import { Response as Res } from "express";
 /**
  * Controller class for managing requests to the culture endpoint.
  */
@@ -27,8 +28,16 @@ export class CultureController {
   constructor(private readonly cultureService: CultureService) {}
 
   @Get()
-  async findAll(@Query() { page = 0, limit = 20 }: PaginationQueryParams) {
-    return this.cultureService.findAll(page, limit);
+  async findAll(@Query() query: PaginationQueryParams, @Response() res: Res) {
+    const results = await this.cultureService.findAll(query.page, query.limit);
+    return res
+      .set({
+        "Pagination-Count": results.count,
+        "Pagination-Page": query.page,
+        "Pagination-Limit": query.limit,
+        "Content-Type": "application/json",
+      })
+      .json(results.results);
   }
 
   @Get(":id")

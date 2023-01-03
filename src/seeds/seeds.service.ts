@@ -2,10 +2,10 @@ import { Injectable } from "@nestjs/common";
 import { InjectModel } from "@nestjs/mongoose";
 import { Model, Types } from "mongoose";
 import { CreateSeedDto } from "./dto/create-seed.dto";
+import { QuerySeedParams } from "./dto/query-seed.dto";
 import { UpdateSeedDto } from "./dto/update-seed.dto";
 import SeedNotFoundException from "./exceptions/seed.exceptions";
 import { Seed, SeedDocument } from "./schemas/seed.schema";
-import { SeedQueryParams } from "./dto/seed-query.dto";
 
 /**
  * This is a service class for interacting with a Seed model in a MongoDB
@@ -27,29 +27,29 @@ export class SeedsService {
     start: number,
     end: number,
     page = 1,
-    limit?: number
+    limit = 20
   ): Promise<any> {
     const skip = (page - 1) * limit;
     const results = await this.model
       .find({
         "seeding.start": { $gte: Number(start), $lte: Number(end) },
       })
-      .skip(parseInt(skip.toString()))
-      .limit(parseInt(limit.toString()));
-
+      .skip(Number(skip))
+      .limit(Number(limit))
+      .exec();
     const count = await this.model.countDocuments();
     return { results, count };
   }
 
-  async getAllSeeds(query: SeedQueryParams): Promise<any> {
+  async getAllSeeds(query: QuerySeedParams): Promise<any> {
     const skip = (query.page - 1) * query.limit;
     const results = await this.model
       .find()
       .populate("plant")
       .populate("companions")
       .populate("competitors")
-      .skip(skip)
-      .limit(query.limit);
+      .skip(Number(skip))
+      .limit(Number(query.limit));
     const count = await this.model.countDocuments();
     return { results, count };
   }

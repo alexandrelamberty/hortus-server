@@ -9,15 +9,17 @@ import {
   Post,
   Put,
   Query,
+  Response,
   UploadedFile,
   UseInterceptors,
 } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
+import { Response as Res } from "express";
 import { Types } from "mongoose";
 import { ParseObjectIdPipe } from "../../common/pipe/ParseObjectIdPipe";
 import { SharpPipe } from "../../common/pipe/SharpPipe";
 import { CreatePlantDto } from "../dto/create-plant.dto";
-import { PlantsQueryParams } from "../dto/plant-query.dto";
+import { QueryPlantParams } from "../dto/query-plant.dto";
 import { UpdatePlantDto } from "../dto/update-plant.dto";
 import PlantNotFoundException from "../exceptions/plant.exceptions";
 import { PlantsService } from "../plants.service";
@@ -40,8 +42,19 @@ export class PlantsController {
    * @returns List of plants.
    */
   @Get()
-  async getAllPlants(@Query() query: PlantsQueryParams): Promise<Plant[]> {
-    return this.plantService.getAllPlants(query);
+  async getAllPlants(
+    @Query() query: QueryPlantParams,
+    @Response() res: Res
+  ): Promise<any> {
+    const results = await this.plantService.getAllPlants(query);
+    return res
+      .set({
+        "Pagination-Count": results.count,
+        "Pagination-Page": query.page,
+        "Pagination-Limit": query.limit,
+        "Content-Type": "application/json",
+      })
+      .json(results.results);
   }
 
   /**
@@ -51,7 +64,6 @@ export class PlantsController {
    */
   @Get("/find")
   async getPlantByName(@Query("name") name: string): Promise<Plant> {
-    Logger.log(name);
     return this.plantService.getPlantByName(name);
   }
 

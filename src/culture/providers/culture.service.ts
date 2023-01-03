@@ -24,14 +24,14 @@ export class CultureService {
     private readonly model: Model<CultureDocument>
   ) {}
 
-  async findAll(page = 1, limit = 10): Promise<any> {
+  async findAll(page = 1, limit = 20): Promise<any> {
     const skip = (page - 1) * limit;
-    const query = this.model
+    const results = await this.model
       .find()
       .populate("seed")
-      .skip(parseInt(skip.toString()))
-      .limit(parseInt(limit.toString()));
-    const results = await query;
+      .skip(Number(skip))
+      .limit(Number(limit))
+      .exec();
     const count = await this.model.count();
     return { results, count };
   }
@@ -71,7 +71,6 @@ export class CultureService {
    * @throws {CultureNotFoundException} If the culture with the specified ID is not found.
    */
   async updateSowingPhase(id: Types.ObjectId, info: PhaseDetails) {
-    console.log("CultureService.updateSowingPhase() ", id, info);
     let executeQuery;
     const skipQuery = {
       $set: {
@@ -114,7 +113,6 @@ export class CultureService {
   }
 
   async updateTransplantingPhase(id: Types.ObjectId, info: PhaseDetails) {
-    console.log("CultureService.updateTransplantingPhase() ", id, info);
     let executeQuery;
     const skipQuery = {
       $set: {
@@ -157,7 +155,6 @@ export class CultureService {
   }
 
   async updatePlantingPhase(id: Types.ObjectId, info: PhaseDetails) {
-    console.log("CultureService.updatePlantingPhase() ", id, info);
     let executeQuery;
     const skipQuery = {
       $set: {
@@ -200,7 +197,6 @@ export class CultureService {
   }
 
   async updateHarvestingPhase(id: Types.ObjectId, info?: PhaseDetails) {
-    console.log("CultureService.updatePlantingPhase() ", id, info);
     let executeQuery;
     const stopQuery = {
       $set: {
@@ -232,6 +228,7 @@ export class CultureService {
 
   // FIXME: implementation with a phase parameter ?
   async skipPhase(id: Types.ObjectId, phase: string) {
+    Logger.log(phase);
     const updateQuery = {
       "${phase}": {
         status: PhaseStatus.Skipped,
