@@ -7,8 +7,6 @@ import { Culture, CultureSchema } from "./schemas/culture.schema";
 
 @Module({
   imports: [
-    // FIXME:Remove async
-
     MongooseModule.forFeature([{ name: Culture.name, schema: CultureSchema }]),
   ],
   providers: [CultureService],

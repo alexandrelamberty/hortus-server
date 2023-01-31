@@ -1,5 +1,4 @@
 import { Prop, Schema, SchemaFactory } from "@nestjs/mongoose";
-import { SeedDocument } from "@seeds/schemas/seed.schema";
 import * as mongoose from "mongoose";
 import { Document, Model, model } from "mongoose";
 
@@ -66,7 +65,6 @@ export const PlantModel: Model<PlantDocument> = model<PlantDocument>(
 );
 
 export const PlantSchemaFactory = (
-  seedModel: Model<SeedDocument>
 ): mongoose.Schema<any> => {
   // remove all seed derived from this plant
   // PlantSchema.pre("deleteOne", function (next) {

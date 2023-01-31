@@ -22,6 +22,7 @@ export class SeedService {
     private readonly model: Model<SeedDocument>
   ) {}
 
+  // FIXME: Promise type
   async findAllToSow(
     start: number,
     end: number,
@@ -40,6 +41,7 @@ export class SeedService {
     return { results, count };
   }
 
+  // FIXME: Promise type
   async findAll(page = 0, limit?: number): Promise<any> {
     const skip = (page - 1) * limit;
     const results = await this.model
@@ -53,19 +55,22 @@ export class SeedService {
     return { results, count };
   }
 
-  async findById(id: Types.ObjectId): Promise<Seed> {
+  async findById(id: Types.ObjectId): Promise<SeedDocument> {
     const result = await this.model.findById(id).populate("species").exec();
     if (!result) throw new SeedNotFoundException(id);
     return result;
   }
 
-  async create(createSeedDto: CreateSeedDto): Promise<Seed> {
+  async create(createSeedDto: CreateSeedDto): Promise<SeedDocument> {
     let seed = await new this.model(createSeedDto).save();
     seed = await seed.populate("plant").execPopulate();
     return seed;
   }
 
-  async update(id: Types.ObjectId, updateSeedDto: UpdateSeedDto) {
+  async update(
+    id: Types.ObjectId,
+    updateSeedDto: UpdateSeedDto
+  ): Promise<SeedDocument> {
     let seed = await this.model.findByIdAndUpdate(id, updateSeedDto).exec();
     if (!Seed) throw new SeedNotFoundException(id);
     seed = await seed.populate("plant").execPopulate();

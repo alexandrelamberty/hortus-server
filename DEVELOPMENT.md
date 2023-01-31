@@ -5,7 +5,7 @@
 - [ ] Add monitoring devices, humidity, temperature, ph
 - [ ] Add controller devices, ventilation, heating, watering
 - [ ] Monitoring alerts vie SMS, email, mobile and web notifications
-- [ ] Automation of ventilation, heating and wateriong
+- [ ] Automation of ventilation, heating and watering
 
 - [ ] Core
   - [ ] Configuration
@@ -14,7 +14,7 @@
   - [ ] Logging
   - [ ] Validation
     - [ ] Class validator
-  - [ ] Serialiaztion, UseInterceptors
+  - [ ] Serialization, UseInterceptors
   - [ ] Exception
   - [x] Database
   - [x] Cache
