@@ -4,11 +4,12 @@ import { NestFactory } from "@nestjs/core";
 import { NestExpressApplication } from "@nestjs/platform-express";
 import * as cookieParser from "cookie-parser";
 import { join } from "path";
+
 import { AppModule } from "./app/app.module";
-import { MongoCastFilter } from "./common/exceptions/mongo-cast.filters";
-import { MongoErrorFilter } from "./common/exceptions/mongo-error.filters";
-import { MongoNativeErrorFilter } from "./common/exceptions/mongo-native-error.filter";
-import { MongoValidationFilter } from "./common/exceptions/mongo-validation.filters";
+import { MongoCastFilter } from "./core/exceptions/mongo-cast.filters";
+import { MongoErrorFilter } from "./core/exceptions/mongo-error.filters";
+import { MongoNativeErrorFilter } from "./core/exceptions/mongo-native-error.filter";
+import { MongoValidationFilter } from "./core/exceptions/mongo-validation.filters";
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);

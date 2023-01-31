@@ -1,8 +1,8 @@
 {
-  "name": "hortus-server",
+  "name": "hortus-api",
   "version": "0.0.1",
   "description": "Hortus - Gardenning Planner Server API and Database ",
-  "author": "Alexandre Lambety",
+  "author": "Alexandre Lamberty",
   "private": true,
   "license": "MIT",
   "engines": {
