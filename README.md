@@ -68,7 +68,7 @@ specified in the configuration are not in use.
 Run the application
 
 ```bash
-npm run start:development
+npm run start:dev
 ```
 
 ### Tests

@@ -28,7 +28,7 @@ import { JwtAuthGuard } from "../../auth/guards/jwt-auth.guard";
  * Controller class for managing requests to the seeds endpoint.
  */
 @Controller("seeds")
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class SeedController {
   private readonly logger = new Logger(SeedController.name);
 

@@ -79,7 +79,7 @@ export class PlantController {
    * @throws {BadRequestException} If no image file is provided in the request.
    */
   @Post()
-  @UseInterceptors(FileInterceptor("file"))
+  @UseInterceptors(FileInterceptor("image"))
   async create(
     @Body() plant: CreatePlantDto,
     @UploadedFile(SharpPipe) file: string

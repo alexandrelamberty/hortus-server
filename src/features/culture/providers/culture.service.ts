@@ -25,7 +25,7 @@ export class CultureService {
   ) {}
 
   async findAll(page = 1, limit = 10): Promise<any> {
-    const skip = (page - 1) * limit;
+    const skip = page;
     const query = this.model
       .find()
       .populate("seed")
