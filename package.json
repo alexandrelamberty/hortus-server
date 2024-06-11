@@ -40,7 +40,7 @@
     "cache-manager": "^3.6.3",
     "cache-manager-redis-store": "^2.0.0",
     "class-transformer": "^0.5.1",
-    "class-validator": "^0.13.2",
+    "class-validator": "^0.14.1",
     "cookie-parser": "^1.4.6",
     "ejs": "^3.1.8",
     "get-ip-range": ">=4.0.1",
