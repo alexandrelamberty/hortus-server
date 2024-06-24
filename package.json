@@ -45,7 +45,7 @@
     "ejs": "^3.1.8",
     "get-ip-range": ">=4.0.1",
     "handlebars": "^4.7.7",
-    "joi": "^17.4.2",
+    "joi": "^17.13.3",
     "local-devices": "^3.0.0",
     "mongoose": "^5.13.15",
     "nestjs": "^0.0.1",
